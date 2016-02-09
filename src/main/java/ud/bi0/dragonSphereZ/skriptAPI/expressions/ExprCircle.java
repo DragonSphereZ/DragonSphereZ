@@ -37,6 +37,7 @@ public class ExprCircle extends SimpleExpression<Location> {
 		d = (Expression<Number>) expr[2];
 		return true;
 	}
+	
 	/**
 	* testcircle at %location% with radius %number% and density %number%
 	*/

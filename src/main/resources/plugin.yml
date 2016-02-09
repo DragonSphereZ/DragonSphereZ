@@ -2,6 +2,6 @@ name: DragonSphereZ
 author: [bi0qaw, _Sashie_]
 description: Mad science
 version: 0.0.1
-main: ud.bi0.skript.dragonSphereZ.dragonSphereCore
+main: ud.bi0.dragonSphereZ.dragonSphereCore
 depend: [Skript]
 load: POSTWORLD
