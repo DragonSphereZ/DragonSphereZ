@@ -12,6 +12,7 @@ public class registerExpressions {
 
 	public static void DragonSphereZ() {
 		Skript.registerExpression(ExprCircle.class, Location.class, ExpressionType.SIMPLE, "testcircle at %location% with radius %number% and density %number%");
-
+		Skript.registerExpression(ExprCube.class, Location.class, ExpressionType.SIMPLE, "testcube at %location% with radius %number% and density %number%");
+		Skript.registerExpression(ExprCubeFace.class, Location.class, ExpressionType.SIMPLE, "testcubefaces at %location% with radius %number% and density %number%");
 	}
 }

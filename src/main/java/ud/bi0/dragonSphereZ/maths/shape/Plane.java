@@ -29,6 +29,10 @@ public class Plane extends Shape {
 		this.base = new Base2();
 	}
 	
+	public Plane(Vector3 u, Vector3 v) {
+		this.origin = new Vector3(0,0,0);
+		this.base = new Base2(u,v);
+	}
 	/**
 	 * Creates a new plane that goes through the point at 
 	 * origin and has u and v as a basis.
@@ -126,15 +130,15 @@ public class Plane extends Shape {
 	 * 	and origin + endU * u + endV
 	 */
 	public List<Vector3> render(double startU, double endU, double startV, double endV, double density) {
-		int pointAmountU = (int) (Math.abs(endU - startU) * density);
-		int pointAmountV = (int) (Math.abs(endV - startV) * density);
+		int pointAmountU = (int) (Math.abs(endU - startU) * base.getU().length() * density);
+		int pointAmountV = (int) (Math.abs(endV - startV) * base.getV().length() * density);
 		double stepU = (endU - startU) / pointAmountU;
 		double stepV = (endV - startV) / pointAmountV;
-		List<Vector3> points = new ArrayList<Vector3>(pointAmountU*pointAmountV);
+		List<Vector3> points = new ArrayList<Vector3>((pointAmountU+1)*(pointAmountV+1));
 		double pointU = startU;
 		double pointV = startV;
-		for (int i = 0; i < pointAmountU; i++) {
-			for (int j = 0; j < pointAmountV; j++) {
+		for (int i = 0; i < pointAmountU+1; i++) {
+			for (int j = 0; j < pointAmountV+1; j++) {
 				points.add(getPoint(pointU, pointV));
 				pointV += stepV;
 			}

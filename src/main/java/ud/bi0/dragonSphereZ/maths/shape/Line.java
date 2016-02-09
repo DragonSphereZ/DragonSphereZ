@@ -22,7 +22,7 @@ public class Line extends Shape {
 	 */
 	public Line(Vector3 pos1, Vector3 pos2) {
 		origin = pos1.clone();
-		direction = pos2.clone().subtract(pos1).normalize();
+		direction = pos2.clone().subtract(pos1);
 	}
 	
 	@Override
@@ -43,7 +43,7 @@ public class Line extends Shape {
 	}
 	
 	public void setDirection(Vector3 direction) {
-		this.direction = direction.clone().normalize();
+		this.direction = direction;
 	}
 	
 	/**
@@ -94,11 +94,11 @@ public class Line extends Shape {
 	 */
 	public List<Vector3> render(double start, double end, double density) {
 		double distance = end - start;
-		int pointAmount = (int) (Math.abs(distance) * density);
+		int pointAmount = (int) (Math.abs(distance) * direction.length() * density);
 		double step = distance / pointAmount;
 		double point = start;
-		List<Vector3> points = new ArrayList<Vector3>(pointAmount);
-		for (int i = 0; i < pointAmount; i++) {
+		List<Vector3> points = new ArrayList<Vector3>(pointAmount+1);
+		for (int i = 0; i < pointAmount+1; i++) {
 			points.add(getPoint(point));
 			point += step;
 		}

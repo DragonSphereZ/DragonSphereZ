@@ -75,6 +75,10 @@ public class Cylinder extends Shape {
 		return origin.getCylinderCoordinate(base.getNormal(), base.getU(), base.getV(), radiusU, radiusV, angle, height);
 	}
 	
+	public List<Vector3> renderEllipse() {
+		return renderEllipse(1);
+	}
+	
 	public List<Vector3> renderEllipse(double density) {
 		return renderEllipse(0, 2*Math.PI, 0, density);
 	}
@@ -84,7 +88,13 @@ public class Cylinder extends Shape {
 	}
 	
 	public List<Vector3> renderSpiral(double startRadiusU, double endRadiusU, double startRadiusV, double endRadiusV, double startAngle, double endAngle, double startHeight, double endHeight, double density) {
-		int pointAmount = (int) density;
+		
+		double totalAngle = Math.abs(endAngle - startAngle);
+		double maxRadius = Math.max(
+							Math.max(Math.abs(startRadiusU),Math.abs(endRadiusU))*base.getU().length(), 
+							Math.max(Math.abs(startRadiusV),Math.abs(endRadiusV))*base.getV().length());
+		
+		int pointAmount = (int) (totalAngle * maxRadius * density);
 		double stepRadiusU = (endRadiusU - startRadiusU) / pointAmount;
 		double stepRadiusV = (endRadiusV - startRadiusV) / pointAmount;
 		double stepAngle = (endAngle - startAngle) / pointAmount;

@@ -67,24 +67,6 @@ public class Ellipsoid extends Shape {
 		return base;
 	}
 	
-	/**
-	 * Returns the length of the longest
-	 * base vector.
-	 * 
-	 */
-	public double getMaxRadius() {
-		return Math.sqrt(getMaxRadiusSquared());
-	}
-	
-	/**
-	 * Returns the squared length of the 
-	 * longest base vector.
-	 * 
-	 */
-	public double getMaxRadiusSquared() {
-		return Math.max(base.getU().lengthSquared(), Math.max(base.getV().lengthSquared(), base.getW().lengthSquared()));
-	}
-	
 	public Vector3 getPoint(double angleThetha, double anglePhi) {
 		return getPoint(1, 1, 1, angleThetha, anglePhi);
 	}
@@ -114,7 +96,13 @@ public class Ellipsoid extends Shape {
 			double endAnglePhi,
 			double density)
 	{
-		int pointAmount = (int) density;
+		double maxRadius = Math.max(
+				Math.max(Math.abs(startRadiusU),Math.abs(endRadiusU))*base.getU().length(), 
+				Math.max(Math.max(Math.abs(startRadiusV),Math.abs(endRadiusV))*base.getV().length(),
+						 Math.max(Math.abs(startRadiusW),Math.abs(endRadiusW))*base.getW().length()));
+		double maxAngle = Math.max(Math.abs(startAngleThetha-endAngleThetha), Math.abs(startAnglePhi-endAnglePhi));
+		int pointAmount = (int) (maxRadius * maxAngle * density);
+		
 		double stepRadiusU = endRadiusU - startRadiusU;
 		double stepRadiusV = endRadiusV - startRadiusV;
 		double stepRadiusW = endRadiusW - startRadiusW;
@@ -137,70 +125,4 @@ public class Ellipsoid extends Shape {
 		return points;
 	}
 	
-	
-	/**
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 	THIS PART IS NOT YET UPDATED!
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 */
-	
-	/**
-	 * Get a set of points on the ellipsoid
-	 * with density 1.
-	 * 
-	 */
-	
-	public Vector3[][] render() {
-		return render(0, 2*Math.PI, 0, Math.PI, 1);
-	}
-	
-	/**
-	 * Get a set of points on the ellipsoid
-	 * with density (density).
-	 * 
-	 */
-	public Vector3[][] render(double density) {
-		return render(0, 2*Math.PI, 0, Math.PI, density);
-	}
-	
-	/**
-	 * Get a set of points on the surface of the 
-	 * ellipsoid (Vector3[u][v]). All points are located 
-	 * between (startU, startV) and (endU, endV).
-	 * 
-	 * Note that startU should be >= 0, endU <= 2*pi
-	 * startV >= 0, endV <= pi.
-	 * 
-	 */
-	public Vector3[][] render(double startU, double endU, double startV, double endV, double density) {
-		double maxRadius = getMaxRadius();
-		int pointAmountU = (int) (Math.abs(endU - startU) * maxRadius * density);
-		int pointAmountV = (int) (Math.abs(endV - startV) * maxRadius * density);
-		double stepU = (endU - startU) / pointAmountU;
-		double stepV = (endV - startV) / pointAmountV;
-		double pointU = startU;
-		double pointV = startV;
-		Vector3[][] points = new Vector3[pointAmountU][pointAmountV];
-		for (int i = 0; i < pointAmountU; i++) {
-			for (int j = 0; j < pointAmountV; j++) {
-				points[i][j] = getPoint(pointU, pointV);
-				pointV += stepV;
-			}
-			pointV = startV;
-			pointU += stepU;
-		}
-		return points;
-	}
 }
