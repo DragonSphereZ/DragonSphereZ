@@ -1,8 +1,8 @@
-package com.gmail.bi0qaw.dragonSphereZ.shape;
+package ud.bi0.dragonSphereZ.maths.shape;
 
 import java.util.Random;
 
-import com.gmail.bi0qaw.dragonSphereZ.vector.Vector3;
+import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 
 public class Ellipsoid extends Shape {
 	

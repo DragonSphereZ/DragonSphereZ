@@ -1,4 +1,7 @@
 name: DragonSphereZ
-author: bi0qaw
-version: 1.0.0
-main: com.gmail.bi0qaw.dragonSphereZ.dragonSphereZ
+author: [bi0qaw, _Sashie_]
+description: Mad science
+version: 0.0.1
+main: ud.bi0.skript.dragonSphereZ.dragonSphereCore
+depend: [Skript]
+load: POSTWORLD

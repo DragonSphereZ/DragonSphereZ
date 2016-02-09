@@ -1,7 +1,7 @@
-package com.gmail.bi0qaw.dragonSphereZ.shape;
+package ud.bi0.dragonSphereZ.maths.shape;
 
-import com.gmail.bi0qaw.dragonSphereZ.vector.Vector2;
-import com.gmail.bi0qaw.dragonSphereZ.vector.Vector3;
+import ud.bi0.dragonSphereZ.maths.vector.Vector2;
+import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 
 public class Plane extends Shape {
 	

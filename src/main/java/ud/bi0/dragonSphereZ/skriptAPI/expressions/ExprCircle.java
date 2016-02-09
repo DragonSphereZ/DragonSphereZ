@@ -1,4 +1,4 @@
-package com.gmail.bi0qaw.dragonSphereZ;
+package ud.bi0.dragonSphereZ.skriptAPI.expressions;
 
 import javax.annotation.Nullable;
 
@@ -6,13 +6,13 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.event.Event;
 
-import com.gmail.bi0qaw.dragonSphereZ.shape.Ellipse;
-import com.gmail.bi0qaw.dragonSphereZ.vector.Vector3;
-
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
+
+import ud.bi0.dragonSphereZ.maths.shape.Ellipse;
+import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 
 public class ExprCircle extends SimpleExpression<Location> {
 	private Expression<Location> loc;
@@ -36,7 +36,9 @@ public class ExprCircle extends SimpleExpression<Location> {
 		d = (Expression<Number>) expr[2];
 		return true;
 	}
-
+	/**
+	* testcircle at %location% with radius %number% and density %number%
+	*/
 	@Override
 	public String toString(@Nullable Event arg0, boolean arg1) {
 		return null;

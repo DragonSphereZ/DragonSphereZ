@@ -1,4 +1,4 @@
-package com.gmail.bi0qaw.dragonSphereZ.shape;
+package ud.bi0.dragonSphereZ.maths.shape;
 
 public class Shape {
 	

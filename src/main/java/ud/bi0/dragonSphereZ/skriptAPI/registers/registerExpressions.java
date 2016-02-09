@@ -1,19 +1,17 @@
-package com.gmail.bi0qaw.dragonSphereZ;
+package ud.bi0.dragonSphereZ.skriptAPI.registers;
 
 import org.bukkit.Location;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.ExpressionType;
+import ud.bi0.dragonSphereZ.skriptAPI.expressions.*;
 
-public class dragonSphereZ extends JavaPlugin{
-	
-	public void onEnable(){
+
+
+public class registerExpressions {
+
+	public static void DragonSphereZ() {
 		Skript.registerExpression(ExprCircle.class, Location.class, ExpressionType.SIMPLE, "testcircle at %location% with radius %number% and density %number%");
-	
-	}
-	
-	public void onDisable() {
-		
+
 	}
 }

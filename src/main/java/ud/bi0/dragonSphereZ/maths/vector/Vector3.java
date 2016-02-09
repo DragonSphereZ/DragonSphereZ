@@ -1,4 +1,4 @@
-package com.gmail.bi0qaw.dragonSphereZ.vector;
+package ud.bi0.dragonSphereZ.maths.vector;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;
