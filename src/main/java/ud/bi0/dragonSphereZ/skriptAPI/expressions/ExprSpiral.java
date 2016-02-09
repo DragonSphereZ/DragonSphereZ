@@ -53,7 +53,7 @@ public class ExprSpiral extends SimpleExpression<Location> {
 		World world = loc.getSingle(e).getWorld();
 		double radius = r.getSingle(e).doubleValue();
 		double density = d.getSingle(e).doubleValue();
-		List<Vector3> vectors = new Cylinder(origin, radius, radius).renderSpiral(1, 1, 1, 1, 0, 20*Math.PI, 0, 10, density);
+		List<Vector3> vectors = new Cylinder(origin, radius, radius).renderSpiral(1, -2, 1, -2, 0, 20*Math.PI, 0, 10, density);
 		Location[] points = new Location[vectors.size()];
 		int i = 0;
 		for (Vector3 vector : vectors) {
