@@ -85,8 +85,4 @@ public class Base3 {
 		}
 		this.w = w;
 	}
-	
-	public void copy(Base3 base) {
-		this.base = new Base3(base);
-	}
 }
