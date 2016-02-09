@@ -2,6 +2,7 @@ package ud.bi0.dragonSphereZ.maths.shape;
 
 import java.util.Random;
 
+import ud.bi0.dragonSphereZ.maths.base.Base3;
 import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 
 public class Ellipsoid extends Shape {
@@ -12,9 +13,13 @@ public class Ellipsoid extends Shape {
 	 * 
 	 */
 	protected Vector3 origin;
-	protected Vector3 u;
-	protected Vector3 v;
-	protected Vector3 w;
+	protected Base3 base;
+	
+	
+	public Ellipsoid(Vector3 origin, Base3 base) {
+		this.origin = origin;
+		this.base = base;
+	}
 	
 	/**
 	 * Creates an ellipsoid at origin with the
@@ -23,9 +28,7 @@ public class Ellipsoid extends Shape {
 	 */
 	public Ellipsoid(Vector3 origin, Vector3 u, Vector3 v, Vector3 w) {
 		this.origin = origin;
-		this.u = u;
-		this.v = v;
-		this.w = w;
+		this.base = new Base3(u,v,w);
 	}
 	
 	/**
@@ -35,31 +38,15 @@ public class Ellipsoid extends Shape {
 	 */
 	public Ellipsoid(Vector3 origin, double x, double y, double z) {
 		this.origin = origin;
-		this.u = new Vector3(x,0,0);
-		this.v = new Vector3(0,y,0);
-		this.w = new Vector3(0,0,z);
+		this.base = new Base3(x,y,z);
 	}
-	
 	
 	/**
 	 * Creates a sphere at origin with a certain radius.
 	 */
 	public Ellipsoid(Vector3 origin, double radius) {
 		this.origin = origin;
-		this.u = new Vector3(radius,0,0);
-		this.v = new Vector3(0,radius,0);
-		this.w = new Vector3(0,0,radius);
-	}
-	
-	/**
-	 * Creates a unit sphere at origin.
-	 * 
-	 */
-	public Ellipsoid(Vector3 origin) {
-		this.origin = origin;
-		this.u = new Vector3(1,0,0);
-		this.v = new Vector3(0,1,0);
-		this.w = new Vector3(0,0,1);
+		this.base = new Base3(radius, radius, radius);
 	}
 	
 	@Override
@@ -75,59 +62,8 @@ public class Ellipsoid extends Shape {
 		this.origin = origin;
 	}
 	
-	public Vector3 getU() {
-		return u;
-	}
-	
-	/**
-	 * Set the base vector u. If adjust is true
-	 * the other base vectors will be changed
-	 * accordingly.
-	 * 
-	 */
-	public void setU(Vector3 u, boolean adjust) {
-		if (adjust) {
-			this.v.adjust(this.u, u);
-			this.w.adjust(this.u, u);
-		}
-		this.u = u;
-	}
-	
-	public Vector3 getV() {
-		return v;
-	}
-	
-	/**
-	 * Set the base vector v. If adjust is true
-	 * the other base vectors will be changed
-	 * accordingly.
-	 * 
-	 */
-	public void setV(Vector3 v, boolean adjust) {
-		if (adjust) {
-			this.u.adjust(this.v, v);
-			this.w.adjust(this.v, v);
-		}
-		this.v = v;
-	}
-	
-
-	public Vector3 getW() {
-		return w;
-	}
-	
-	/**
-	 * Set the base vector w. If adjust is true
-	 * the other base vectors will be changed
-	 * accordingly.
-	 * 
-	 */	
-	public void setW(Vector3 w, boolean adjust) {
-		if (adjust) {
-			this.u.adjust(this.w, w);
-			this.v.adjust(this.w, w);
-		}
-		this.w = w;
+	public Base3 getBase() {
+		return base;
 	}
 	
 	/**
@@ -145,7 +81,7 @@ public class Ellipsoid extends Shape {
 	 * 
 	 */
 	public double getMaxRadiusSquared() {
-		return Math.max(u.lengthSquared(), Math.max(v.lengthSquared(), w.lengthSquared()));
+		return Math.max(base.getU().lengthSquared(), Math.max(base.getV().lengthSquared(), base.getW().lengthSquared()));
 	}
 	
 	/**
@@ -165,8 +101,8 @@ public class Ellipsoid extends Shape {
 		double sinu = Math.sin(u);
 		double sinv = Math.sin(v);
 		double cosv = Math.cos(v);
-		Vector3 dUV = this.u.clone().multiply(cosu*sinv).add(sinu*sinv,this.v);
-		Vector3 dW = this.w.clone().multiply(cosv);
+		Vector3 dUV = base.getU().clone().multiply(cosu*sinv).add(sinu*sinv,base.getV());
+		Vector3 dW = base.getW().clone().multiply(cosv);
 		Vector3[] points = new Vector3[2];
 		points[0] = origin.clone().add(dUV).add(dW);
 		points[1] = origin.clone().add(dUV).subtract(dW);

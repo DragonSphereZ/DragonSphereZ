@@ -46,7 +46,7 @@ public class ExprCircle extends SimpleExpression<Location> {
 
 	@Override
 	@Nullable
-	protected Location[] get(Event e) {
+	protected Location[] get(Event e) {	
 		Vector3 origin = new Vector3(loc.getSingle(e));
 		World world = loc.getSingle(e).getWorld();
 		double radius = r.getSingle(e).doubleValue();

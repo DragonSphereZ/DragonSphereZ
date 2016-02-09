@@ -1,5 +1,6 @@
 package ud.bi0.dragonSphereZ.maths.shape;
 
+import ud.bi0.dragonSphereZ.maths.base.Base2;
 import ud.bi0.dragonSphereZ.maths.vector.Vector2;
 import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 
@@ -12,9 +13,7 @@ public class Plane extends Shape {
 	 * 
 	 */
 	protected Vector3 origin;
-	protected Vector3 normal;
-	protected Vector3 u;
-	protected Vector3 v;
+	protected Base2 base;
 	
 	/**
 	 * Creates a new plane that goes through 
@@ -24,21 +23,17 @@ public class Plane extends Shape {
 	 */
 	public Plane(Vector3 origin) {
 		this.origin = origin;
-		this.u = new Vector3(1,0,0);
-		this.v = new Vector3(0,1,0);
-		this.normal = new Vector3(0,0,1);
+		this.base = new Base2();
 	}
 	
 	/**
 	 * Creates a new plane that goes through the point at 
-	 * origin and has u and v normalized as a basis.
+	 * origin and has u and v as a basis.
 	 * 
 	 */
 	public Plane(Vector3 origin, Vector3 u, Vector3 v) {
 		this.origin = origin;
-		this.u = u;
-		this.v = v;
-		this.normal = u.clone().crossProduct(v).normalize();
+		this.base = new Base2(u,v);
 	}
 	
 	@Override
@@ -54,52 +49,12 @@ public class Plane extends Shape {
 		this.origin = origin;
 	}
 	
-	public Vector3 getNormal() {
-		return normal;
+	public Base2 getBase() {
+		return base;
 	}
 	
-	/**
-	 * Sets the normal vector of the plane and 
-	 * changes the base accordingly.
-	 * 
-	 */
-	public void setNormal(Vector3 direction) {
-		Vector3 normal = direction.clone().normalize();
-		this.normal = normal;
-		this.u.adjust(normal);
-		this.v.adjust(normal);
-	}
-	
-	public Vector3 getU() {
-		return u;
-	}
-	
-	/** 
-	 * Sets the base vector u. If adjust
-	 * is true it will change the other base
-	 * vector accordingly.
-	 * 
-	 */
-	public void setU(Vector3 u, boolean adjust) {
-		if (adjust) this.v.adjust(this.u, u);
-		this.u = u;
-		this.normal = u.clone().crossProduct(v).normalize();
-	}
-	
-	public Vector3 getV() {
-		return v;
-	}
-	
-	/**
-	 * Sets the base vector v. If adjust 
-	 * is true it will change the other base 
-	 * vector accordingly.
-	 * 
-	 */
-	public void setV(Vector3 v, boolean adjust) {
-		if (adjust) this.u.adjust(this.v, v);
-		this.v = v;
-		this.normal = u.clone().crossProduct(v).normalize();
+	public void setBase(Base2 base) {
+		this.base = base;
 	}
 	
 	/**
@@ -110,7 +65,7 @@ public class Plane extends Shape {
 	 * 
 	 */
 	public Vector3 getPoint(double u, double v) {
-		return origin.clone().add(u,this.u).add(v,this.v);
+		return origin.clone().add(u,base.getU()).add(v,base.getV());
 	}
 	
 	/**

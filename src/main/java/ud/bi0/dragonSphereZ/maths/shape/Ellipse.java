@@ -1,5 +1,6 @@
 package ud.bi0.dragonSphereZ.maths.shape;
 
+import ud.bi0.dragonSphereZ.maths.base.Base2;
 import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 
 public class Ellipse extends Shape {
@@ -12,9 +13,7 @@ public class Ellipse extends Shape {
 	 * 
 	 */
 	protected Vector3 origin;
-	protected Vector3 normal;
-	protected Vector3 u;
-	protected Vector3 v;
+	protected Base2 base;
 	
 	/**
 	 * Creates an ellipse at a point (origin) with the 
@@ -23,9 +22,7 @@ public class Ellipse extends Shape {
 	 */
 	public Ellipse(Vector3 origin, Vector3 u, Vector3 v) {
 		this.origin = origin;
-		this.u = u;
-		this.v = v;
-		this.normal = u.clone().crossProduct(v).normalize();
+		this.base = new Base2(u,v);
 	}
 	
 	/**
@@ -35,9 +32,7 @@ public class Ellipse extends Shape {
 	 */
 	public Ellipse(Vector3 origin, double x, double y) {
 		this.origin = origin;
-		this.u = new Vector3(x,0,0);
-		this.v = new Vector3(0,y,0);
-		this.normal = u.clone().crossProduct(v).normalize();
+		this.base = new Base2(x,y);
 	}
 	
 	@Override
@@ -53,63 +48,16 @@ public class Ellipse extends Shape {
 		this.origin = origin;
 	}
 	
-	public Vector3 getNormal() {
-		return normal;
+	public Base2 getBase() {
+		return base;
 	}
 	
-	/**
-	 * Changes the direction of the normal vector and 
-	 * adjusts the base accordingly.
-	 * 
-	 */
-	public void setNormal(Vector3 direction) {
-		Vector3 normal = direction.clone().normalize();
-		this.u.adjust(this.normal, normal);
-		this.v.adjust(this.normal, normal);
-		this.normal = normal;
+	public void setBase(Base2 base) {
+		this.base = base;
 	}
 	
-	public Vector3 getU() {
-		return u;
-	}
-	
-	/**
-	 * Changes the base vector u. If adjust is 
-	 * true it will change the other base vector
-	 * accordingly.
-	 * 
-	 */
-	public void setU(Vector3 u, boolean adjust) {
-		if (adjust) this.v.adjust(this.u, u);
-		this.u = u;
-		this.normal = u.clone().crossProduct(v).normalize();
-	}
-	
-	
-	public Vector3 getV() {
-		return v;
-	}
-	
-	/**
-	 * Changes the base vector v. If adjust is
-	 * true it will change the other base vector
-	 * accordingly.
-	 * 
-	 */
-	public void setV(Vector3 v, boolean adjust) {
-		if (adjust) this.u.adjust(this.v, v);
-		this.v = v;
-		this.normal = u.clone().crossProduct(v).normalize();
-	}
-	
-	/**
-	 * Get a point on the ellipse.
-	 * If angle = 0 then it will return origin + u.
-	 * If angle = pi / 2 then it will return origin + v.
-	 * 
-	 */
 	public Vector3 getPoint(double angle) {
-		return origin.clone().add(Math.cos(angle),u).add(Math.sin(angle),v);
+		return origin.clone().add(Math.cos(angle),base.getU()).add(Math.sin(angle),base.getV());
 	}
 	
 	/**
@@ -139,7 +87,7 @@ public class Ellipse extends Shape {
 	 * 
 	 */
 	public Vector3[] render(double start, double end, double density) {
-		int pointAmount = (int) (Math.abs(end - start) * Math.sqrt(getU().lengthSquared() + getV().lengthSquared()) * density);
+		int pointAmount = (int) (Math.abs(end - start) * Math.sqrt(base.getU().lengthSquared() + base.getV().lengthSquared()) * density);
 		double step = (end - start) / pointAmount;
 		double angle = start;
 		Vector3[] points = new Vector3[pointAmount];

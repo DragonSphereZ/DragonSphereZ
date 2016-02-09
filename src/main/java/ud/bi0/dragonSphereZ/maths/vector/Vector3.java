@@ -114,7 +114,7 @@ public class Vector3
 	 *
 	 */
 	
-	public Vector3 mulitply(Vector3 vec) {
+	public Vector3 multiply(Vector3 vec) {
 		x *= vec.x;
 		y *= vec.y;
 		z *= vec.z;
@@ -186,6 +186,15 @@ public class Vector3
         z = (z + other.z) / 2;
         return this;
     }
+	
+	/**
+	 * Returns the normal vector of this vector
+	 * and another.
+	 * 
+	 */
+	public Vector3 getNormal(Vector3 other) {
+		return this.clone().crossProduct(other).normalize();
+	}
 	
 	/** 
 	 * Returns a new vector with the midpoint of this vector and another.
@@ -486,7 +495,7 @@ public class Vector3
     
     /**
      * Adjusts the vector with respect to the
-     * change of another vector.
+     * change of another vector. 
      * Used for base rotations.
      * 
      */
