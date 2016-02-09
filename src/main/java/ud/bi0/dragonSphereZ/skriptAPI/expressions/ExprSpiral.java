@@ -16,9 +16,19 @@ import ud.bi0.dragonSphereZ.maths.shape.Cylinder;
 import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 
 public class ExprSpiral extends SimpleExpression<Location> {
-	private Expression<Location> loc;
-	private Expression<Number> r;
-	private Expression<Number> d;
+	private Expression<Location> origin;
+	private Expression<Number> radiusU;
+	private Expression<Number> radiusV;
+	private Expression<Number> startRadiusU;
+	private Expression<Number> endRadiusU;
+	private Expression<Number> startRadiusV;
+	private Expression<Number> endRadiusV;
+	private Expression<Number> startAngle;
+	private Expression<Number> endAngle;
+	private Expression<Number> startHeight;
+	private Expression<Number> endHeight;
+	private Expression<Number> density;
+	
 	@Override
 	public Class<? extends Location> getReturnType() {
 		return Location.class;
@@ -32,9 +42,19 @@ public class ExprSpiral extends SimpleExpression<Location> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean init(Expression<?>[] expr, int arg1, Kleenean arg2, ParseResult arg3) {
-		loc = (Expression<Location>) expr[0];
-		r = (Expression<Number>) expr[1];
-		d = (Expression<Number>) expr[2];
+		origin = (Expression<Location>) expr[0];
+		radiusU = (Expression<Number>) expr[1];
+		radiusV = (Expression<Number>) expr[2];
+		startRadiusU = (Expression<Number>) expr[3];
+		endRadiusU = (Expression<Number>) expr[4];
+		startRadiusV = (Expression<Number>) expr[5];
+		endRadiusV = (Expression<Number>) expr[6];
+		startAngle = (Expression<Number>) expr[7];
+		endAngle = (Expression<Number>) expr[8];
+		startHeight = (Expression<Number>) expr[9];
+		endHeight = (Expression<Number>) expr[10];
+		density = (Expression<Number>) expr[11];
+		
 		return true;
 	}
 	
@@ -49,11 +69,22 @@ public class ExprSpiral extends SimpleExpression<Location> {
 	@Override
 	@Nullable
 	protected Location[] get(Event e) {	
-		Vector3 origin = new Vector3(loc.getSingle(e));
-		World world = loc.getSingle(e).getWorld();
-		double radius = r.getSingle(e).doubleValue();
-		double density = d.getSingle(e).doubleValue();
-		List<Vector3> vectors = new Cylinder(origin, radius, radius).renderSpiral(1, -2, 1, -2, 0, 20*Math.PI, 0, 10, density);
+		Vector3 loc = new Vector3(origin.getSingle(e));
+		World world = origin.getSingle(e).getWorld();
+		List<Vector3> vectors = new Cylinder(
+				loc,
+				radiusU.getSingle(e).doubleValue(),
+				radiusV.getSingle(e).doubleValue())
+			.renderSpiral(
+				startRadiusU.getSingle(e).doubleValue(),
+				endRadiusU.getSingle(e).doubleValue(),
+				startRadiusV.getSingle(e).doubleValue(),
+				endRadiusV.getSingle(e).doubleValue(),
+				startAngle.getSingle(e).doubleValue(),
+				endAngle.getSingle(e).doubleValue(),
+				startHeight.getSingle(e).doubleValue(),
+				endHeight.getSingle(e).doubleValue(),
+				density.getSingle(e).doubleValue());
 		Location[] points = new Location[vectors.size()];
 		int i = 0;
 		for (Vector3 vector : vectors) {

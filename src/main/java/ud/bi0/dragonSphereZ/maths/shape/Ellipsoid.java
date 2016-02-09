@@ -103,11 +103,11 @@ public class Ellipsoid extends Shape {
 		double maxAngle = Math.max(Math.abs(startAngleThetha-endAngleThetha), Math.abs(startAnglePhi-endAnglePhi));
 		int pointAmount = (int) (maxRadius * maxAngle * density);
 		
-		double stepRadiusU = endRadiusU - startRadiusU;
-		double stepRadiusV = endRadiusV - startRadiusV;
-		double stepRadiusW = endRadiusW - startRadiusW;
-		double stepAngleThetha = endAngleThetha - startAngleThetha;
-		double stepAnglePhi = endAnglePhi - startAnglePhi;
+		double stepRadiusU = (endRadiusU - startRadiusU) / pointAmount;
+		double stepRadiusV = (endRadiusV - startRadiusV) / pointAmount;
+		double stepRadiusW = (endRadiusW - startRadiusW) / pointAmount;
+		double stepAngleThetha = (endAngleThetha - startAngleThetha) / pointAmount;
+		double stepAnglePhi = (endAnglePhi - startAnglePhi) / pointAmount;
 		double radiusU = startRadiusU;
 		double radiusV = startRadiusV;
 		double radiusW = startRadiusW;
