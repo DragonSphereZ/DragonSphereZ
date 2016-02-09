@@ -1,5 +1,7 @@
 package ud.bi0.dragonSphereZ.skriptAPI.expressions;
 
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 import org.bukkit.Location;
@@ -10,8 +12,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
-
-import ud.bi0.dragonSphereZ.maths.shape.Ellipse;
+import ud.bi0.dragonSphereZ.maths.shape.Cylinder;
 import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 
 public class ExprCircle extends SimpleExpression<Location> {
@@ -51,8 +52,8 @@ public class ExprCircle extends SimpleExpression<Location> {
 		World world = loc.getSingle(e).getWorld();
 		double radius = r.getSingle(e).doubleValue();
 		double density = d.getSingle(e).doubleValue();
-		Vector3[] vectors = new Ellipse(origin, radius, radius).render(density);
-		Location[] points = new Location[vectors.length];
+		List<Vector3> vectors = new Cylinder(origin, radius, radius).renderEllipse(density);
+		Location[] points = new Location[vectors.size()];
 		int i = 0;
 		for (Vector3 vector : vectors) {
 			points[i] = vector.toLocation(world);

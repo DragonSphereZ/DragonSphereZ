@@ -1,6 +1,7 @@
 package ud.bi0.dragonSphereZ.maths.shape;
 
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.List;
 
 import ud.bi0.dragonSphereZ.maths.base.Base3;
 import ud.bi0.dragonSphereZ.maths.vector.Vector3;
@@ -84,31 +85,76 @@ public class Ellipsoid extends Shape {
 		return Math.max(base.getU().lengthSquared(), Math.max(base.getV().lengthSquared(), base.getW().lengthSquared()));
 	}
 	
+	public Vector3 getPoint(double angleThetha, double anglePhi) {
+		return getPoint(1, 1, 1, angleThetha, anglePhi);
+	}
+	
+	public Vector3 getPoint(double radius, double angleThetha, double anglePhi) {
+		return getPoint(radius, radius, radius, angleThetha, anglePhi);
+	}
+	
 	/**
-	 * Returns the two points at (u,v) of the 
-	 * parameterized ellipsoid. 
-	 * If u = v = 0 it returns:
-	 * 		origin + u + w
-	 * and	origin + u - w
-	 * 
-	 * If u = pi / 2 & v = 0 it returns:
-	 * 		origin + v + w
-	 * and 	origin + v - w
+	 * Returns a point on the ellipsoid.
 	 * 
 	 */
-	public Vector3[] getPoint(double u, double v) {
-		double cosu = Math.cos(u);
-		double sinu = Math.sin(u);
-		double sinv = Math.sin(v);
-		double cosv = Math.cos(v);
-		Vector3 dUV = base.getU().clone().multiply(cosu*sinv).add(sinu*sinv,base.getV());
-		Vector3 dW = base.getW().clone().multiply(cosv);
-		Vector3[] points = new Vector3[2];
-		points[0] = origin.clone().add(dUV).add(dW);
-		points[1] = origin.clone().add(dUV).subtract(dW);
+	public Vector3 getPoint(double radiusU, double radiusV, double radiusW, double angleThetha, double anglePhi) {
+		return origin.getSphereCoordinate(base.getU(), base.getV(), base.getW(), radiusU, radiusV, radiusW, angleThetha, anglePhi);
+	}
+	
+	public List<Vector3> renderSpiral(
+			double startRadiusU,
+			double endRadiusU,
+			double startRadiusV,
+			double endRadiusV,
+			double startRadiusW,
+			double endRadiusW,
+			double startAngleThetha,
+			double endAngleThetha,
+			double startAnglePhi,
+			double endAnglePhi,
+			double density)
+	{
+		int pointAmount = (int) density;
+		double stepRadiusU = endRadiusU - startRadiusU;
+		double stepRadiusV = endRadiusV - startRadiusV;
+		double stepRadiusW = endRadiusW - startRadiusW;
+		double stepAngleThetha = endAngleThetha - startAngleThetha;
+		double stepAnglePhi = endAnglePhi - startAnglePhi;
+		double radiusU = startRadiusU;
+		double radiusV = startRadiusV;
+		double radiusW = startRadiusW;
+		double angleThetha = startAngleThetha;
+		double anglePhi = startAnglePhi;
+		List<Vector3> points = new ArrayList<Vector3>(pointAmount);
+		for (int i = 0; i < pointAmount; i++) {
+			points.add(getPoint(radiusU, radiusV, radiusW, angleThetha, anglePhi));
+			radiusU += stepRadiusU;
+			radiusV += stepRadiusV;
+			radiusW += stepRadiusW;
+			angleThetha += stepAngleThetha;
+			anglePhi += stepAnglePhi;
+		}
 		return points;
 	}
 	
+	
+	/**
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 	THIS PART IS NOT YET UPDATED!
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 */
 	
 	/**
 	 * Get a set of points on the ellipsoid
@@ -149,56 +195,12 @@ public class Ellipsoid extends Shape {
 		Vector3[][] points = new Vector3[pointAmountU][pointAmountV];
 		for (int i = 0; i < pointAmountU; i++) {
 			for (int j = 0; j < pointAmountV; j++) {
-				points[i][j] = getPoint(pointU, pointV)[0];
+				points[i][j] = getPoint(pointU, pointV);
 				pointV += stepV;
 			}
 			pointV = startV;
 			pointU += stepU;
 		}
 		return points;
-	}
-	
-	/**
-	 * Get a set of points randomly distributed
-	 * on the surface of the ellipsoid with
-	 * density 1.
-	 * 
-	 */
-	public Vector3[] renderRandom() {
-		return renderRandom(0, 2*Math.PI, 0, Math.PI, 1);
-	}
-	
-	/**
-	 * Get a set of points randomly distributed
-	 * on the surface of the ellipsoid with
-	 * density (density).
-	 * 
-	 */
-	public Vector3[] renderRandom(double density) {
-		return renderRandom(0, 2*Math.PI, 0, Math.PI, density);
-	}
-	
-	/**
-	 * Get a set of points randomly distributed
-	 * on the surface of the ellipsoid. All points
-	 * are located between (startU, startV) and 
-	 * (endU, endV).
-	 * 
-	 * Note that startU should be >= 0, endU <= 2*pi
-	 * startV >= 0, endV <= pi.
-	 * 
-	 */
-	public Vector3[] renderRandom(double startU, double endU, double startV, double endV, double density) {
-		Random random = new Random();
-		double maxRadius = getMaxRadius();
-		int pointAmount = (int) (4 / 3 * Math.PI * maxRadius * maxRadius * density * density);
-		double dU = endU - startU;
-		double dV = endV - startV;
-		Vector3[] points = new Vector3[pointAmount];
-		for (int i = 0; i < pointAmount; i++) {
-			points[i] = getPoint(startU + random.nextDouble()*dU, startV + random.nextDouble()*dV)[0];
-		}
-		return points;
-		
 	}
 }

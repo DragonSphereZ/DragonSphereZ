@@ -208,6 +208,63 @@ public class Vector3
     }
 	
 	/**
+	 * Returns a new point from a base.
+	 * 
+	 */
+	public Vector3 getCoordinate(
+			Vector3	u,
+			Vector3 v,
+			Vector3 w,
+			double factorU,
+			double factorV,
+			double factorW)
+	{
+		return this.clone()
+				.add(factorU, u)
+				.add(factorV, v)
+				.add(factorW, w);
+	}
+	
+	/**
+	 * Returns a new point on a cylinder.
+	 * 
+	 */
+	public Vector3 getCylinderCoordinate(
+			Vector3 normal,
+			Vector3 u,
+			Vector3 v,
+			double radiusU,
+			double radiusV,
+			double angle,
+			double height) 
+	{
+		return this.clone()
+				.add(radiusU*Math.cos(angle), u)
+				.add(radiusV*Math.sin(angle), v)
+				.add(height, normal);
+	}
+	
+	/**
+	 * Returns a new point on a sphere.
+	 * 
+	 */
+	public Vector3 getSphereCoordinate(
+			Vector3 u, 
+			Vector3 v, 
+			Vector3 w, 
+			double radiusU, 
+			double radiusV, 
+			double radiusW, 
+			double angleThetha, 
+			double anglePhi) 
+	{
+		return this.clone()
+				.add(radiusU*Math.cos(anglePhi)*Math.sin(angleThetha), u)
+				.add(radiusV*Math.sin(anglePhi)*Math.sin(angleThetha), v)
+				.add(radiusW*Math.cos(angleThetha), w);
+	}
+	
+	/**
 	 * 
 	 * Multiplies this vector by a scalar.
 	 *

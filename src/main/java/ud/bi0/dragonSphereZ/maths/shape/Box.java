@@ -33,5 +33,9 @@ public class Box extends Shape {
 	public void setBase(Base3 base) {
 		this.base = base;
 	}
+	
+	public Vector3 getPoint(double u, double v, double w) {
+		return origin.getCoordinate(base.getU(), base.getV(), base.getW(), u, v, w);
+	}
 
 }

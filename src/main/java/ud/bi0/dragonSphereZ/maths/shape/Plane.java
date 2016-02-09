@@ -1,5 +1,8 @@
 package ud.bi0.dragonSphereZ.maths.shape;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ud.bi0.dragonSphereZ.maths.base.Base2;
 import ud.bi0.dragonSphereZ.maths.vector.Vector2;
 import ud.bi0.dragonSphereZ.maths.vector.Vector3;
@@ -102,7 +105,7 @@ public class Plane extends Shape {
 	 * density 1
 	 * 
 	 */
-	public Vector3[][] render() {
+	public List<Vector3> render() {
 		return render(0,1,0,1,1);
 	}
 	
@@ -112,7 +115,7 @@ public class Plane extends Shape {
 	 * density (density).
 	 * 
 	 */
-	public Vector3[][] render(double density) {
+	public List<Vector3> render(double density) {
 		return render(0,1,0,1,density);
 	}
 	
@@ -122,17 +125,17 @@ public class Plane extends Shape {
 	 * 		origin + startU * u + startV * u 
 	 * 	and origin + endU * u + endV
 	 */
-	public Vector3[][] render(double startU, double endU, double startV, double endV, double density) {
+	public List<Vector3> render(double startU, double endU, double startV, double endV, double density) {
 		int pointAmountU = (int) (Math.abs(endU - startU) * density);
 		int pointAmountV = (int) (Math.abs(endV - startV) * density);
 		double stepU = (endU - startU) / pointAmountU;
 		double stepV = (endV - startV) / pointAmountV;
-		Vector3[][] points = new Vector3[pointAmountU][pointAmountV];
+		List<Vector3> points = new ArrayList<Vector3>(pointAmountU*pointAmountV);
 		double pointU = startU;
 		double pointV = startV;
 		for (int i = 0; i < pointAmountU; i++) {
 			for (int j = 0; j < pointAmountV; j++) {
-				points[i][j] = getPoint(pointU, pointV);
+				points.add(getPoint(pointU, pointV));
 				pointV += stepV;
 			}
 			pointV = startV;
@@ -147,7 +150,7 @@ public class Plane extends Shape {
 	 * start = (startU, startV)
 	 * end = (endU, endV)
 	 */
-	public Vector3[][] render(Vector2 start, Vector2 end, double density) {
+	public List<Vector3> render(Vector2 start, Vector2 end, double density) {
 		return render(start.getX(), end.getX(), start.getY(), end.getY(), density);
 	}
 	
