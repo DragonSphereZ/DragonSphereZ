@@ -14,5 +14,6 @@ public class registerExpressions {
 		Skript.registerExpression(ExprCircle.class, Location.class, ExpressionType.SIMPLE, "testcircle at %location% with radius %number% and density %number%");
 		Skript.registerExpression(ExprCube.class, Location.class, ExpressionType.SIMPLE, "testcube at %location% with radius %number% and density %number%");
 		Skript.registerExpression(ExprCubeFace.class, Location.class, ExpressionType.SIMPLE, "testcubefaces at %location% with radius %number% and density %number%");
+		Skript.registerExpression(ExprSpiral.class, Location.class, ExpressionType.SIMPLE, "testspiral at %location% with radius %number% and density %number%");
 	}
 }
