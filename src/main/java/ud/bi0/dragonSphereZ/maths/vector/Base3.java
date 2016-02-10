@@ -1,6 +1,4 @@
-package ud.bi0.dragonSphereZ.maths.base;
-
-import ud.bi0.dragonSphereZ.maths.vector.Vector3;
+package ud.bi0.dragonSphereZ.maths.vector;
 
 public class Base3 {
 	

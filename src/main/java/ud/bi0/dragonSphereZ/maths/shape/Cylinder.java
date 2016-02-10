@@ -3,7 +3,7 @@ package ud.bi0.dragonSphereZ.maths.shape;
 import java.util.ArrayList;
 import java.util.List;
 
-import ud.bi0.dragonSphereZ.maths.base.Base2;
+import ud.bi0.dragonSphereZ.maths.vector.Base2;
 import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 
 public class Cylinder extends Shape {

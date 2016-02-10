@@ -1,7 +1,9 @@
 package ud.bi0.dragonSphereZ.maths.vector;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -59,6 +61,15 @@ public class Vector3
 		this.x = loc.getZ();
 		this.y = loc.getX();
 		this.z = loc.getY();
+	}
+	
+	public List<Vector3> vector3List(Location[] locs) {
+		int size = locs.length;
+		List<Vector3> vectors = new ArrayList<Vector3>(size);
+		for (int i = 0; i < size; i++) {
+			vectors.add(new Vector3(locs[i]));
+		}
+		return vectors;
 	}
 	
 	public Vector3 add(Vector3 vec) {
@@ -901,6 +912,16 @@ public class Vector3
     	return new Location[]{vector.clone().toLocation(world)};
     }
     
+    public Location[] locationArray(World world, List<Vector3> vectors) {
+    	Location[] locs = new Location[vectors.size()];
+    	int i = 0;
+    	for (Vector3 vec : vectors) {
+    		locs[i] = vec.toLocation(world);
+    		i++;
+    	}
+    	return locs;
+    }
+       
     public BlockVector toBlockVector() {
         return new BlockVector(y, z, x);
     }

@@ -15,7 +15,7 @@ import ch.njol.util.Kleenean;
 import ud.bi0.dragonSphereZ.maths.shape.Box;
 import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 
-public class ExprCubeFace extends SimpleExpression<Location> {
+public class ExprTestCubeFace extends SimpleExpression<Location> {
 	private Expression<Location> loc;
 	private Expression<Number> r;
 	private Expression<Number> d;

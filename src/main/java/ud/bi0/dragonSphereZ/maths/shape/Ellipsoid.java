@@ -3,7 +3,7 @@ package ud.bi0.dragonSphereZ.maths.shape;
 import java.util.ArrayList;
 import java.util.List;
 
-import ud.bi0.dragonSphereZ.maths.base.Base3;
+import ud.bi0.dragonSphereZ.maths.vector.Base3;
 import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 
 public class Ellipsoid extends Shape {

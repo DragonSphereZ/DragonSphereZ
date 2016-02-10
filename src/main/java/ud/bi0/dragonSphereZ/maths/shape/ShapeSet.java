@@ -3,7 +3,7 @@ package ud.bi0.dragonSphereZ.maths.shape;
 import java.util.HashMap;
 import java.util.Map;
 
-import ud.bi0.dragonSphereZ.maths.base.Base3;
+import ud.bi0.dragonSphereZ.maths.vector.Base3;
 import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 
 public class ShapeSet {
@@ -53,7 +53,8 @@ public class ShapeSet {
 	public void setBase(Base3 base) {
 		this.base = base;
 	}
-
+	
+	
 	
 }
 

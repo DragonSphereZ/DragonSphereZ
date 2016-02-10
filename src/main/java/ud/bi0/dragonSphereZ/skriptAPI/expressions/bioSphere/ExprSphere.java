@@ -1,21 +1,16 @@
-package ud.bi0.dragonSphereZ.skriptAPI.expressions;
-
-import java.util.List;
-
-import javax.annotation.Nullable;
+package ud.bi0.dragonSphereZ.skriptAPI.expressions.bioSphere;
 
 import org.bukkit.Location;
-import org.bukkit.World;
 import org.bukkit.event.Event;
+
+import javax.annotation.Nullable;
 
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
-import ud.bi0.dragonSphereZ.maths.shape.Box;
-import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 
-public class ExprCube extends SimpleExpression<Location> {
+public class ExprSphere extends SimpleExpression<Location>{
 	private Expression<Location> loc;
 	private Expression<Number> r;
 	private Expression<Number> d;
@@ -37,10 +32,7 @@ public class ExprCube extends SimpleExpression<Location> {
 		d = (Expression<Number>) expr[2];
 		return true;
 	}
-	
-	/**
-	* testcube at %location% with radius %number% and density %number%
-	*/
+
 	@Override
 	public String toString(@Nullable Event arg0, boolean arg1) {
 		return null;
@@ -48,19 +40,8 @@ public class ExprCube extends SimpleExpression<Location> {
 
 	@Override
 	@Nullable
-	protected Location[] get(Event e) {	
-		Vector3 origin = new Vector3(loc.getSingle(e));
-		World world = loc.getSingle(e).getWorld();
-		double radius = r.getSingle(e).doubleValue();
-		double density = d.getSingle(e).doubleValue();
-		List<Vector3> vectors = new Box(origin, radius, radius, radius).renderOutline(density);
-		Location[] points = new Location[vectors.size()];
-		int i = 0;
-		for (Vector3 vector : vectors) {
-			points[i] = vector.toLocation(world);
-			i++;
-		}
-		return points;
+	protected Location[] get(Event e) {
+		return new TrigLib().getSphere(loc.getArray(e), r.getSingle(e).doubleValue(), d.getSingle(e).doubleValue());
 	}
 
 }
