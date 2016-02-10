@@ -23,11 +23,11 @@ public class registerExpressions {
 		Skript.registerExpression(ExprLinkAll.class, Location.class, ExpressionType.SIMPLE, "[all ]%locations% (linked|connected)[ with] density %number%");
 		Skript.registerExpression(ExprPolygon.class, Location.class, ExpressionType.SIMPLE, "polygon[s] at %locations% with %integer% (vertex|vertices|vertexes)(,| and) radius %number%");
 		Skript.registerExpression(ExprPolygonOutline.class, Location.class, ExpressionType.SIMPLE, "polygon[s] outline[s] at %locations% with %integer% (vertex|vertices|vertexes)(,| and) radius %number%(,| and) density %number%");
-		Skript.registerExpression(ExprTestCube.class, Location.class, ExpressionType.SIMPLE, "cube[s] at %locations%[ with] radius %number%");
+		Skript.registerExpression(ExprCube.class, Location.class, ExpressionType.SIMPLE, "cube[s] at %locations%[ with] radius %number%");
 		Skript.registerExpression(ExprCubeOutline.class, Location.class, ExpressionType.SIMPLE, "cube[s] outline[s] at %locations%[ with] radius %number%[ and] density %number%");
 		Skript.registerExpression(ExprCylinderLoc.class, Location.class, ExpressionType.SIMPLE, "cylinder coord[inate][s][ at] %locations%[ with] coordinates %number%(,| and) %number%(,| and) %number%");
 		Skript.registerExpression(ExprHelix.class, Location.class, ExpressionType.SIMPLE, "heli(x|xes|ces) at %locations% with radius %number%(,| and) height %number%(,| and) step (height|size) %number%(,| and) density %number%");
-		Skript.registerExpression(ExprTestCircle.class, Location.class, ExpressionType.SIMPLE, "circle[s] at %locations%[ with] radius %number%(,| and) density %number%");
+		Skript.registerExpression(ExprCircle.class, Location.class, ExpressionType.SIMPLE, "circle[s] at %locations%[ with] radius %number%(,| and) density %number%");
 		Skript.registerExpression(ExprSphereLoc.class, Location.class, ExpressionType.SIMPLE, "spheric[al][ coord[inate][s][ at] %locations%[ with] coordinates %number%(,| and) %number%(,| and) %number%");
 		Skript.registerExpression(ExprSphere.class, Location.class, ExpressionType.SIMPLE, "sphere[s] at %locations%[ with] radius %number%(,| and) density %number%");
 		Skript.registerExpression(ExprSphereRand.class, Location.class, ExpressionType.SIMPLE, "random sphere[s] at %locations% with radius %number%(,| and) density %number%");
@@ -45,5 +45,6 @@ public class registerExpressions {
 		Skript.registerExpression(ExprTestCubeFace.class, Location.class, ExpressionType.SIMPLE, "testcubefaces at %location% with radius %number% and density %number%");
 		Skript.registerExpression(ExprTestSpiral.class, Location.class, ExpressionType.SIMPLE, "testspiral at %location% with properties %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%");
 		Skript.registerExpression(ExprTestEllipsoidSpiral.class, Location.class, ExpressionType.SIMPLE, "testellspiral at %location% with properties %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%");
+		Skript.registerExpression(ExprTestEllipsoid.class, Location.class, ExpressionType.SIMPLE, "testell at %location% with properties %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%");
 	}
 }

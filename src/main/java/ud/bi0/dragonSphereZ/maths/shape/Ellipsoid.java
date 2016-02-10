@@ -83,6 +83,47 @@ public class Ellipsoid extends Shape {
 		return origin.getSphereCoordinate(base.getU(), base.getV(), base.getW(), radiusU, radiusV, radiusW, angleThetha, anglePhi);
 	}
 	
+	/**
+	 * Renders the ellipsoid from (startAngleThetha, startAnglePhi)
+	 * to (endAngleThetha, endAnglePhi).
+	 * It always fixes one angle thetha and gets then an ellipse
+	 * by varying the angle phi. The radii change with every ellipse
+	 * and not with every point on the ellipse.
+	 * 
+	 */
+	public List<Vector3> render(
+			double startRadiusU,
+			double endRadiusU,
+			double startRadiusV,
+			double endRadiusV,
+			double startRadiusW,
+			double endRadiusW,
+			double startAngleThetha,
+			double endAngleThetha,
+			double startAnglePhi,
+			double endAnglePhi,
+			double density) 
+	{
+		int ellipseAmount = (int) (density * Math.abs(endAngleThetha - startAngleThetha) * maxRadius(startRadiusU, endRadiusU, startRadiusV, endRadiusV, startRadiusW, endRadiusW));
+		double stepRadiusU = (endRadiusU - startRadiusU) / ellipseAmount;
+		double stepRadiusV = (endRadiusV - startRadiusV) / ellipseAmount;
+		double stepRadiusW = (endRadiusW - startRadiusW) / ellipseAmount;
+		double stepAngleThetha = (endAngleThetha - startAngleThetha) / ellipseAmount;
+		double radiusU = startRadiusU;
+		double radiusV = startRadiusV;
+		double radiusW = startRadiusW;
+		double angleThetha = startAngleThetha;
+		List<Vector3> points = new ArrayList<Vector3>(ellipseAmount);
+		for (int i = 0; i < ellipseAmount; i++) {
+			points.addAll(this.renderSpiral(radiusU, radiusU, radiusV, radiusV, radiusW, radiusW, angleThetha, angleThetha, startAnglePhi, endAnglePhi, density));
+			radiusU += stepRadiusU;
+			radiusV += stepRadiusV;
+			radiusW += stepRadiusW;
+			angleThetha += stepAngleThetha;
+		}
+		return points;
+	}
+	
 	public List<Vector3> renderSpiral(
 			double startRadiusU,
 			double endRadiusU,
@@ -96,11 +137,8 @@ public class Ellipsoid extends Shape {
 			double endAnglePhi,
 			double density)
 	{
-		double maxRadius = Math.max(
-				Math.max(Math.abs(startRadiusU),Math.abs(endRadiusU))*base.getU().length(), 
-				Math.max(Math.max(Math.abs(startRadiusV),Math.abs(endRadiusV))*base.getV().length(),
-						 Math.max(Math.abs(startRadiusW),Math.abs(endRadiusW))*base.getW().length()));
-		double maxAngle = Math.max(Math.abs(startAngleThetha-endAngleThetha), Math.abs(startAnglePhi-endAnglePhi));
+		double maxRadius = maxRadius(startRadiusU, endRadiusU, startRadiusV, endRadiusV, startRadiusW, endRadiusW);
+		double maxAngle = maxAngle(startAngleThetha, endAngleThetha, startAnglePhi, endAnglePhi);
 		int pointAmount = (int) (maxRadius * maxAngle * density);
 		
 		double stepRadiusU = (endRadiusU - startRadiusU) / pointAmount;
@@ -125,4 +163,21 @@ public class Ellipsoid extends Shape {
 		return points;
 	}
 	
+	private double maxRadius(
+			double startRadiusU,
+			double endRadiusU,
+			double startRadiusV,
+			double endRadiusV,
+			double startRadiusW,
+			double endRadiusW)
+	{
+		return Math.max(
+				Math.max(Math.abs(startRadiusU),Math.abs(endRadiusU))*base.getU().length(), 
+				Math.max(Math.max(Math.abs(startRadiusV),Math.abs(endRadiusV))*base.getV().length(),
+						 Math.max(Math.abs(startRadiusW),Math.abs(endRadiusW))*base.getW().length()));
+	}
+	
+	private double maxAngle(double startAngleThetha, double endAngleThetha, double startAnglePhi, double endAnglePhi) {
+		return Math.max(Math.abs(startAngleThetha-endAngleThetha), Math.abs(startAnglePhi-endAnglePhi));
+	}
 }
