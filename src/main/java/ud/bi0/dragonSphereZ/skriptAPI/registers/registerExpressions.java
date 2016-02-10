@@ -15,6 +15,6 @@ public class registerExpressions {
 		Skript.registerExpression(ExprCube.class, Location.class, ExpressionType.SIMPLE, "testcube at %location% with radius %number% and density %number%");
 		Skript.registerExpression(ExprCubeFace.class, Location.class, ExpressionType.SIMPLE, "testcubefaces at %location% with radius %number% and density %number%");
 		Skript.registerExpression(ExprSpiral.class, Location.class, ExpressionType.SIMPLE, "testspiral at %location% with properties %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%");
-		Skript.registerExpression(ExprEllipsoidSpiral.class, Location.class, ExpressionType.SIMPLE, "testellspiral at %location% with radius %number% and density %number%");
+		Skript.registerExpression(ExprEllipsoidSpiral.class, Location.class, ExpressionType.SIMPLE, "testellspiral at %location% with properties %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%");
 	}
 }
