@@ -47,12 +47,19 @@ public class Vector3
 		z = 0;
 	}
 	
+	/**
+	 * Get a new vector with coordinates x, y, z.
+	 * 
+	 */
 	public Vector3(int x, int y, int z) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 	
+	/**
+	 * Get a new vector with coordinates x, y, z.
+	 */
 	public Vector3(double x, double y, double z) {
 		this.x = x;
 		this.y = y;
@@ -524,51 +531,87 @@ public class Vector3
         return (NumberConversions.square(origin.x - x) + NumberConversions.square(origin.y - y) + NumberConversions.square(origin.z - z)) <= NumberConversions.square(radius);
     }
 	
+	/**
+	 * Get the x-coordinate of the vector.
+	 * 
+	 */
 	public double getX() {
         return x;
     }
 	
-	
+	/**
+	 * Get the y-coordinate of the vector.
+	 * 
+	 */
 	public double getY() {
         return y;
     }
 	
+	/**
+	 * Get the z-coordinate of the vector.
+	 * 
+	 */
 	public double getZ() {
         return z;
     }
 	
+	/**
+	 * Set the x-coordinate of the vector.
+	 * 
+	 */
 	public Vector3 setX(int x) {
         this.x = x;
         return this;
     }
 
-
+	/**
+	 * Set the x-coordinate of the vector.
+	 * 
+	 */
     public Vector3 setX(double x) {
         this.x = x;
         return this;
     }
 	
+    /**
+     * Set the y-coordinate of the vector.
+     * 
+     */
     public Vector3 setY(int y) {
         this.y = y;
         return this;
     }
 
-
+    /**
+     * Set the y-coordinate of the vector.
+     * 
+     */
     public Vector3 setY(double y) {
         this.y = y;
         return this;
     }
     
+    /**
+     * Set the z-coordinate of the vector.
+     * 
+     */
     public Vector3 setZ(int z) {
         this.z = z;
         return this;
     }
 
+    /**
+     * Set the z-coordinate of the vector.
+     */
     public Vector3 setZ(double z) {
         this.z = z;
         return this;
     }
     
+    /**
+     * Set the x, y and z coordinates of the vector.
+     * 
+     */
     public Vector3 setXYZ(int x, int y, int z) {
     	this.x = x;
     	this.y = y;
@@ -576,6 +619,10 @@ public class Vector3
     	return this;
     }
     
+    /**
+     * Set the x, y and z coordinates of the vector.
+     * 
+     */
     public Vector3 setXYZ(double x, double y, double z) {
     	this.x = x;
     	this.y = y;
@@ -583,12 +630,11 @@ public class Vector3
     	return this;
     }
     
+    
     /**
      * Rotates the vector around the x-axis.
-     * a is in radian.
      * 
      */
-    
     public Vector3 rotX(double a) {
     	double y = this.y;
     	double z = this.z;
@@ -602,7 +648,6 @@ public class Vector3
     
     /**
      * Rotates the vector around the y-axis
-     * a is in radian.
      * 
      */
     public Vector3 rotY(double a) {
@@ -618,7 +663,6 @@ public class Vector3
     
     /**
      * Rotates the vector around the z-axis
-     * a is in radian.
      * 
      */
     public Vector3 rotZ(double a) {
@@ -636,7 +680,6 @@ public class Vector3
      * Rotates the vector around the 
      * x-axis by a, the y-axis by b and 
      * the z-axis by c.
-     * All angles are in radian.
      *
      */
     
@@ -646,7 +689,6 @@ public class Vector3
     
     /**
      * Rotates the vector around an axis described by (x,y,z).
-     * a is in radian.
      * 
      */
     public Vector3 rot(double x, double y, double z, double a) {
@@ -655,7 +697,6 @@ public class Vector3
     
     /**
      * Rotates the vector around an axis described by vec.
-     * a is in radian.
      * 
      */   
     public Vector3 rot(Vector3 vec, double a) {
@@ -999,6 +1040,10 @@ public class Vector3
         return Math.abs(x - other.x) < epsilon && Math.abs(y - other.y) < epsilon && Math.abs(z - other.z) < epsilon && (this.getClass().equals(obj.getClass()));
     }
     
+    /**
+     * Clones the vector.
+     * 
+     */
     @Override
     public Vector3 clone() {
         try {
@@ -1008,6 +1053,10 @@ public class Vector3
         }
     }
     
+    /**
+     * Returns a string representation of the vector.
+     * 
+     */
     @Override
     public String toString() {
         return x + "," + y + "," + z;
@@ -1015,7 +1064,6 @@ public class Vector3
     
     /**
      * Changes a Vector3 into a Vector.
-     * Note that the orientation of coordinate system changes.
      * 
      */
     public Vector toVector() {
@@ -1030,15 +1078,43 @@ public class Vector3
     	return new Location(world, y, z, x);
     }
     
+    /**
+     * Returns a location in world with a yaw and pitch.
+     * 
+     */   
     public Location toLocation(World world, float yaw, float pitch) {
     	return new Location(world, y, z, x, yaw, pitch);
     }
-    
+
+    /**
+     * Returns the vector as a location array.
+     * 
+     */
     public Location[] locationArray(World world, Vector3 vector) {
-    	return new Location[]{vector.clone().toLocation(world)};
+    	return new Location[]{vector.toLocation(world)};
+    }
+
+    /**
+     * Returns the vector as a location array with a yaw and pitch
+     * 
+     */
+    public Location[] locationArray(World world, Vector3 vector, double yaw, double pitch) {
+    	return new Location[]{vector.toLocation(world)};
     }
     
+    /**
+     * Returns a list of vectors as a location array.
+     * 
+     */
     public Location[] locationArray(World world, List<Vector3> vectors) {
+    	return locationArray(world, vectors, 0, 0);
+    }
+      
+    /**
+     * Returns a list of vectors as a location array with a yaw and pitch.
+     * 
+     */
+    public Location[] locationArray(World world, List<Vector3> vectors, double yaw, double pitch) {
     	Location[] locs = new Location[vectors.size()];
     	int i = 0;
     	for (Vector3 vec : vectors) {
@@ -1046,8 +1122,12 @@ public class Vector3
     		i++;
     	}
     	return locs;
-    }
-       
+    }   
+    
+    /**
+     * Converts the vector to a block vector.
+     * 
+     */
     public BlockVector toBlockVector() {
         return new BlockVector(y, z, x);
     }
