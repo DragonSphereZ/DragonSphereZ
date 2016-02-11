@@ -25,9 +25,9 @@ public class dragonSphereCore extends JavaPlugin {
 		if (skript != null) {
 			Skript.registerAddon(this);
 			Bukkit.getServer().getLogger().info("[DragonSphereZ] Plugin has been Enabled");
-			Plugin Biosphere = Bukkit.getServer().getPluginManager().getPlugin("Biosphere");
 			registerEffects.DragonSphereZ();
 			registerExpressions.DragonSphereZ();
+			Plugin Biosphere = Bukkit.getServer().getPluginManager().getPlugin("Biosphere");
 			if (Biosphere == null) {
 				Bukkit.getServer().getLogger().info("[DragonSphereZ] Biosphere expressions registered!");
 				registerExpressions.Biosphere();
