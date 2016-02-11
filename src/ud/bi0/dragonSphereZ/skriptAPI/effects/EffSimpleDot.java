@@ -94,7 +94,7 @@ public class EffSimpleDot extends Effect {
 			offsetY = offY.getSingle(e).floatValue();
 			offsetZ = offZ.getSingle(e).floatValue();
 		}
-		if(partSpeed.getSingle(e) != null){
+		if(partSpeed != null){
 			speed = partSpeed.getSingle(e).floatValue();	
 		}
 		double visibleRange = range.getSingle(e).doubleValue();
