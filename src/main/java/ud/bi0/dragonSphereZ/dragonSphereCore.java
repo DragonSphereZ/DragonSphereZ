@@ -1,7 +1,6 @@
 package ud.bi0.dragonSphereZ;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -30,10 +29,10 @@ public class dragonSphereCore extends JavaPlugin {
 			registerEffects.DragonSphereZ();
 			registerExpressions.DragonSphereZ();
 			if (Biosphere == null) {
-				Bukkit.getServer().getLogger().info("[skDragonSphere] Biosphere expressions registered!");
+				Bukkit.getServer().getLogger().info("[DragonSphere] Biosphere expressions registered!");
 				registerExpressions.Biosphere();
 			}else{
-				Bukkit.getServer().getLogger().info(ChatColor.YELLOW + "[skDragonSphere] Biosphere detected.. we have merged, please use this version instead <3");
+				Bukkit.getServer().getLogger().warning("[DragonSphere] Biosphere detected.. we have merged, please use this version instead <3");
 			}
 		} else {
 			Bukkit.getPluginManager().disablePlugin(this);
