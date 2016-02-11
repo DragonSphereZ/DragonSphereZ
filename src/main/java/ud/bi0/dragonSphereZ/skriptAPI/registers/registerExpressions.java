@@ -13,7 +13,16 @@ import ud.bi0.dragonSphereZ.skriptAPI.expressions.bioSphere.*;
 public class registerExpressions {
 
 	public static void DragonSphereZ() {
-		
+		// Test Expressions
+		Skript.registerExpression(ExprTestCircle.class, Location.class, ExpressionType.SIMPLE, "testcircle at %location% with radius %number% and density %number%");
+		Skript.registerExpression(ExprTestCube.class, Location.class, ExpressionType.SIMPLE, "testcube at %location% with radius %number% and density %number%");
+		Skript.registerExpression(ExprTestCubeFace.class, Location.class, ExpressionType.SIMPLE, "testcubefaces at %location% with radius %number% and density %number%");
+		Skript.registerExpression(ExprTestSpiral.class, Location.class, ExpressionType.SIMPLE, "testspiral at %location% with properties %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%");
+		Skript.registerExpression(ExprTestEllipsoidSpiral.class, Location.class, ExpressionType.SIMPLE, "testellspiral at %location% with properties %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%");
+
+	}
+	
+	public static void Biosphere() {
 		// Expressions from BioSphere
 		Skript.registerExpression(ExprToRadian.class, Number.class, ExpressionType.PROPERTY, "%number% [in] rad[ian]");
 		Skript.registerExpression(ExprToDegree.class, Number.class, ExpressionType.PROPERTY, "%number% [in] deg[ree]");
@@ -38,12 +47,5 @@ public class registerExpressions {
 		Skript.registerExpression(ExprMove.class, Location.class, ExpressionType.SIMPLE, "(move|shift) %locations%[ with] center %location% to %location%"); 
 		Skript.registerExpression(ExprBox.class, Location.class, ExpressionType.SIMPLE, "box from %location% to %location%");
 		Skript.registerExpression(ExprBoxOutline.class, Location.class, ExpressionType.SIMPLE, "box outline[ from] %location% to %location%[ with] density %number%");
-
-		// Test Expressions
-		Skript.registerExpression(ExprTestCircle.class, Location.class, ExpressionType.SIMPLE, "testcircle at %location% with radius %number% and density %number%");
-		Skript.registerExpression(ExprTestCube.class, Location.class, ExpressionType.SIMPLE, "testcube at %location% with radius %number% and density %number%");
-		Skript.registerExpression(ExprTestCubeFace.class, Location.class, ExpressionType.SIMPLE, "testcubefaces at %location% with radius %number% and density %number%");
-		Skript.registerExpression(ExprTestSpiral.class, Location.class, ExpressionType.SIMPLE, "testspiral at %location% with properties %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%");
-		Skript.registerExpression(ExprTestEllipsoidSpiral.class, Location.class, ExpressionType.SIMPLE, "testellspiral at %location% with properties %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%");
 	}
 }
