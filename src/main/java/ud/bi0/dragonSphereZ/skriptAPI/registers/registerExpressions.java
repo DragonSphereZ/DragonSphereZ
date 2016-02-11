@@ -47,6 +47,7 @@ public class registerExpressions {
 		Skript.registerExpression(ExprMove.class, Location.class, ExpressionType.SIMPLE, "(move|shift) %locations%[ with] center %location% to %location%"); 
 		Skript.registerExpression(ExprBox.class, Location.class, ExpressionType.SIMPLE, "box from %location% to %location%");
 		Skript.registerExpression(ExprBoxOutline.class, Location.class, ExpressionType.SIMPLE, "box outline[ from] %location% to %location%[ with] density %number%");
+<<<<<<< HEAD
 
 		// Test Expressions
 		Skript.registerExpression(ExprTestCircle.class, Location.class, ExpressionType.SIMPLE, "testcircle at %location% with radius %number% and density %number%");
@@ -56,5 +57,7 @@ public class registerExpressions {
 		Skript.registerExpression(ExprTestEllipsoidSpiral.class, Location.class, ExpressionType.SIMPLE, "testellspiral at %location% with properties %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%");
 		Skript.registerExpression(ExprTestEllipsoid.class, Location.class, ExpressionType.SIMPLE, "testell at %location% with properties %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%");
 
+=======
+>>>>>>> branch 'master' of ssh://git@github.com/DragonSphereZ/DragonSphereZ.git
 	}
 }

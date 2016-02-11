@@ -3,6 +3,7 @@ package ud.bi0.dragonSphereZ.particles;
 import java.util.HashMap;
 
 import org.bukkit.Bukkit;
+<<<<<<< HEAD
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -78,5 +79,45 @@ public class EffectsLib {
 			ParticleEffect.valueOf(particle).display(dataMat, dataID, player, location, visibleRange, isSinglePlayer, rainbowMode, hue, offsetX, offsetY, offsetZ, speed, particleCount);
 
 	}
+=======
+
+/**
+ * Not to be confused with EffectLib. 
+ * Eventually this Lib will contain every effect/trail/whatever I can find.
+ * Available to Skript
+ * This is still a major work in progress.
+ *  - Sashie <3
+*/
+public class EffectsLib {
+	final public static HashMap<String, Integer> arraylist = new HashMap<String, Integer>();
+	final public static HashMap<String, Integer> arraylist1 = new HashMap<String, Integer>();
+	final public static HashMap<String, Integer> arraylist2 = new HashMap<String, Integer>();
+	final public static HashMap<String, Integer> arraylist3 = new HashMap<String, Integer>();
+	final public static HashMap<String, Integer> arraylist4 = new HashMap<String, Integer>();
+	final public static float PI = 3.141592653589793f;
+	final public static float PI2 = 6.283185307179586f;
+	public enum Plane {
+		X, Y, Z, XY, XZ, XYZ, YZ;
+	}
+
+	public static void stopEffect(String idName) {
+		if (arraylist.containsKey(idName)) {
+			Bukkit.getScheduler().cancelTask(arraylist.get(idName));
+			arraylist.remove(idName);
+		}
+	}
+	
+	public static boolean EffectActive(String idName) {
+		if (!arraylist.containsKey(idName)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	
+	
+
+>>>>>>> branch 'master' of ssh://git@github.com/DragonSphereZ/DragonSphereZ.git
 	
 }
