@@ -1,6 +1,8 @@
 package ud.bi0.dragonSphereZ.skriptAPI.effects;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
@@ -12,7 +14,6 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 
-import ud.bi0.dragonSphereZ.particles.EffectsLib;
 import ud.bi0.dragonSphereZ.utils.ParticleEffect;
 
 public class EffSimpleDot extends Effect {
@@ -28,8 +29,6 @@ public class EffSimpleDot extends Effect {
 	private Expression<Player> player;
 	private Expression<Boolean> rainbMode;
 	private Expression<Number> range;
-	private Expression<Long> ticks;
-	private Expression<Long> seconds;
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -46,8 +45,6 @@ public class EffSimpleDot extends Effect {
 		player = (Expression<Player>) exprs[9];
 		rainbMode = (Expression<Boolean>) exprs[10];
 		range = (Expression<Number>) exprs[11];
-		ticks = (Expression<Long>) exprs[12];
-		seconds = (Expression<Long>) exprs[13];
 		return true;
 	}
 	
@@ -61,11 +58,10 @@ public class EffSimpleDot extends Effect {
 	 * [, isSingle %-boolean%, %-player%]
 	 * [, r[ainbow]M[ode] %-boolean%], 
 	 * visibleRange %number%, 
-	 * [, tps %-number%, second %-number%]
 	*/
 	@Override
 	public String toString(@Nullable Event e, boolean debug) {
-		return "drawDot [count %-number%], particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], visibleRange %number%[, tps %-number%, second %-number%]";
+		return "drawDot [count %-number%], particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], visibleRange %number%";
 	}
 
 	@SuppressWarnings("deprecation")
@@ -76,8 +72,6 @@ public class EffSimpleDot extends Effect {
 		float offsetY = 0;
 		float offsetZ = 0;
 		float speed = 0;
-		Long delayTicks = (long) 0;
-		Long delayBySecond = (long) 0;
 		int count = 1;
 		if(partCount.getSingle(e) != null){
 			count = partCount.getSingle(e).intValue();
@@ -103,20 +97,25 @@ public class EffSimpleDot extends Effect {
 			speed = partSpeed.getSingle(e).floatValue();	
 		}
 		double visibleRange = range.getSingle(e).doubleValue();
-		if (ticks != null){
-			delayTicks = ticks.getSingle(e);
-		}
-		if (seconds != null){
-			delayBySecond = seconds.getSingle(e);
-		}
 		Material dataMat = Material.DIRT;
 		byte dataID = 0;
 		if(data != null){
 			dataMat = data.getSingle(e).getType();
 			dataID = data.getSingle(e).getData().getData();
 		}
-		
-		EffectsLib.drawSimpleDot(count, particle, dataMat, dataID, speed, offsetX, offsetY, offsetZ, center, isSinglePlayer, p, rainbowMode, visibleRange, delayTicks, delayBySecond);
+		float hue = 0;
+		Location location = null;
+		if (center instanceof Entity) {
+			location = ((Entity) center).getLocation();
+		}
+		else if (center instanceof Location){
+			location = new Location(((Location) center).getWorld(), ((Location) center).getX(), ((Location) center).getY(), ((Location) center).getZ());
+		}
+		if (rainbowMode == true)
+			hue += 0.01F;
+			hue = (hue >= 1.0F ? 0.0F : hue);
+		ParticleEffect.valueOf(particle).display(dataMat, dataID, p, location, visibleRange, isSinglePlayer, rainbowMode, hue, offsetX, offsetY, offsetZ, speed, count);
+		//EffectsLib.drawSimpleDot(count, particle, dataMat, dataID, speed, offsetX, offsetY, offsetZ, center, isSinglePlayer, p, rainbowMode, visibleRange, delayTicks, delayBySecond);
 
 	}
 }
