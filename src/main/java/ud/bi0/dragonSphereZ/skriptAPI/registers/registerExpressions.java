@@ -13,7 +13,16 @@ import ud.bi0.dragonSphereZ.skriptAPI.expressions.bioSphere.*;
 public class registerExpressions {
 
 	public static void DragonSphereZ() {
-		
+		// Test Expressions
+		Skript.registerExpression(ExprTestCircle.class, Location.class, ExpressionType.SIMPLE, "testcircle at %location% with radius %number% and density %number%");
+		Skript.registerExpression(ExprTestCube.class, Location.class, ExpressionType.SIMPLE, "testcube at %location% with radius %number% and density %number%");
+		Skript.registerExpression(ExprTestCubeFace.class, Location.class, ExpressionType.SIMPLE, "testcubefaces at %location% with radius %number% and density %number%");
+		Skript.registerExpression(ExprTestSpiral.class, Location.class, ExpressionType.SIMPLE, "testspiral at %location% with properties %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%");
+		Skript.registerExpression(ExprTestEllipsoidSpiral.class, Location.class, ExpressionType.SIMPLE, "testellspiral at %location% with properties %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%");
+
+	}
+	
+	public static void Biosphere() {
 		// Expressions from BioSphere
 		Skript.registerExpression(ExprToRadian.class, Number.class, ExpressionType.PROPERTY, "%number% [in] rad[ian]");
 		Skript.registerExpression(ExprToDegree.class, Number.class, ExpressionType.PROPERTY, "%number% [in] deg[ree]");
@@ -46,5 +55,6 @@ public class registerExpressions {
 		Skript.registerExpression(ExprTestSpiral.class, Location.class, ExpressionType.SIMPLE, "testspiral at %location% with properties %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%");
 		Skript.registerExpression(ExprTestEllipsoidSpiral.class, Location.class, ExpressionType.SIMPLE, "testellspiral at %location% with properties %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%");
 		Skript.registerExpression(ExprTestEllipsoid.class, Location.class, ExpressionType.SIMPLE, "testell at %location% with properties %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%");
+
 	}
 }

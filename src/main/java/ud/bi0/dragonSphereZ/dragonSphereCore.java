@@ -27,7 +27,13 @@ public class dragonSphereCore extends JavaPlugin {
 			Bukkit.getServer().getLogger().info("[DragonSphereZ] Plugin has been Enabled");
 			registerEffects.DragonSphereZ();
 			registerExpressions.DragonSphereZ();
-			
+			Plugin Biosphere = Bukkit.getServer().getPluginManager().getPlugin("Biosphere");
+			if (Biosphere == null) {
+				Bukkit.getServer().getLogger().info("[DragonSphereZ] Biosphere expressions registered!");
+				registerExpressions.Biosphere();
+			}else{
+				Bukkit.getServer().getLogger().warning("[DragonSphereZ] Biosphere detected.. we have merged, please use this version instead <3");
+			}
 		} else {
 			Bukkit.getPluginManager().disablePlugin(this);
 			getLogger().info( "[DragonSphereZ] Plugin is now disabled. Why you no haz Skript?" );

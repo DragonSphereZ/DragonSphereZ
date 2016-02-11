@@ -14,6 +14,8 @@ import org.bukkit.util.BlockVector;
 import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
 
+import ud.bi0.dragonSphereZ.maths.shape.Plane;
+
 @SerializableAs("Vector3")
 public class Vector3
 	implements Cloneable, Serializable
@@ -21,6 +23,7 @@ public class Vector3
 
 	/**
 	 * Class for 3D vectors in the Cartesian coordinate system.
+	 * Each vector has a x, y and z value.
 	 * 
 	 */
 	private static final long serialVersionUID = -7163599704997417903L;
@@ -33,6 +36,11 @@ public class Vector3
 	private double y;
 	private double z;
 	
+	
+	/**
+	 * Get a new zero vector.
+	 * 
+	 */
 	public Vector3() {
 		x = 0;
 		y = 0;
@@ -51,19 +59,32 @@ public class Vector3
 		this.z = z;
 	}
 	
+	/**
+	 * Gets a copy of another vector.
+	 * 
+	 */
 	public Vector3(Vector vec) {
 		this.x = vec.getZ();
 		this.y = vec.getX();
 		this.z = vec.getY();
 	}
 	
+	/**
+	 * Gets a vector from a location.
+	 * 
+	 */
 	public Vector3(Location loc) {
 		this.x = loc.getZ();
 		this.y = loc.getX();
 		this.z = loc.getY();
 	}
 	
-	public List<Vector3> vector3List(Location[] locs) {
+	/**
+	 * Gets a list of vectors from a list of 
+	 * locations.
+	 * 
+	 */
+	public List<Vector3> getList(Location[] locs) {
 		int size = locs.length;
 		List<Vector3> vectors = new ArrayList<Vector3>(size);
 		for (int i = 0; i < size; i++) {
@@ -72,6 +93,10 @@ public class Vector3
 		return vectors;
 	}
 	
+	/**
+	 * Adds another vector to this one.
+	 * 
+	 */
 	public Vector3 add(Vector3 vec) {
 		x += vec.x;
 		y += vec.y;
@@ -79,8 +104,10 @@ public class Vector3
 		return this;
 	}
 	
-
-	
+	/**
+	 * Adds another vector to this one.
+	 * 
+	 */
 	public Vector3 add(int x, int y, int z) {
 		this.x += x;
 		this.y += y;
@@ -88,6 +115,10 @@ public class Vector3
 		return this;
 	}
 	
+	/**
+	 * Adds another vector to this one.
+	 * 
+	 */
 	public Vector3 add(double x, double y, double z) {
 		this.x += x;
 		this.y += y;
@@ -106,6 +137,10 @@ public class Vector3
 		return this;		
 	}
 	
+	/**
+	 * Adds a mutiple of another vector to this one.
+	 * 
+	 */
 	public Vector3 add(double factor, Vector3 vec) {
 		x += factor * vec.x;
 		y += factor * vec.y;
@@ -113,6 +148,10 @@ public class Vector3
 		return this;
 	}
 	
+	/**
+	 * Subtracts another vector from this one.
+	 * 
+	 */
 	public Vector3 subtract(Vector3 vec) {
 		x -= vec.x;
 		y -= vec.y;
@@ -121,8 +160,31 @@ public class Vector3
 	}
 	
 	/**
+	 * Subtracts a multiple of another vector from
+	 * this one.
+	 * 
+	 */
+	public Vector3 subtract(int factor, Vector3 vec) {
+		x -= factor * vec.x;
+		y -= factor * vec.y;
+		z -= factor * vec.z;
+		return this;
+	}
+	
+	/**
+	 * Subtracts a multiple of another vector from this one.
+	 * 
+	 */
+	public Vector3 subtract(double factor, Vector3 vec) {
+		x -= factor * vec.x;
+		y -= factor * vec.y;
+		z -= factor * vec.z;
+		return this;
+	}
+	
+	/**
 	 * Multiplies this vector by another.
-	 *
+	 * 
 	 */
 	
 	public Vector3 multiply(Vector3 vec) {
@@ -144,8 +206,30 @@ public class Vector3
 	}
 	
 	/**
-	 * Copies another vector.
+	 * Changes the position of the vector with respect 
+	 * to the position change of another vector.
 	 * 
+	 */
+	public Vector3 move(Vector3 from, Vector3 to) {
+		return this.subtract(from).add(to);
+	}
+	
+	/**
+	 * Changes the positions of a list of vectors
+	 * with respect to the position change of another
+	 * vector.
+	 * 
+	 */
+	public List<Vector3> move(Vector3 from, Vector3 to, List<Vector3> vectors) {
+		Vector3 change = to.clone().subtract(from);
+		for (Vector3 vector : vectors) {
+			vector.add(change);
+		}
+		return vectors;
+	}
+	
+	/**
+	 * Copies another vector to this one.
 	 * 
 	 */
 	public Vector3 copy(Vector3 vec) {
@@ -155,12 +239,17 @@ public class Vector3
 		return this;
 	}
 	
+	/**
+	 * Gets the length of this vector.
+	 * Note: Use lengthSquared() if possible as it is a lot faster.
+	 * 
+	 */
 	public double length() {
-		return Math.sqrt(NumberConversions.square(x) + NumberConversions.square(y) + NumberConversions.square(z));
+		return Math.sqrt(x*x + y*y + z*z);
 	}
 	
 	public double lengthSquared() {
-        return NumberConversions.square(x) + NumberConversions.square(y) + NumberConversions.square(z);
+        return x*x + y*y + z*z;
     }
 	
 	/**
@@ -180,11 +269,11 @@ public class Vector3
     }
 	
 	/**
-	 * Gets the angle between this vector and another.
+	 * Gets the cosine of the angle between this vector and another.
 	 * 
 	 */
 	public float angle(Vector3 other) {
-		return (float) (dot(other) / (length() * other.length()));
+		return (float) (dot(other) * Math.abs(dot(other)) / (lengthSquared() * other.lengthSquared()));
     }
 	
 	/**
@@ -199,12 +288,11 @@ public class Vector3
     }
 	
 	/**
-	 * Returns the normal vector of this vector
-	 * and another.
+	 * Returns the normal vector of this vector and another.
 	 * 
 	 */
 	public Vector3 getNormal(Vector3 other) {
-		return this.clone().crossProduct(other).normalize();
+		return this.crossProduct(other).normalize();
 	}
 	
 	/** 
@@ -217,6 +305,20 @@ public class Vector3
         double z = (this.z + other.z) / 2;
         return new Vector3(x, y, z);
     }
+	
+	/**
+	 * Returns the midpoint of a list of vectors.
+	 * 
+	 */
+	public Vector3 getMidpoint(List<Vector3> vectors) {
+		int size = vectors.size();
+		Vector3 midpoint = new Vector3();
+		for (Vector3 vector : vectors) {
+			midpoint.add(vector);
+		}
+		midpoint.multiply(1/size);
+		return midpoint;
+	}
 	
 	/**
 	 * Returns a new point from a base.
@@ -322,11 +424,11 @@ public class Vector3
 	 * 
 	 */
 	public Vector3 normalize() {
-        double lengthSquared = lengthSquared();
+        double invLengthSquared = 1 / lengthSquared();
 
-        x *= Math.abs(x)/lengthSquared;
-        y *= Math.abs(y)/lengthSquared;
-        z *= Math.abs(z)/lengthSquared;
+        x *= Math.abs(x)*invLengthSquared;
+        y *= Math.abs(y)*invLengthSquared;
+        z *= Math.abs(z)*invLengthSquared;
 
         return this;
     }
@@ -341,6 +443,30 @@ public class Vector3
         z = 0;
         return this;
     }
+	
+	/**
+	 * Projects this vector onto another.
+	 */
+	public Vector3 project(Vector3 other) {
+		Vector3 direction = other.clone().normalize();
+		return direction.multiply(this.dot(direction));
+	}
+	
+	/**
+	 * Projects this vector onto a plane.
+	 * 
+	 */
+	public Vector3 projectPlane(Vector3 normal) {
+		return this.subtract(this.dot(normal), normal);
+	}
+	
+	/**
+	 * Projects this vector onto a plane.
+	 * 
+	 */
+	public Vector3 projectPlane(Plane plane) {
+		return projectPlane(plane.getBase().getNormal());
+	}
 	
 	/**
 	 * Checks whether the vector is parallel to another.
