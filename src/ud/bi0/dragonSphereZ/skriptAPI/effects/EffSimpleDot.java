@@ -55,14 +55,14 @@ public class EffSimpleDot extends Effect {
 	 * particle %string%[, material %-itemstack%]
 	 * [, speed %-number%]
 	 * [, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], 
-	 * center %entity/location%, 
+	 * center %locations/entities%, 
 	 * [, isSingle %-boolean%, %-player%]
 	 * [, r[ainbow]M[ode] %-boolean%], 
 	 * visibleRange %number%, 
 	*/
 	@Override
 	public String toString(@Nullable Event e, boolean debug) {
-		return "drawDot [count %-number%], particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], visibleRange %number%";
+		return "drawDot [count %-number%], particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %locations/entities%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], visibleRange %number%";
 	}
 
 	@SuppressWarnings("deprecation")
@@ -74,21 +74,24 @@ public class EffSimpleDot extends Effect {
 		float offsetZ = 0;
 		float speed = 0;
 		int count = 1;
-		if(partCount.getSingle(e) != null){
+		if(partCount != null){
 			count = partCount.getSingle(e).intValue();
 		}
 		if (particleString != null){
 	    	if (ParticleEffect.NAME_MAP.containsKey(particleString.getSingle(e).toLowerCase()) == true)
 				particle = (String)this.particleString.getSingle(e).toLowerCase();
 		}
-		Object center = entLoc.getSingle(e);
+		
 		Player p = null;
 		boolean isSinglePlayer = false;
 		if (singlePlayer != null && singlePlayer.getSingle(e) != null && this.player != null && this.player.getSingle(e) != null){
 			isSinglePlayer = singlePlayer.getSingle(e).booleanValue();
 			p = (Player)this.player.getSingle(e);
 		}
-		boolean rainbowMode = rainbMode.getSingle(e).booleanValue();
+		boolean rainbowMode = false;
+		if (rainbMode != null && rainbMode.getSingle(e) != null){
+			rainbowMode = rainbMode.getSingle(e).booleanValue();
+		}
 		if(offX != null && offY != null && offZ != null){
 			offsetX = offX.getSingle(e).floatValue();
 			offsetY = offY.getSingle(e).floatValue();
@@ -105,19 +108,23 @@ public class EffSimpleDot extends Effect {
 			dataID = data.getSingle(e).getData().getData();
 		}
 		float hue = 0;
+		Object[] center = (Object[])entLoc.getAll(e);
+		//Location[] loc = (Location[])entLoc.getAll(e);
 		Location location = null;
-		if (center instanceof Entity) {
-			location = ((Entity) center).getLocation();
-		}
-		else if (center instanceof Location){
-			location = new Location(((Location) center).getWorld(), ((Location) center).getX(), ((Location) center).getY(), ((Location) center).getZ());
-		}
-		if (rainbowMode == true)
-			hue += 0.01F;
-			hue = (hue >= 1.0F ? 0.0F : hue);
-		ParticleEffect.valueOf(particle).display(dataMat, dataID, p, location, visibleRange, isSinglePlayer, rainbowMode, hue, offsetX, offsetY, offsetZ, speed, count);
+		for (final Object loc : center) {
+			if (loc instanceof Entity) {
+				location = ((Entity) loc).getLocation();
+			}else if (loc instanceof Location){
+				location = new Location(((Location) loc).getWorld(), ((Location) loc).getX(), ((Location) loc).getY(), ((Location) loc).getZ());
+			}
+			if (rainbowMode == true)
+				hue += 0.01F;
+				hue = (hue >= 1.0F ? 0.0F : hue);
+			
+			ParticleEffect.valueOf(particle).display(dataMat, dataID, p, location, visibleRange, isSinglePlayer, rainbowMode, hue, offsetX, offsetY, offsetZ, speed, count);
 		//EffectsLib.drawSimpleDot(count, particle, dataMat, dataID, speed, offsetX, offsetY, offsetZ, center, isSinglePlayer, p, rainbowMode, visibleRange, delayTicks, delayBySecond);
 
+        }
 
 	}
 }
