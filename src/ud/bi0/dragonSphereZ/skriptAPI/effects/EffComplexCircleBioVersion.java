@@ -137,6 +137,7 @@ public class EffComplexCircleBioVersion extends Effect {
 		if(offX != null && offY != null && offZ != null){
 			offset.setXYZ(offX.getSingle(e).doubleValue(), offY.getSingle(e).doubleValue(), offZ.getSingle(e).doubleValue());
 		}
+		
 		if(displaceX != null && displaceY != null && displaceZ != null){
 			dis.setXYZ(displaceX.getSingle(e).doubleValue(), displaceY.getSingle(e).doubleValue(), displaceZ.getSingle(e).doubleValue());
 		}
