@@ -688,6 +688,14 @@ public class Vector3
     }
     
     /**
+     * Rotates the vector around the x-/y- and z-axis by 
+     * the values of the rotation vector.
+     * 
+     */
+    public Vector3 rotXYZ(Vector3 rotation) {
+    	return this.rotXYZ(rotation.x, rotation.y, rotation.z);
+    }
+    /**
      * Rotates the vector around an axis described by (x,y,z).
      * 
      */
