@@ -1342,29 +1342,23 @@ public enum ParticleEffect {
 	 * @param speed
 	 * @param particleCount
 	*/
-	public void display(Material dataMat, byte dataID, Player player, Location center, double visibleRange, boolean isSinglePlayer, boolean rainbowMode, float hue, float offsetX, float offsetY, float offsetZ, float speed, int particleCount) {
+	public void display(Material dataMat, byte dataID, Player player, Location center, double visibleRange, boolean isSinglePlayer, boolean rainbowMode, float offsetX, float offsetY, float offsetZ, float speed, int particleCount) {
 		// Color these particles only please also add rainbow if asked for.
 		if (this == ParticleEffect.redstone || this == ParticleEffect.mobspell || this == ParticleEffect.mobspellambient) {
-			//TODO Add message about limiting offset to 0-255 for color...(or at input if < 0 = 0 if > 255 = 255 also could do if > 255 = 0 for a loop)
+			//TODO Add message about limiting offset to 0-255 for color...(or at input if < 0 = 0 if > 255 = 255 also could do if > 255 = 0 for a loop.
 			if (rainbowMode == true){
-				int argb = Color.HSBtoRGB(hue, 1.0F, 1.0F);
-				float r = (argb >> 16 & 0xFF) / 255.0F;
-				float g = (argb >> 8 & 0xFF) / 255.0F;
-				float b = (argb & 0xFF) / 255.0F;
-				r = r == 0.0F ? 0.001F : r;
+				OrdinaryColor color = new OrdinaryColor(Color.getHSBColor(offsetX, offsetY, offsetZ));
 				if (isSinglePlayer){
-					display(r, g, b, 1, 0, center, player);
+					display(color, center, player);
 				} else {
-					display(r, g, b, 1, 0, center, visibleRange);
+					display(color, center, visibleRange);
 				}
 			}else{
-				int r = Math.round(offsetX);
-				int g = Math.round(offsetY);
-				int b = Math.round(offsetZ);
+				OrdinaryColor color = new OrdinaryColor((int) offsetX, (int) offsetY, (int) offsetZ);
 				if (isSinglePlayer){
-					display(new ParticleEffect.OrdinaryColor(r, g, b), center, player);
+					display(color, center, player);
 				} else {
-					display(new ParticleEffect.OrdinaryColor(r, g, b), center, visibleRange);
+					display(color, center, visibleRange);
 				}
 			}
 		}
@@ -1402,15 +1396,11 @@ public enum ParticleEffect {
 	public void display(Player player, Location center, double visibleRange, boolean isSinglePlayer, float hue) {
 		// Color these particles only please also add rainbow if asked for.
 		if (this == ParticleEffect.redstone || this == ParticleEffect.mobspell || this == ParticleEffect.mobspellambient) {
-			int argb = Color.HSBtoRGB(hue / 20.0F, 1.0F, 1.0F);
-			float r = (argb >> 16 & 0xFF) / 255.0F;
-			float g = (argb >> 8 & 0xFF) / 255.0F;
-			float b = (argb & 0xFF) / 255.0F;
-			r = r == 0.0F ? 0.001F : r;
+			OrdinaryColor color = new OrdinaryColor(Color.getHSBColor(hue / 20, 1F, 1F));
 			if (isSinglePlayer){
-				display(r, g, b, 1, 0, center, player);
+				display(color, center, player);
 			} else {
-				display(r, g, b, 1, 0, center, visibleRange);
+				display(color, center, visibleRange);
 			}
 		}	
 	}
@@ -1420,10 +1410,11 @@ public enum ParticleEffect {
 	*/
 	public void display(Location center, double visibleRange, boolean isSinglePlayer, Player player, int r, int g, int b) {
 			if (this == ParticleEffect.redstone || this == ParticleEffect.mobspell || this == ParticleEffect.mobspellambient) {
+				OrdinaryColor color = new OrdinaryColor(r,g,b);
 				if (isSinglePlayer){
-					display(new ParticleEffect.OrdinaryColor(r, g, b), center, player);
+					display(color, center, player);
 				} else {
-					display(new ParticleEffect.OrdinaryColor(r, g, b), center, visibleRange);
+					display(color, center, visibleRange);
 				}
 			}
 	}
