@@ -100,6 +100,7 @@ public class EffComplexCircleBioVersion extends Effect {
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void execute(@Nullable Event e) {
+		skriptHandler Handler = new skriptHandler();
 		String particle = "limeglassparticle";
 		float finalSpeed = 0;
 		Vector3 offset = new Vector3(0,0,0);
@@ -108,7 +109,7 @@ public class EffComplexCircleBioVersion extends Effect {
 		int finalDelayTicks = 0;
 		int finalDelayBySec = 0;
 		//String particle = (String)this.particleString.getSingle(e);
-		if (particleString != null){
+		if (!Handler.hasNull(e, particleString)){
 	    	if (ParticleEffect.NAME_MAP.containsKey(particleString.getSingle(e).toLowerCase()) == true)
 				particle = (String)this.particleString.getSingle(e).toLowerCase();
 		}

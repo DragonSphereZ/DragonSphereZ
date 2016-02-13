@@ -12,7 +12,7 @@ public class skriptHandler {
 	 * Checks if all expressions are non-null.
 	 * 
 	 */
-	public static boolean containsNull(@Nullable Event e, @Nullable Expression<?>...args) {
+	public static boolean hasNull(@Nullable Event e, @Nullable Expression<?>...args) {
 		for (Expression<?> arg : args) {
 			if (arg == null) return true;
 			if (arg.isSingle()) {
