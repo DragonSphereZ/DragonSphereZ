@@ -42,7 +42,7 @@ public class EffectsLib {
 	}
 	
 
-    protected Location getCenter(Object location) {
+    protected Location getLocation(Object location) {
     	Location finalLocation = null;
     	if (location instanceof Entity) {
     		finalLocation = ((Entity) location).getLocation();
