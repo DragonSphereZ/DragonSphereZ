@@ -6,7 +6,7 @@ import org.bukkit.event.Event;
 
 import ch.njol.skript.lang.Expression;
 
-public class skriptHandler {
+public class SkriptHandler {
 	
 	/**
 	 * Checks if all expressions are non-null.

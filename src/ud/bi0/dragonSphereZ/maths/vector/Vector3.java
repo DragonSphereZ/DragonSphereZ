@@ -725,6 +725,10 @@ public class Vector3
     	
     }
     
+    public Vector3 rot(Rotator3 rotator) {
+    	return this.setXYZ(rotator.getRotatorX().dot(this), rotator.getRotatorY().dot(this), rotator.getRotatorZ().dot(this));
+    }
+    
     /**
      * Adjusts the vector to be orthogonal to direction.
      * Used for base rotations.
@@ -1196,5 +1200,6 @@ public class Vector3
 
         return new Vector3(x, y, z);
     }
+    
 }
 

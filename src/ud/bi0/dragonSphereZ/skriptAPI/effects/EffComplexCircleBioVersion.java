@@ -13,7 +13,7 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 import ud.bi0.dragonSphereZ.particles.EffectsLib;
-import ud.bi0.dragonSphereZ.skriptAPI.skriptHandler;
+import ud.bi0.dragonSphereZ.skriptAPI.SkriptHandler;
 import ud.bi0.dragonSphereZ.utils.ParticleEffect;
 
 
@@ -100,7 +100,7 @@ public class EffComplexCircleBioVersion extends Effect {
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void execute(@Nullable Event e) {
-		skriptHandler Handler = new skriptHandler();
+		SkriptHandler Handler = new SkriptHandler();
 		String particle = "limeglassparticle";
 		float finalSpeed = 0;
 		Vector3 offset = new Vector3(0,0,0);
@@ -115,7 +115,7 @@ public class EffComplexCircleBioVersion extends Effect {
 		}
 		Object center = entLoc.getSingle(e);
 		String idName = this.idName.getSingle(e);
-		int finalParticleDensity = skriptHandler.containsNull(e, pDensity) ? null : pDensity.getSingle(e).intValue(); //change the name of this stuff, its not the right thing..
+		int finalParticleDensity = SkriptHandler.containsNull(e, pDensity) ? null : pDensity.getSingle(e).intValue(); //change the name of this stuff, its not the right thing..
 		float finalStep = step.getSingle(e).floatValue();
 		double visibleRange = range.getSingle(e).doubleValue();
 		Player p = null;

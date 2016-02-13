@@ -10,11 +10,11 @@ import ud.bi0.dragonSphereZ.skriptAPI.registers.registerEffects;
 import ud.bi0.dragonSphereZ.skriptAPI.registers.registerExpressions;
 
 
-public class dragonSphereCore extends JavaPlugin {
-	public static dragonSphereCore dragonSphereCore;
-	private static dragonSphereCore instance;
+public class DragonSphereCore extends JavaPlugin {
+	public static DragonSphereCore dragonSphereCore;
+	private static DragonSphereCore instance;
 
-    public dragonSphereCore() {
+    public DragonSphereCore() {
     	instance = this;    
     }
     
@@ -45,7 +45,7 @@ public class dragonSphereCore extends JavaPlugin {
 		getLogger().info( "[DragonSphereZ] Plugin is now disabled. Most likely you shut down or reset your server" );
 		}
 
-    public static dragonSphereCore instance() {
+    public static DragonSphereCore instance() {
         return instance;
     }
 }
