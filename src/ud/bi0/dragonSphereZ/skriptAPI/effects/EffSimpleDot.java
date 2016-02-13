@@ -74,6 +74,7 @@ public class EffSimpleDot extends Effect {
 		float offsetZ = 0;
 		float speed = 0;
 		int count = 1;
+		
 		if(partCount != null){
 			count = partCount.getSingle(e).intValue();
 		}
@@ -107,7 +108,7 @@ public class EffSimpleDot extends Effect {
 			dataMat = data.getSingle(e).getType();
 			dataID = data.getSingle(e).getData().getData();
 		}
-		float hue = 0;
+		
 		Object[] center = (Object[])entLoc.getAll(e);
 		//Location[] loc = (Location[])entLoc.getAll(e);
 		Location location = null;
@@ -117,11 +118,12 @@ public class EffSimpleDot extends Effect {
 			}else if (loc instanceof Location){
 				location = new Location(((Location) loc).getWorld(), ((Location) loc).getX(), ((Location) loc).getY(), ((Location) loc).getZ());
 			}
+			float hue = 0;
 			if (rainbowMode == true)
+				
 				hue += 0.01F;
 				hue = (hue >= 1.0F ? 0.0F : hue);
-			
-			ParticleEffect.valueOf(particle).display(dataMat, dataID, p, location, visibleRange, isSinglePlayer, rainbowMode, hue, offsetX, offsetY, offsetZ, speed, count);
+			ParticleEffect.valueOf(particle).display(dataMat, dataID, p, location, visibleRange, isSinglePlayer, rainbowMode, offsetX, offsetY, offsetZ, speed, count);
 		//EffectsLib.drawSimpleDot(count, particle, dataMat, dataID, speed, offsetX, offsetY, offsetZ, center, isSinglePlayer, p, rainbowMode, visibleRange, delayTicks, delayBySecond);
 
         }
