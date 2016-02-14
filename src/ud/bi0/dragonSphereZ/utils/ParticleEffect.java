@@ -1,6 +1,7 @@
 package ud.bi0.dragonSphereZ.utils;
 
 import java.awt.Color;
+import java.awt.color.ColorSpace;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -1341,7 +1342,7 @@ public enum ParticleEffect {
 	 * @param offsetZ
 	 * @param speed
 	 * @param particleCount
-	*/
+	 */
 	public void display(Material dataMat, byte dataID, Player player, Location center, double visibleRange, boolean isSinglePlayer, boolean rainbowMode, float offsetX, float offsetY, float offsetZ, float speed, int particleCount) {
 		// Color these particles only please also add rainbow if asked for.
 		if (this == ParticleEffect.redstone || this == ParticleEffect.mobspell || this == ParticleEffect.mobspellambient) {
@@ -1392,7 +1393,7 @@ public enum ParticleEffect {
 
 	/**
      * Sashies NyanCat helper :3
-	*/
+	 */
 	public void display(Player player, Location center, double visibleRange, boolean isSinglePlayer, float hue) {
 		// Color these particles only please also add rainbow if asked for.
 		if (this == ParticleEffect.redstone || this == ParticleEffect.mobspell || this == ParticleEffect.mobspellambient) {
@@ -1407,7 +1408,7 @@ public enum ParticleEffect {
 	
 	/**
      * Sashies ColorImage helper :3
-	*/
+	 */
 	public void display(Location center, double visibleRange, boolean isSinglePlayer, Player player, int r, int g, int b) {
 			if (this == ParticleEffect.redstone || this == ParticleEffect.mobspell || this == ParticleEffect.mobspellambient) {
 				OrdinaryColor color = new OrdinaryColor(r,g,b);
@@ -1418,6 +1419,77 @@ public enum ParticleEffect {
 				}
 			}
 	}
-
+	
+	public class Rainbow {
+		
+		protected float hue;
+		protected float saturation;
+		protected float value;
+		protected float stepHue;
+		protected float stepSaturation;
+		protected float stepValue;
+		
+		public Rainbow(Color color, float stepHue) {
+			init(color, stepHue, 1F, 1F);
+		}
+		public Rainbow(Color color, float stepHue, float stepSaturation, float stepValue) {
+			init(color, stepHue, stepSaturation, stepValue);
+		}
+		public Rainbow(float r, float g, float b, float stepHue, float stepSaturation, float stepValue) {
+			init(new Color(r, g, b), stepHue, stepSaturation, stepValue);
+		}
+		private void init(Color color, float stepHue, float stepSaturation, float stepValue) {
+			float[] hsv = new float[3];
+			color.getColorComponents(ColorSpace.getInstance(ColorSpace.TYPE_HSV), hsv);
+			hue = hsv[0];
+			saturation = hsv[1];
+			value = hsv[2];
+			this.stepHue = stepHue;
+			this.stepSaturation = stepSaturation;
+			this.stepValue = stepValue;
+		}
+		public OrdinaryColor next() {
+			hue += stepHue;
+			saturation += stepSaturation;
+			value += stepValue;
+			return new OrdinaryColor(Color.getHSBColor(hue, saturation, value));
+		}
+		public float getHue() {
+			return hue;
+		}
+		public float getSaturation() {
+			return saturation;
+		}
+		public float getValue() {
+			return value;
+		}
+		public float getHueStep() {
+			return stepHue;
+		}
+		public float getSaturationStep() {
+			return stepSaturation;
+		}
+		public float getValueStep() {
+			return stepValue;
+		}
+		public void setHue(float hue)	 {
+			this.hue = hue;
+		}
+		public void setSaturation(float saturation)	{
+			this.saturation = saturation;
+		}
+		public void setValue(float value) {
+			this.value = value;
+		}
+		public void setHueStep(float stepHue) {
+			this.stepHue = stepHue;
+		}
+		public void setSaturationStep(float stepSaturation) {
+			this.stepSaturation = stepSaturation;
+		}
+		public void setValueStep(float stepValue) {
+			this.stepValue = stepValue;
+		}
+	}
 
 }

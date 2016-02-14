@@ -688,6 +688,14 @@ public class Vector3
     }
     
     /**
+     * Rotates the vector around the x-/y- and z-axis by 
+     * the values of the rotation vector.
+     * 
+     */
+    public Vector3 rotXYZ(Vector3 rotation) {
+    	return this.rotXYZ(rotation.x, rotation.y, rotation.z);
+    }
+    /**
      * Rotates the vector around an axis described by (x,y,z).
      * 
      */
@@ -715,6 +723,10 @@ public class Vector3
     	this.z = (n3*n1*(1-cosa)-n2*sina)*x + (n3*n2*(1-cosa)+n1*sina)*y + (n3*n3*(1-cosa)+cosa)*z;
     	return this;
     	
+    }
+    
+    public Vector3 rot(Rotator3 rotator) {
+    	return this.setXYZ(rotator.getRotatorX().dot(this), rotator.getRotatorY().dot(this), rotator.getRotatorZ().dot(this));
     }
     
     /**
@@ -1188,5 +1200,6 @@ public class Vector3
 
         return new Vector3(x, y, z);
     }
+    
 }
 

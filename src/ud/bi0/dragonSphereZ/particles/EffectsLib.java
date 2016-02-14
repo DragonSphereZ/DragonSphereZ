@@ -9,7 +9,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import ud.bi0.dragonSphereZ.dragonSphereCore;
+import ud.bi0.dragonSphereZ.DragonSphereCore;
 import ud.bi0.dragonSphereZ.utils.ParticleEffect;
 import ud.bi0.dragonSphereZ.utils.VectorUtils;
 
@@ -86,7 +86,7 @@ public class EffectsLib {
 			final long delayTicks, 
 			final long delayBySecond) {
 		if (!EffectsLib.arraylist.containsKey(idName)) {
-			int circle = Bukkit.getServer().getScheduler().runTaskTimer(dragonSphereCore.dragonSphereCore, new Runnable() {
+			int circle = Bukkit.getServer().getScheduler().runTaskTimer(DragonSphereCore.dragonSphereCore, new Runnable() {
 						public double angularVelocityX = PI / 200;
 						public double angularVelocityY = PI / 170;
 						public double angularVelocityZ = PI / 155;
