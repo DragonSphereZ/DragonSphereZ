@@ -50,15 +50,7 @@ public class EffectsLib {
 	}
 	
 
-    protected Location getLocation(Object location) {
-    	Location finalLocation = null;
-    	if (location instanceof Entity) {
-    		finalLocation = ((Entity) location).getLocation();
-		}else if (location instanceof Location){
-			finalLocation = new Location(((Location) location).getWorld(), ((Location) location).getX(), ((Location) location).getY(), ((Location) location).getZ());
-		}
-        return finalLocation;
-    }
+	
 	
 	
 	

@@ -10,6 +10,7 @@ import ud.bi0.dragonSphereZ.skriptAPI.registers.registerEffects;
 import ud.bi0.dragonSphereZ.skriptAPI.registers.registerExpressions;
 
 
+
 public class DragonSphereCore extends JavaPlugin {
 	public static DragonSphereCore dragonSphereCore;
 	private static DragonSphereCore instance;
