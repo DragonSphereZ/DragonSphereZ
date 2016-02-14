@@ -1343,21 +1343,23 @@ public enum ParticleEffect {
 	 * @param speed
 	 * @param particleCount
 	 */
-	public void display(Material dataMat, byte dataID, Player player, Location center, double visibleRange, boolean isSinglePlayer, boolean rainbowMode, float offsetX, float offsetY, float offsetZ, float speed, int particleCount) {
+	public void display(Material dataMat, byte dataID, List<Player> players, Location center, double visibleRange, boolean rainbowMode, float offsetX, float offsetY, float offsetZ, float speed, int particleCount) {
 		// Color these particles only please also add rainbow if asked for.
 		if (this == ParticleEffect.redstone || this == ParticleEffect.mobspell || this == ParticleEffect.mobspellambient) {
 			//TODO Add message about limiting offset to 0-255 for color...(or at input if < 0 = 0 if > 255 = 255 also could do if > 255 = 0 for a loop.
 			if (rainbowMode == true){
 				OrdinaryColor color = new OrdinaryColor(Color.getHSBColor(offsetX, offsetY, offsetZ));
-				if (isSinglePlayer){
-					display(color, center, player);
+				if (players != null){
+					//display(color, center, players);
+					display(color, center, players);
 				} else {
 					display(color, center, visibleRange);
 				}
 			}else{
 				OrdinaryColor color = new OrdinaryColor((int) offsetX, (int) offsetY, (int) offsetZ);
-				if (isSinglePlayer){
-					display(color, center, player);
+				if (players != null){
+					//display(color, center, player);
+					display(color, center, players);
 				} else {
 					display(color, center, visibleRange);
 				}
@@ -1367,24 +1369,27 @@ public enum ParticleEffect {
 		else if (hasProperty(ParticleProperty.REQUIRES_DATA)) {
 			if ((this == ParticleEffect.blockcrack || this == ParticleEffect.blockdust) && dataMat != null){
 				BlockData finalData = new BlockData(dataMat, dataID);
-				if (isSinglePlayer){
-					display(finalData, offsetX, offsetY, offsetZ, speed, particleCount, center, player);
+				if (players != null){
+					//display(finalData, offsetX, offsetY, offsetZ, speed, particleCount, center, player);
+					display(finalData, offsetX, offsetY, offsetZ, speed, particleCount, center, players);
 				} else {
 					display(finalData, offsetX, offsetY, offsetZ, speed, particleCount, center, visibleRange);
 				}
 			}
 			else if((this == ParticleEffect.itemcrack) && dataMat != null){
 				ItemData finalData = new ItemData(dataMat, dataID);
-				if (isSinglePlayer){
-					display(finalData, offsetX, offsetY, offsetZ, speed, particleCount, center, player);
+				if (players != null){
+					//display(finalData, offsetX, offsetY, offsetZ, speed, particleCount, center, player);
+					display(finalData, offsetX, offsetY, offsetZ, speed, particleCount, center, players);
 				} else {
 					display(finalData, offsetX, offsetY, offsetZ, speed, particleCount, center, visibleRange);
 				}
 			}
 		//Nothing special down here.
 		} else {
-			if (isSinglePlayer){
-				display(offsetX, offsetY, offsetZ, speed, particleCount, center, player);
+			if (players != null){
+				//display(offsetX, offsetY, offsetZ, speed, particleCount, center, player);
+				display(offsetX, offsetY, offsetZ, speed, particleCount, center, players);
 			} else {
 				display(offsetX, offsetY, offsetZ, speed, particleCount, center, visibleRange);
 			}
@@ -1394,12 +1399,13 @@ public enum ParticleEffect {
 	/**
      * Sashies NyanCat helper :3
 	 */
-	public void display(Player player, Location center, double visibleRange, boolean isSinglePlayer, float hue) {
+	public void display(List<Player> players, Location center, double visibleRange, float hue) {
 		// Color these particles only please also add rainbow if asked for.
 		if (this == ParticleEffect.redstone || this == ParticleEffect.mobspell || this == ParticleEffect.mobspellambient) {
 			OrdinaryColor color = new OrdinaryColor(Color.getHSBColor(hue / 20, 1F, 1F));
-			if (isSinglePlayer){
-				display(color, center, player);
+			if (players != null){
+				//display(color, center, player);
+				display(color, center, players);
 			} else {
 				display(color, center, visibleRange);
 			}
@@ -1409,11 +1415,12 @@ public enum ParticleEffect {
 	/**
      * Sashies ColorImage helper :3
 	 */
-	public void display(Location center, double visibleRange, boolean isSinglePlayer, Player player, int r, int g, int b) {
+	public void display(Location center, double visibleRange, List<Player> players, int r, int g, int b) {
 			if (this == ParticleEffect.redstone || this == ParticleEffect.mobspell || this == ParticleEffect.mobspellambient) {
 				OrdinaryColor color = new OrdinaryColor(r,g,b);
-				if (isSinglePlayer){
-					display(color, center, player);
+				if (players != null){
+					//display(color, center, player);
+					display(color, center, players);
 				} else {
 					display(color, center, visibleRange);
 				}
