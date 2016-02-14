@@ -14,7 +14,7 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
-
+import ud.bi0.dragonSphereZ.skriptAPI.SkriptHandler;
 import ud.bi0.dragonSphereZ.utils.ParticleEffect;
 
 public class EffSimpleDot extends Effect {
@@ -73,11 +73,13 @@ public class EffSimpleDot extends Effect {
 		float offsetY = 0;
 		float offsetZ = 0;
 		float speed = 0;
-		int count = 1;
+		//int count = 1;
 		
-		if(partCount != null){
-			count = partCount.getSingle(e).intValue();
-		}
+		SkriptHandler.inputParticleCount(e, partCount);//TODO returns count but still have to look up how this works
+		//if(partCount != null){
+		//	count = partCount.getSingle(e).intValue();
+		//}
+		
 		if (particleString != null){
 	    	if (ParticleEffect.NAME_MAP.containsKey(particleString.getSingle(e).toLowerCase()) == true)
 				particle = (String)this.particleString.getSingle(e).toLowerCase();
@@ -89,18 +91,22 @@ public class EffSimpleDot extends Effect {
 			isSinglePlayer = singlePlayer.getSingle(e).booleanValue();
 			p = (Player)this.player.getSingle(e);
 		}
+		
 		boolean rainbowMode = false;
 		if (rainbMode != null && rainbMode.getSingle(e) != null){
 			rainbowMode = rainbMode.getSingle(e).booleanValue();
 		}
+		
 		if(offX != null && offY != null && offZ != null){
 			offsetX = offX.getSingle(e).floatValue();
 			offsetY = offY.getSingle(e).floatValue();
 			offsetZ = offZ.getSingle(e).floatValue();
 		}
+		
 		if(partSpeed != null){
 			speed = partSpeed.getSingle(e).floatValue();	
 		}
+		
 		double visibleRange = range.getSingle(e).doubleValue();
 		Material dataMat = Material.DIRT;
 		byte dataID = 0;
