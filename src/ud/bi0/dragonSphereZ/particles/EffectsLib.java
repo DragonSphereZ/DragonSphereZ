@@ -66,7 +66,6 @@ public class EffectsLib {
 			final byte dataID, 
 			final Object center, 
 			final String idName, 
-			final boolean isSinglePlayer, 
 			final List<Player> player, 
 			final boolean rainbowMode, 
 			final boolean enableRotation, 

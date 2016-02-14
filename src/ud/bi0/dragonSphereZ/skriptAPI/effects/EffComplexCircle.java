@@ -5,6 +5,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 import ch.njol.skript.lang.Effect;
@@ -13,6 +15,7 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 
 import ud.bi0.dragonSphereZ.particles.EffectsLib;
+import ud.bi0.dragonSphereZ.skriptAPI.SkriptHandler;
 import ud.bi0.dragonSphereZ.utils.ParticleEffect;
 
 
@@ -22,7 +25,7 @@ public class EffComplexCircle extends Effect {
 	private Expression<?> entLoc;
 	private Expression<String> idName;
 	private Expression<Number> radius;
-	private Expression<?> player;
+	private Expression<Player> inputPlayers;
 	private Expression<Number> xRot;
 	private Expression<Number> yRot;
 	private Expression<Number> zRot;
@@ -36,7 +39,6 @@ public class EffComplexCircle extends Effect {
 	private Expression<Long> pDensity;
 	private Expression<Number> step;
 	private Expression<Number> range;
-	private Expression<Boolean> singlePlayer;
 	private Expression<Boolean> rotation;
 	private Expression<Boolean> rainbMode;
 	private Expression<Long> ticks;
@@ -54,8 +56,7 @@ public class EffComplexCircle extends Effect {
 		offZ = (Expression<Number>) exprs[5];
 		this.entLoc = (Expression<?>) exprs[6];
 		this.idName = (Expression<String>) exprs[7];
-		singlePlayer = (Expression<Boolean>) exprs[8];
-		this.player = (Expression<?>) exprs[9];
+		inputPlayers = (Expression<Player>) exprs[9];
 		rainbMode = (Expression<Boolean>) exprs[10];
 		rotation = (Expression<Boolean>) exprs[11];
 		this.radius = (Expression<Number>) exprs[12];
@@ -110,6 +111,14 @@ public class EffComplexCircle extends Effect {
 		double disX = 0;
 		double disY = 0;
 		double disZ = 0;
+		
+		List<Player> p = SkriptHandler.inputPlayers(e, inputPlayers);
+		
+		
+		
+		
+		
+		
 		Long finalDelayTicks = (long) 0;
 		Long finalDelayBySec = (long) 0;
 		//String particle = (String)this.particleString.getSingle(e);
@@ -123,12 +132,6 @@ public class EffComplexCircle extends Effect {
 		Integer finalParticleDensity = pD != null ? pD.intValue() : null;
 		float finalStep = step.getSingle(e).floatValue();
 		double visibleRange = range.getSingle(e).doubleValue();
-		Player p = null;
-		boolean isSinglePlayer = false;
-		if (singlePlayer != null && singlePlayer.getSingle(e) != null && this.player != null && this.player.getSingle(e) != null){
-			isSinglePlayer = singlePlayer.getSingle(e).booleanValue();
-			p = (Player)this.player.getSingle(e);
-		}
 		boolean rainbowMode = false;
 		if (rainbMode != null && rainbMode.getSingle(e) != null){
 			rainbowMode = rainbMode.getSingle(e).booleanValue();
@@ -163,11 +166,11 @@ public class EffComplexCircle extends Effect {
 		try {
 			Material dataMat = data.getSingle(e).getType();
 			byte dataID = data.getSingle(e).getData().getData();
-			EffectsLib.drawComplexCircle(particle, dataMat, dataID, center, idName, isSinglePlayer, p, rainbowMode, enableRotation, radius, finalSpeed, finalParticleDensity, finalStep, visibleRange, xRotation, yRotation, zRotation, offsetX, offsetY, offsetZ, disX, disY, disZ, finalDelayTicks, finalDelayBySec);
+			EffectsLib.drawComplexCircle(particle, dataMat, dataID, center, idName, p, rainbowMode, enableRotation, radius, finalSpeed, finalParticleDensity, finalStep, visibleRange, xRotation, yRotation, zRotation, offsetX, offsetY, offsetZ, disX, disY, disZ, finalDelayTicks, finalDelayBySec);
 		} catch (Exception ex) {;
 			Material dataMatNull = Material.DIRT;
 			byte dataIDNull = 0;
-			EffectsLib.drawComplexCircle(particle, dataMatNull, dataIDNull, center, idName, isSinglePlayer, p, rainbowMode, enableRotation, radius, finalSpeed, finalParticleDensity, finalStep, visibleRange, xRotation, yRotation, zRotation, offsetX, offsetY, offsetZ, disX, disY, disZ, finalDelayTicks, finalDelayBySec);
+			EffectsLib.drawComplexCircle(particle, dataMatNull, dataIDNull, center, idName, p, rainbowMode, enableRotation, radius, finalSpeed, finalParticleDensity, finalStep, visibleRange, xRotation, yRotation, zRotation, offsetX, offsetY, offsetZ, disX, disY, disZ, finalDelayTicks, finalDelayBySec);
 		}
 	}
 }
