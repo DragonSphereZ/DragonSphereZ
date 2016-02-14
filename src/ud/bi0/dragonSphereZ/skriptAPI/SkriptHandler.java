@@ -1,5 +1,8 @@
 package ud.bi0.dragonSphereZ.skriptAPI;
 
+import java.util.Arrays;
+import java.util.List;
+
 import javax.annotation.Nullable;
 
 import org.bukkit.entity.Player;
@@ -75,14 +78,12 @@ public class SkriptHandler {
 	 * This method can return null because the final result relies on isSinglePlayer being true and are required together.
 	 * If isSinglePlayer is false then the final effect helpers skip this return.
 	 */
-	public static Player inputPlayer(@Nullable Event e, @Nullable Expression<Player> inputPlayer) {
-		Player player = null;
-		if (inputPlayer != null && inputPlayer.getSingle(e) != null){
-			player = (Player)inputPlayer.getSingle(e);
-		}
-		return player;
+	public static List<Player> inputPlayers(@Nullable Event e, @Nullable Expression<Player> inputPlayers) {
+        if (inputPlayers != null && inputPlayers.getAll(e) != null && inputPlayers.getAll(e).length != 0) {
+            return Arrays.asList(inputPlayers.getAll(e));
+        }
+        return null;
     }
-
 	/**
 	 * This method checks if rainbow mode is enabled
 	 */

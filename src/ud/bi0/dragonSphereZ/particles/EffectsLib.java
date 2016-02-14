@@ -1,6 +1,7 @@
 package ud.bi0.dragonSphereZ.particles;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -66,7 +67,7 @@ public class EffectsLib {
 			final Object center, 
 			final String idName, 
 			final boolean isSinglePlayer, 
-			final Player player, 
+			final List<Player> player, 
 			final boolean rainbowMode, 
 			final boolean enableRotation, 
 			final float radius, 
@@ -86,6 +87,7 @@ public class EffectsLib {
 			final long delayTicks, 
 			final long delayBySecond) {
 		if (!EffectsLib.arraylist.containsKey(idName)) {
+			
 			int circle = Bukkit.getServer().getScheduler().runTaskTimer(DragonSphereCore.dragonSphereCore, new Runnable() {
 						public double angularVelocityX = PI / 200;
 						public double angularVelocityY = PI / 170;
@@ -121,13 +123,13 @@ public class EffectsLib {
 							if (rainbowMode == true){
 								hue += 0.01F;
 								hue = (hue >= 1.0F ? 0.0F : hue);
-								ParticleEffect.valueOf(particle).display(dataMat, dataID, player, location.add(v), visibleRange, isSinglePlayer, rainbowMode, offsetX, offsetY, offsetZ, speed, 1);
+								ParticleEffect.valueOf(particle).display(dataMat, dataID, player, location.add(v), visibleRange, rainbowMode, offsetX, offsetY, offsetZ, speed, 1);
 							}else{
 								//ParticleEffect.valueOf(particle).display(new Vector(Math.cos(angle) * radius, 0, Math.sin(angle) * radius), 1.0f, this.location.clone(), 100.0);
 								//ParticleEffect.valueOf(particle).display(v, speed, location, visibleRange);
 								//ParticleEffect.valueOf(particle).display(dataMat, dataID, player, location, visibleRange, isSinglePlayer, rainbowMode, hue, offsetX, offsetY, offsetZ, speed, 1);
 
-								ParticleEffect.valueOf(particle).display(dataMat, dataID, player, location.add(v), visibleRange, isSinglePlayer, rainbowMode, offsetX, offsetY, offsetZ, speed, 1);
+								ParticleEffect.valueOf(particle).display(dataMat, dataID, player, location.add(v), visibleRange, rainbowMode, offsetX, offsetY, offsetZ, speed, 1);
 							}
 							step++;
 						}
