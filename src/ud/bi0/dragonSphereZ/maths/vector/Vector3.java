@@ -1090,6 +1090,13 @@ public class Vector3
     	return new Location(world, y, z, x);
     }
     
+    public Location toLocation(Location location) {
+    	location.setX(y);
+    	location.setY(z);
+    	location.setZ(x);
+    	return location;
+    }
+    
     /**
      * Returns a location in world with a yaw and pitch.
      * 
@@ -1140,8 +1147,11 @@ public class Vector3
      * Converts the vector to a block vector.
      * 
      */
-    public BlockVector toBlockVector() {
-        return new BlockVector(y, z, x);
+    public BlockVector toBlockVector(BlockVector blockVector) {
+    	blockVector.setX(y);
+    	blockVector.setY(z);
+    	blockVector.setZ(x);
+        return blockVector;
     }
     
     /**

@@ -16,7 +16,10 @@ public class Ellipsoid extends Shape {
 	protected Vector3 origin;
 	protected Base3 base;
 	
-	
+	public Ellipsoid(double radius) {
+		this.origin = new Vector3(0,0,0);
+		this.base = new Base3(radius, radius, radius);
+	}
 	public Ellipsoid(Vector3 origin, Base3 base) {
 		this.origin = origin;
 		this.base = base;
@@ -180,4 +183,7 @@ public class Ellipsoid extends Shape {
 	private double maxAngle(double startAngleThetha, double endAngleThetha, double startAnglePhi, double endAnglePhi) {
 		return Math.max(Math.abs(startAngleThetha-endAngleThetha), Math.abs(startAnglePhi-endAnglePhi));
 	}
+	
 }
+
+
