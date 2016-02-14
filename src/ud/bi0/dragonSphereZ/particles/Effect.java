@@ -77,5 +77,9 @@ public class Effect extends BukkitRunnable {
 	
 	@Override
  	public void run() {
+		cancel();
+	}
+	
+	public void start() {
 	}
 }
