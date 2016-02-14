@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 public class ExampleEffect extends Effect {
 	
 
-
 	public ExampleEffect(String idName, String particle, Material dataMat, byte dataID, List<Location> locations,
 			List<Entity> entities, List<Player> players) {
 		super(idName, particle, dataMat, dataID, locations, entities, players);
@@ -24,8 +23,7 @@ public class ExampleEffect extends Effect {
 			Integer idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
 				@Override
 				public void run() {
-					
-					
+					cancel();
 				}
 			}, this.delayTick, this.pulseTick).getTaskId();
 			effectManager.startEffect(idName, idTask);

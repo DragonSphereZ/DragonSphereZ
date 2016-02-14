@@ -52,7 +52,9 @@ public class Effect extends BukkitRunnable {
 	}
 	
 	private void init (String idName, String particle, Material dataMat, byte dataID, List<Location> locations, List<Entity> entities, List<Player> players) {
-		//TODO Check if effect already exists.
+		if (effectManager.isActive(idName)) {
+			//TODO throw some error.
+		}
 		this.idName = idName;
 		this.particle = particle;
 		this.dataMat = dataMat;
