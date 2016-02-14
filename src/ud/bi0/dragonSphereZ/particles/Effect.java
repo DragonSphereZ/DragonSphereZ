@@ -45,7 +45,7 @@ public class Effect extends BukkitRunnable {
 	}
 	
 	private void init (String idName, String particle, Material dataMat, byte dataID, List<Location> locations, List<Entity> entities, List<Player> players) {
-		// Check if effect already exists.
+		//TODO Check if effect already exists.
 		this.idName = idName;
 		this.particle = particle;
 		this.dataMat = dataMat;
@@ -73,6 +73,10 @@ public class Effect extends BukkitRunnable {
 		this.particle = particle;
 		this.dataMat = dataMat;
 		this.dataID = dataID;
+	}
+	
+	public void stop() {
+		
 	}
 	
 	@Override

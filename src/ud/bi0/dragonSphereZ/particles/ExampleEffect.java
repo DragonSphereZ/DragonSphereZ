@@ -7,31 +7,37 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 
 import ud.bi0.dragonSphereZ.DragonSphereCore;
 
 public class ExampleEffect extends Effect {
+	
+	private final Plugin plugin = DragonSphereCore.dragonSphereCore;
+	private final EffectManager effectManager = DragonSphereCore.effectManager;
 
 	public ExampleEffect(String idName, String particle, Material dataMat, byte dataID, List<Location> locations,
 			List<Entity> entities, List<Player> players) {
 		super(idName, particle, dataMat, dataID, locations, entities, players);
+		
 	}
 	
 	@Override
 	public void start() {
-		if (true)  {	//TODO check if idName is already in effect list: if (!EffectsLib.arraylist.containsKey(idName))
-			int circle = Bukkit.getServer().getScheduler().runTaskTimer(DragonSphereCore.dragonSphereCore, new Runnable() {
+		if (!effectManager.isActive(idName))  {
+			Integer idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
 				@Override
 				public void run() {
 				}
 			}, this.delayTick, this.pulseTick).getTaskId();
+			effectManager.startEffect(idName, idTask);
 		}
-		//TODO Add idName and taskID to effect list: EffectsLib.arraylist.put(idName, circle);
+		
 	}
 	
-
-	
-	
-	
+	@Override
+	public void stop() {
+		effectManager.stopEffect(idName);
+	}
 
 }

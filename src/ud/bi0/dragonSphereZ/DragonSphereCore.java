@@ -6,20 +6,28 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import ch.njol.skript.Skript;
+import ud.bi0.dragonSphereZ.particles.EffectManager;
 import ud.bi0.dragonSphereZ.skriptAPI.registers.registerEffects;
 import ud.bi0.dragonSphereZ.skriptAPI.registers.registerExpressions;
 
 
 
 public class DragonSphereCore extends JavaPlugin {
+	
+	
 	public static DragonSphereCore dragonSphereCore;
 	private static DragonSphereCore instance;
-
+	public static EffectManager effectManager;
+	
+	
+	
     public DragonSphereCore() {
     	instance = this;    
     }
     
 	public void onEnable() {
+		
+		
 		dragonSphereCore = this;
 
 		Plugin skript = Bukkit.getServer().getPluginManager().getPlugin("Skript");
@@ -28,6 +36,7 @@ public class DragonSphereCore extends JavaPlugin {
 			Bukkit.getServer().getLogger().info("[DragonSphereZ] Plugin has been Enabled");
 			registerEffects.DragonSphereZ();
 			registerExpressions.DragonSphereZ();
+			effectManager = new EffectManager();
 			Plugin Biosphere = Bukkit.getServer().getPluginManager().getPlugin("Biosphere");
 			if (Biosphere == null) {
 				Bukkit.getServer().getLogger().info("[DragonSphereZ] Biosphere expressions registered!");
