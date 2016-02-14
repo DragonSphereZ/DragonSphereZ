@@ -22,7 +22,9 @@ public class SkriptHandler {
 		}
 		return false;
 	}
-	
+	/**
+	 * This is the amount of particles that are played at once in a single location or if offset is used they randomize.
+	 */
 	public static int inputParticleCount(@Nullable Event e, @Nullable Expression<Number> inputParticleCount) {
 		int count = 1;
 		if(inputParticleCount != null){
@@ -44,7 +46,7 @@ public class SkriptHandler {
     }
 	
 	/**
-	 * This method can be null.
+	 * This method can be null. It affects the speed of a particle(not the entire effect)
 	 */
 	public static float inputParticleSpeed(@Nullable Event e, @Nullable Expression<Number> inputParticleSpeed) {
 		float finalSpeed = 0;
