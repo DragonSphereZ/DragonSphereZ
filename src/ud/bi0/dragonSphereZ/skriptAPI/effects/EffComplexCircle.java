@@ -16,12 +16,13 @@ import ch.njol.util.Kleenean;
 
 import ud.bi0.dragonSphereZ.particles.EffectsLib;
 import ud.bi0.dragonSphereZ.skriptAPI.SkriptHandler;
-import ud.bi0.dragonSphereZ.utils.ParticleEffect;
 
 
 public class EffComplexCircle extends Effect {
 	private Expression<ItemStack> data;
-	private Expression<String> particleString;
+	private Expression<String> inputParticleString;
+	private Expression<Number> inputParticleSpeed;
+	
 	private Expression<?> entLoc;
 	private Expression<String> idName;
 	private Expression<Number> radius;
@@ -35,29 +36,27 @@ public class EffComplexCircle extends Effect {
 	private Expression<Number> displaceX;
 	private Expression<Number> displaceY;
 	private Expression<Number> displaceZ;
-	private Expression<Number> speed;
 	private Expression<Long> pDensity;
 	private Expression<Number> step;
 	private Expression<Number> range;
 	private Expression<Boolean> rotation;
-	private Expression<Boolean> rainbMode;
-	private Expression<Long> ticks;
-	private Expression<Long> seconds;
+	private Expression<Boolean> isRainbowTrue;
+	private Expression<Long> inputTickDelay;
 	
 	@SuppressWarnings("unchecked")
 	@Override
 	public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
 
-		this.particleString = (Expression<String>) exprs[0];
+		inputParticleString = (Expression<String>) exprs[0];
 		this.data = (Expression<ItemStack>) exprs[1];
-		speed = (Expression<Number>) exprs[2];
+		inputParticleSpeed = (Expression<Number>) exprs[2];
 		offX = (Expression<Number>) exprs[3];
 		offY = (Expression<Number>) exprs[4];
 		offZ = (Expression<Number>) exprs[5];
 		this.entLoc = (Expression<?>) exprs[6];
 		this.idName = (Expression<String>) exprs[7];
 		inputPlayers = (Expression<Player>) exprs[9];
-		rainbMode = (Expression<Boolean>) exprs[10];
+		isRainbowTrue = (Expression<Boolean>) exprs[10];
 		rotation = (Expression<Boolean>) exprs[11];
 		this.radius = (Expression<Number>) exprs[12];
 		pDensity = (Expression<Long>) exprs[13];
@@ -69,8 +68,7 @@ public class EffComplexCircle extends Effect {
 		displaceX = (Expression<Number>) exprs[19];
 		displaceY = (Expression<Number>) exprs[20];
 		displaceZ = (Expression<Number>) exprs[21];
-		ticks = (Expression<Long>) exprs[22];
-		seconds = (Expression<Long>) exprs[23];
+		inputTickDelay = (Expression<Long>) exprs[22];
 		return true;
 	}
 
@@ -79,29 +77,27 @@ public class EffComplexCircle extends Effect {
 	 * particle %string%[, material %-itemstack%]
 	 * [, speed %-number%]
 	 * [, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], 
-	 * center %entity/location%, 
+	 * center %locations/entitys%, 
 	 * id %string%, 
-	 * [, isSingle %-boolean%, %-player%]
+	 * [, onlyFor %-player%]
 	 * [, r[ainbow]M[ode] %-boolean%], 
 	 * randomRotation %boolean%, 
 	 * radius %number%, 
 	 * density %number%, 
 	 * start %number%, 
 	 * visibleRange %number%, 
-	 * [, xR[otation] %-number%, yR[otation] %-number%, zR[otation] %-number%]
-	 * [, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%]
-	 * [, tps %-number%, second %-number%]
+	 * [, Rot[ation]XYZ %-number%, %-number%, %-number%]
+	 * [, dis[placement]XYZ %-number%, %-number%, %-number%]
+	 * [, pulseDelay %-number%]
 	*/
 	@Override
 	public String toString(@Nullable Event e, boolean debug) {
-		return "drawComplexCircle particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %entity/location%, id %string%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, radius %number%, density %number%, start %number%, visibleRange %number%[, xR[otation] %-number%, yR[otation] %-number%, zR[otation] %-number%][, dis[placement]X %-number%, dis[placement]Y %-number%, dis[placement]Z %-number%][, tps %-number%, second %-number%]";
+		return "drawComplexCircle particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %locations/entitys%, id %string%[, onlyFor %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, radius %number%, density %number%, start %number%, visibleRange %number%[, Rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, [pulse]Delay %-number%]";
 	}
 
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void execute(@Nullable Event e) {
-		String particle = "limeglassparticle";
-		float finalSpeed = 0;
 		float offsetX = 0;
 		float offsetY = 0;
 		float offsetZ = 0;
@@ -111,37 +107,26 @@ public class EffComplexCircle extends Effect {
 		double disX = 0;
 		double disY = 0;
 		double disZ = 0;
+		Long finalTickDelay = (long) 0;
 		
+		String particle = SkriptHandler.inputParticleString(e, inputParticleString);
 		List<Player> p = SkriptHandler.inputPlayers(e, inputPlayers);
+		float finalSpeed = SkriptHandler.inputParticleSpeed(e, inputParticleSpeed);
+		boolean rainbowMode = SkriptHandler.inputRainbowMode(e, isRainbowTrue);
 		
-		
-		
-		
-		
-		
-		Long finalDelayTicks = (long) 0;
-		Long finalDelayBySec = (long) 0;
-		//String particle = (String)this.particleString.getSingle(e);
-		if (particleString != null){
-	    	if (ParticleEffect.NAME_MAP.containsKey(particleString.getSingle(e).toLowerCase()) == true)
-				particle = (String)this.particleString.getSingle(e).toLowerCase();
-		}
 		Object center = entLoc.getSingle(e);
 		String idName = (String)this.idName.getSingle(e);
+		
+		
 		Long pD = (Long)this.pDensity.getSingle(e);//change the name of this stuff, its not the right thing..
 		Integer finalParticleDensity = pD != null ? pD.intValue() : null;
 		float finalStep = step.getSingle(e).floatValue();
 		double visibleRange = range.getSingle(e).doubleValue();
-		boolean rainbowMode = false;
-		if (rainbMode != null && rainbMode.getSingle(e) != null){
-			rainbowMode = rainbMode.getSingle(e).booleanValue();
-		}
+
 		boolean enableRotation = rotation.getSingle(e).booleanValue();
 		Number radiusInt = (Number)this.radius.getSingle(e);
 		float radius = ((Number)radiusInt).floatValue();
-		if(speed != null){
-			finalSpeed = speed.getSingle(e).floatValue();	
-		}
+
 		if(offX != null && offY != null && offZ != null){
 			offsetX = offX.getSingle(e).floatValue();
 			offsetY = offY.getSingle(e).floatValue();
@@ -157,20 +142,18 @@ public class EffComplexCircle extends Effect {
 			yRotation = yRot.getSingle(e).doubleValue();
 			zRotation = zRot.getSingle(e).doubleValue();
 		}
-		if (ticks != null){
-			finalDelayTicks = ticks.getSingle(e);
-		}
-		if (seconds != null){
-			finalDelayBySec = seconds.getSingle(e);
+
+		if (inputTickDelay != null){
+			finalTickDelay = inputTickDelay.getSingle(e);
 		}
 		try {
 			Material dataMat = data.getSingle(e).getType();
 			byte dataID = data.getSingle(e).getData().getData();
-			EffectsLib.drawComplexCircle(particle, dataMat, dataID, center, idName, p, rainbowMode, enableRotation, radius, finalSpeed, finalParticleDensity, finalStep, visibleRange, xRotation, yRotation, zRotation, offsetX, offsetY, offsetZ, disX, disY, disZ, finalDelayTicks, finalDelayBySec);
+			EffectsLib.drawComplexCircle(particle, dataMat, dataID, center, idName, p, rainbowMode, enableRotation, radius, finalSpeed, finalParticleDensity, finalStep, visibleRange, xRotation, yRotation, zRotation, offsetX, offsetY, offsetZ, disX, disY, disZ, finalTickDelay);
 		} catch (Exception ex) {;
 			Material dataMatNull = Material.DIRT;
 			byte dataIDNull = 0;
-			EffectsLib.drawComplexCircle(particle, dataMatNull, dataIDNull, center, idName, p, rainbowMode, enableRotation, radius, finalSpeed, finalParticleDensity, finalStep, visibleRange, xRotation, yRotation, zRotation, offsetX, offsetY, offsetZ, disX, disY, disZ, finalDelayTicks, finalDelayBySec);
+			EffectsLib.drawComplexCircle(particle, dataMatNull, dataIDNull, center, idName, p, rainbowMode, enableRotation, radius, finalSpeed, finalParticleDensity, finalStep, visibleRange, xRotation, yRotation, zRotation, offsetX, offsetY, offsetZ, disX, disY, disZ, finalTickDelay);
 		}
 	}
 }

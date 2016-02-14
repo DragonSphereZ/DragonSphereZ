@@ -83,8 +83,7 @@ public class EffectsLib {
 			final double disX, 
 			final double disY, 
 			final double disZ, 
-			final long delayTicks, 
-			final long delayBySecond) {
+			final long delayByTick) {
 		if (!EffectsLib.arraylist.containsKey(idName)) {
 			
 			int circle = Bukkit.getServer().getScheduler().runTaskTimer(DragonSphereCore.dragonSphereCore, new Runnable() {
@@ -132,7 +131,7 @@ public class EffectsLib {
 							}
 							step++;
 						}
-					}, delayTicks, delayBySecond).getTaskId();//1,1
+					}, 1, delayByTick).getTaskId();//1,1
 			EffectsLib.arraylist.put(idName, circle);
 		}
 	}
