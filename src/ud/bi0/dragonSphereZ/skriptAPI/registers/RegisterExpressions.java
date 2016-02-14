@@ -10,7 +10,7 @@ import ud.bi0.dragonSphereZ.skriptAPI.expressions.bioSphere.*;
 
 
 
-public class registerExpressions {
+public class RegisterExpressions {
 
 	public static void DragonSphereZ() {
 		// Test Expressions

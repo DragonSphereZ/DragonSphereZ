@@ -7,8 +7,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import ch.njol.skript.Skript;
 import ud.bi0.dragonSphereZ.particles.EffectManager;
-import ud.bi0.dragonSphereZ.skriptAPI.registers.registerEffects;
-import ud.bi0.dragonSphereZ.skriptAPI.registers.registerExpressions;
+import ud.bi0.dragonSphereZ.skriptAPI.registers.RegisterEffects;
+import ud.bi0.dragonSphereZ.skriptAPI.registers.RegisterExpressions;
 
 
 
@@ -34,13 +34,13 @@ public class DragonSphereCore extends JavaPlugin {
 		if (skript != null) {
 			Skript.registerAddon(this);
 			Bukkit.getServer().getLogger().info("[DragonSphereZ] Plugin has been Enabled");
-			registerEffects.DragonSphereZ();
-			registerExpressions.DragonSphereZ();
+			RegisterEffects.DragonSphereZ();
+			RegisterExpressions.DragonSphereZ();
 			effectManager = new EffectManager();
 			Plugin Biosphere = Bukkit.getServer().getPluginManager().getPlugin("Biosphere");
 			if (Biosphere == null) {
 				Bukkit.getServer().getLogger().info("[DragonSphereZ] Biosphere expressions registered!");
-				registerExpressions.Biosphere();
+				RegisterExpressions.Biosphere();
 			}else{
 				Bukkit.getServer().getLogger().warning("[DragonSphereZ] Biosphere detected.. we have merged, please use this version instead <3");
 			}
