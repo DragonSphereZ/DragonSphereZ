@@ -77,6 +77,15 @@ public class SkriptHandler {
 		return false;
     }
 	
+	/**
+	 * The amount of points along the effects path.
+	 */
+	public static int inputParticleDensity(@Nullable Event e, @Nullable Expression<Number> inputParticleDensity) {
+		if (inputParticleDensity != null && inputParticleDensity.getSingle(e) != null){
+			return inputParticleDensity.getSingle(e).intValue();
+		}
+		return 20;
+    }
 	
 	
 	
