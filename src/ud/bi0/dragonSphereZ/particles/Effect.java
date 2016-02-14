@@ -8,7 +8,10 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import ud.bi0.dragonSphereZ.DragonSphereCore;
 
 
 public class Effect extends BukkitRunnable {
@@ -39,7 +42,11 @@ public class Effect extends BukkitRunnable {
 	public boolean cancel = false;
 	
 	protected Runnable task;
-
+	
+	protected final Plugin plugin = DragonSphereCore.dragonSphereCore;
+	protected final EffectManager effectManager = DragonSphereCore.effectManager;
+	
+	
 	public Effect(String idName, String particle, Material dataMat, byte dataID, List<Location> locations, List<Entity> entities, List<Player> players) {
 		init(idName, particle, dataMat, dataID, locations, entities, players);
 	}
@@ -76,7 +83,7 @@ public class Effect extends BukkitRunnable {
 	}
 	
 	public void stop() {
-		
+		effectManager.stopEffect(idName);
 	}
 	
 	@Override
