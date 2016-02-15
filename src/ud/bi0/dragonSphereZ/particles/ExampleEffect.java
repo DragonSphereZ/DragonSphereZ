@@ -4,16 +4,13 @@ import java.util.List;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 public class ExampleEffect extends Effect {
 	
 
-	public ExampleEffect(String idName, String particle, Material dataMat, byte dataID, List<Location> locations,
-			List<Entity> entities, List<Player> players) {
-		super(idName, particle, dataMat, dataID, locations, entities, players);
+	public ExampleEffect(String idName, List<Location> locations, List<Player> players) {
+		super(idName, locations, players);
 		
 	}
 	

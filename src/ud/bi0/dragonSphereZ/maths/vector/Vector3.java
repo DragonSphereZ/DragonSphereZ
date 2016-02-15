@@ -24,6 +24,13 @@ public class Vector3
 	/**
 	 * Class for 3D vectors in the Cartesian coordinate system.
 	 * Each vector has a x, y and z value.
+	 * Note that the x, y and z coordinates are different from
+	 * the minecraft x, y and z coordinates! Take this notch!
+	 * The conversion is as follows:
+	 * 	Vector3		Minecraft
+	 * 		x	=	z
+	 * 		y 	=	x
+	 * 		z 	= 	y
 	 * 
 	 */
 	private static final long serialVersionUID = -7163599704997417903L;
@@ -64,6 +71,22 @@ public class Vector3
 		this.x = x;
 		this.y = y;
 		this.z = z;
+	}
+	
+	/**
+	 * Get a new vector from a yaw and pitch.
+	 * 
+	 */
+	public Vector3(double yaw, double pitch) {
+		double radYaw = Math.toRadians(yaw + 90F);
+		double radPitch = Math.toRadians(pitch + 90F);
+		double sinYaw = Math.sin(radYaw);
+		double cosYaw = Math.cos(radYaw);
+		double sinPitch = Math.sin(radPitch);
+		double cosPitch = Math.cos(radPitch);
+		x = cosPitch * sinYaw;
+		y = sinPitch * sinYaw;
+		z = cosYaw;
 	}
 	
 	/**
@@ -247,6 +270,16 @@ public class Vector3
 	}
 	
 	/**
+	 * Copies the coordinates of a location to a vector.
+	 */
+	public Vector3 copy(Location location) {
+		this.x = location.getZ();
+		this.y = location.getX();
+		this.z = location.getY();
+		return this;
+	}
+	
+	/**
 	 * Gets the length of this vector.
 	 * Note: Use lengthSquared() if possible as it is a lot faster.
 	 * 
@@ -385,7 +418,6 @@ public class Vector3
 	}
 	
 	/**
-	 * 
 	 * Multiplies this vector by a scalar.
 	 *
 	 */
@@ -396,6 +428,10 @@ public class Vector3
         return this;
     }
 	
+	/**
+	 * Multiplies this vector by a scalar.
+	 * 
+	 */
 	public Vector3 multiply(double m) {
         x *= m;
         y *= m;
@@ -453,6 +489,7 @@ public class Vector3
 	
 	/**
 	 * Projects this vector onto another.
+	 * 
 	 */
 	public Vector3 project(Vector3 other) {
 		Vector3 direction = other.clone().normalize();
@@ -490,7 +527,6 @@ public class Vector3
 	}
 	
 	/**
-	 * 
 	 * Checks whether the vector points in the same
 	 * direction as another. Uses the property that 
 	 * the dot product of two parallel vectors with
@@ -725,6 +761,10 @@ public class Vector3
     	
     }
     
+    /**
+     * Rotates a vector with a Rotator3
+     * 
+     */
     public Vector3 rot(Rotator3 rotator) {
     	return this.setXYZ(rotator.getRotatorX().dot(this), rotator.getRotatorY().dot(this), rotator.getRotatorZ().dot(this));
     }
@@ -1090,6 +1130,10 @@ public class Vector3
     	return new Location(world, y, z, x);
     }
     
+    /**
+     * Gets a location representation of the vector.
+     * 
+     */
     public Location toLocation(Location location) {
     	location.setX(y);
     	location.setY(z);
@@ -1103,6 +1147,15 @@ public class Vector3
      */   
     public Location toLocation(World world, float yaw, float pitch) {
     	return new Location(world, y, z, x, yaw, pitch);
+    }
+    
+    /**
+     * Adds the vector to a location.
+     * 
+     */
+    public Location addToLocation(Location location) {
+    	location.add(y, z, x);
+    	return location;
     }
 
     /**
