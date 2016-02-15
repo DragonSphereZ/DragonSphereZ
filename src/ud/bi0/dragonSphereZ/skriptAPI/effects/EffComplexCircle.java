@@ -19,7 +19,7 @@ import ud.bi0.dragonSphereZ.skriptAPI.SkriptHandler;
 
 
 public class EffComplexCircle extends Effect {
-	private Expression<ItemStack> data;
+	private Expression<ItemStack> inputParticleData;
 	private Expression<String> inputParticleString;
 	private Expression<Number> inputParticleSpeed;
 	
@@ -36,7 +36,7 @@ public class EffComplexCircle extends Effect {
 	private Expression<Number> displaceX;
 	private Expression<Number> displaceY;
 	private Expression<Number> displaceZ;
-	private Expression<Long> pDensity;
+	private Expression<Number> inputParticleDensity;
 	private Expression<Number> step;
 	private Expression<Number> range;
 	private Expression<Boolean> rotation;
@@ -48,7 +48,7 @@ public class EffComplexCircle extends Effect {
 	public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
 
 		inputParticleString = (Expression<String>) exprs[0];
-		this.data = (Expression<ItemStack>) exprs[1];
+		inputParticleData = (Expression<ItemStack>) exprs[1];
 		inputParticleSpeed = (Expression<Number>) exprs[2];
 		offX = (Expression<Number>) exprs[3];
 		offY = (Expression<Number>) exprs[4];
@@ -59,7 +59,7 @@ public class EffComplexCircle extends Effect {
 		isRainbowTrue = (Expression<Boolean>) exprs[10];
 		rotation = (Expression<Boolean>) exprs[11];
 		this.radius = (Expression<Number>) exprs[12];
-		pDensity = (Expression<Long>) exprs[13];
+		inputParticleDensity = (Expression<Number>) exprs[13];
 		step = (Expression<Number>) exprs[14];
 		range = (Expression<Number>) exprs[15];
 		xRot = (Expression<Number>) exprs[16];
@@ -95,7 +95,6 @@ public class EffComplexCircle extends Effect {
 		return "drawComplexCircle particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %locations/entitys%, id %string%[, onlyFor %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, radius %number%, density %number%, start %number%, visibleRange %number%[, Rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, [pulse]Delay %-number%]";
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void execute(@Nullable Event e) {
 
@@ -117,39 +116,27 @@ public class EffComplexCircle extends Effect {
 		double xRotation = SkriptHandler.inputEffectRotation(e, xRot);
 		double yRotation = SkriptHandler.inputEffectRotation(e, yRot);
 		double zRotation = SkriptHandler.inputEffectRotation(e, zRot);
-
+		int finalParticleDensity = SkriptHandler.inputParticleDensity(e, inputParticleDensity);
 		
 		Object center = entLoc.getSingle(e);
 		String idName = (String)this.idName.getSingle(e);
 		
 		
-		Long pD = (Long)this.pDensity.getSingle(e);//change the name of this stuff, its not the right thing..
-		Integer finalParticleDensity = pD != null ? pD.intValue() : null;
 		float finalStep = step.getSingle(e).floatValue();
 		double visibleRange = range.getSingle(e).doubleValue();
 
 		boolean enableRotation = rotation.getSingle(e).booleanValue();
 		Number radiusInt = (Number)this.radius.getSingle(e);
 		float radius = ((Number)radiusInt).floatValue();
-
-		
-
-		
-
-		
 		
 
 		if (inputTickDelay != null){
 			finalTickDelay = inputTickDelay.getSingle(e);
 		}
-		try {
-			Material dataMat = data.getSingle(e).getType();
-			byte dataID = data.getSingle(e).getData().getData();
-			EffectsLib.drawComplexCircle(particle, dataMat, dataID, center, idName, p, rainbowMode, enableRotation, radius, finalSpeed, finalParticleDensity, finalStep, visibleRange, xRotation, yRotation, zRotation, offsetX, offsetY, offsetZ, disX, disY, disZ, finalTickDelay);
-		} catch (Exception ex) {;
-			Material dataMatNull = Material.DIRT;
-			byte dataIDNull = 0;
-			EffectsLib.drawComplexCircle(particle, dataMatNull, dataIDNull, center, idName, p, rainbowMode, enableRotation, radius, finalSpeed, finalParticleDensity, finalStep, visibleRange, xRotation, yRotation, zRotation, offsetX, offsetY, offsetZ, disX, disY, disZ, finalTickDelay);
-		}
+		
+		Material dataMat = SkriptHandler.inputParticleDataMat(e, inputParticleData);
+		byte dataID = SkriptHandler.inputParticleDataID(e, inputParticleData);
+		EffectsLib.drawComplexCircle(particle, dataMat, dataID, center, idName, p, rainbowMode, enableRotation, radius, finalSpeed, finalParticleDensity, finalStep, visibleRange, xRotation, yRotation, zRotation, offsetX, offsetY, offsetZ, disX, disY, disZ, finalTickDelay);
+
 	}
 }

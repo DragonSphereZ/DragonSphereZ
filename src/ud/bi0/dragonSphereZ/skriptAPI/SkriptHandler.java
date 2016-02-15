@@ -5,8 +5,10 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.inventory.ItemStack;
 
 import ch.njol.skript.lang.Expression;
 import ud.bi0.dragonSphereZ.utils.ParticleEffect;
@@ -51,6 +53,23 @@ public class SkriptHandler {
     }
 	
 	/**
+	 * Handles the data values of a particle.
+	 */
+	public static Material inputParticleDataMat(@Nullable Event e, @Nullable Expression<ItemStack> inputParticleData) {
+		if(inputParticleData != null){
+			return inputParticleData.getSingle(e).getType();
+		}
+		return Material.DIRT;
+    }
+	@SuppressWarnings("deprecation")
+	public static byte inputParticleDataID(@Nullable Event e, @Nullable Expression<ItemStack> inputParticleData) {
+		if(inputParticleData != null){
+			return inputParticleData.getSingle(e).getData().getData();
+		}
+		return 0;
+    }
+	
+	/**
 	 * This method can be null. It affects the speed of a particle(not the entire effect)
 	 */
 	public static float inputParticleSpeed(@Nullable Event e, @Nullable Expression<Number> inputParticleSpeed) {
@@ -70,8 +89,6 @@ public class SkriptHandler {
 		}
 		return 0;
     }
-	
-	
 	
 	/**
 	 * This method can return null because the final result relies on isSinglePlayer being true and are required together.
@@ -125,4 +142,5 @@ public class SkriptHandler {
 		return 0;
     }
 	
+
 }
