@@ -11,6 +11,10 @@ import org.bukkit.event.Event;
 import ch.njol.skript.lang.Expression;
 import ud.bi0.dragonSphereZ.utils.ParticleEffect;
 
+/**
+ * SkriptHandler written by Sashie and bi0qaw.
+ * This handler allows easy hooks into Skripts input for use with DragonSphereZ.
+ */
 public class SkriptHandler {
 	
 	/**
@@ -57,6 +61,19 @@ public class SkriptHandler {
     }
 	
 	/**
+	 * Some particles can use an offset to randomize how far from their center they spawn.
+	 * This also handles RGB(color) and will soon handle HSB <3
+	 */
+	public static float inputParticleOffset(@Nullable Event e, @Nullable Expression<Number> inputParticleOffset) {
+		if(inputParticleOffset != null){
+			return inputParticleOffset.getSingle(e).floatValue();
+		}
+		return 0;
+    }
+	
+	
+	
+	/**
 	 * This method can return null because the final result relies on isSinglePlayer being true and are required together.
 	 * If isSinglePlayer is false then the final effect helpers skip this return.
 	 */
@@ -86,17 +103,7 @@ public class SkriptHandler {
 		}
 		return 20;
     }
-	
-	/**
-	 * Some particles can use an offset to randomize how far from their center they spawn.
-	 * This also handles RGB(color) and will soon handle HSB <3
-	 */
-	public static float inputParticleOffset(@Nullable Event e, @Nullable Expression<Number> inputParticleOffset) {
-		if(inputParticleOffset != null){
-			return inputParticleOffset.getSingle(e).floatValue();
-		}
-		return 0;
-    }
+
 	
 	/**
 	 * This will place the particle anywhere around the player they want for instance if they want to make their own halo using the circle.
