@@ -39,7 +39,7 @@ public class EffLineTest extends Effect {
 	@Override
 	protected void execute(Event e) {
 		
-		new LineTest(id.getSingle(e), loc.getSingle(e), Arrays.asList(players.getAll(e))).start();;
+		new LineTest(id.getSingle(e), loc.getSingle(e), Arrays.asList(players.getAll(e))).start();
 		
 	}
 

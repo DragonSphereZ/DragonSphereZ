@@ -78,6 +78,7 @@ public class ComplexCircle extends Effect {
 				final Ellipsoid circle = new Ellipsoid(radius);
 				//Location location;				<-----changed to EffectUtils helper
 				boolean setAxis = true;
+				Location location;
 				
 				@Override
 				public void run() {
@@ -92,7 +93,7 @@ public class ComplexCircle extends Effect {
 					//else if (center instanceof Location){
 					//	location = (Location) center;
 					//}
-					Location location = EffectUtils.getLocation(center);
+					location = EffectUtils.getLocation(center);
 					circle.getPoint(thetha, phi).addToLocation(location);
 					ParticleEffect.valueOf(particle).display(dataMat, dataID, players, location, visibleRange, rainbowMode, offset, speed, particleCount);
 					
