@@ -98,21 +98,26 @@ public class EffComplexCircle extends Effect {
 	@SuppressWarnings("deprecation")
 	@Override
 	protected void execute(@Nullable Event e) {
-		float offsetX = 0;
-		float offsetY = 0;
-		float offsetZ = 0;
-		double xRotation = 0;
-		double yRotation = 0;
-		double zRotation = 0;
-		double disX = 0;
-		double disY = 0;
-		double disZ = 0;
+
+		
+
 		Long finalTickDelay = (long) 0;
 		
 		String particle = SkriptHandler.inputParticleString(e, inputParticleString);
-		List<Player> p = SkriptHandler.inputPlayers(e, inputPlayers);
 		float finalSpeed = SkriptHandler.inputParticleSpeed(e, inputParticleSpeed);
+		float offsetX = SkriptHandler.inputParticleOffset(e, offX);
+		float offsetY = SkriptHandler.inputParticleOffset(e, offY);
+		float offsetZ = SkriptHandler.inputParticleOffset(e, offZ);
+		List<Player> p = SkriptHandler.inputPlayers(e, inputPlayers);
+		
 		boolean rainbowMode = SkriptHandler.inputRainbowMode(e, isRainbowTrue);
+		double disX = SkriptHandler.inputLocDisplacement(e, displaceX);
+		double disY = SkriptHandler.inputLocDisplacement(e, displaceY);
+		double disZ = SkriptHandler.inputLocDisplacement(e, displaceZ);
+		double xRotation = SkriptHandler.inputEffectRotation(e, xRot);
+		double yRotation = SkriptHandler.inputEffectRotation(e, yRot);
+		double zRotation = SkriptHandler.inputEffectRotation(e, zRot);
+
 		
 		Object center = entLoc.getSingle(e);
 		String idName = (String)this.idName.getSingle(e);
@@ -127,21 +132,12 @@ public class EffComplexCircle extends Effect {
 		Number radiusInt = (Number)this.radius.getSingle(e);
 		float radius = ((Number)radiusInt).floatValue();
 
-		if(offX != null && offY != null && offZ != null){
-			offsetX = offX.getSingle(e).floatValue();
-			offsetY = offY.getSingle(e).floatValue();
-			offsetZ = offZ.getSingle(e).floatValue();
-		}
-		if(displaceX != null && displaceY != null && displaceZ != null){
-			disX = displaceX.getSingle(e).doubleValue();
-			disY = displaceY.getSingle(e).doubleValue();
-			disZ = displaceZ.getSingle(e).doubleValue();
-		}
-		if(xRot != null && yRot != null && zRot != null){
-			xRotation = xRot.getSingle(e).doubleValue();
-			yRotation = yRot.getSingle(e).doubleValue();
-			zRotation = zRot.getSingle(e).doubleValue();
-		}
+		
+
+		
+
+		
+		
 
 		if (inputTickDelay != null){
 			finalTickDelay = inputTickDelay.getSingle(e);

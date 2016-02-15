@@ -87,7 +87,35 @@ public class SkriptHandler {
 		return 20;
     }
 	
+	/**
+	 * Some particles can use an offset to randomize how far from their center they spawn.
+	 * This also handles RGB(color) and will soon handle HSB <3
+	 */
+	public static float inputParticleOffset(@Nullable Event e, @Nullable Expression<Number> inputParticleOffset) {
+		if(inputParticleOffset != null){
+			return inputParticleOffset.getSingle(e).floatValue();
+		}
+		return 0;
+    }
 	
+	/**
+	 * This will place the particle anywhere around the player they want for instance if they want to make their own halo using the circle.
+	 */
+	public static double inputLocDisplacement(@Nullable Event e, @Nullable Expression<Number> inputLocDisplacement) {
+		if(inputLocDisplacement != null){
+			return inputLocDisplacement.getSingle(e).doubleValue();
+		}
+		return 0;
+    }
 	
+	/**
+	 * For manually rotating the whole effect around its axis.
+	 */
+	public static double inputEffectRotation(@Nullable Event e, @Nullable Expression<Number> inputEffectRotation) {
+		if(inputEffectRotation != null){
+			return inputEffectRotation.getSingle(e).doubleValue();
+		}
+		return 0;
+    }
 	
 }
