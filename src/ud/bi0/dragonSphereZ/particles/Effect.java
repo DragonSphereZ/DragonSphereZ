@@ -10,63 +10,74 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import ud.bi0.dragonSphereZ.DragonSphereCore;
+import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 import ud.bi0.dragonSphereZ.utils.ParticleEffect;
 
 
 public class Effect extends BukkitRunnable {
 	
 	
-	public String idName;
+	public String idName; 
 	
 	@Nullable
-	public List<?> locations;
+	public Object center;
 	@Nullable
 	public List<Player> players;
 	
-	public String particle;
-	public int particleCount;
-	public Material dataMat;
-	public byte dataID;
-	public float speed;
-	public double visibleRange;
-	public double offsetX;
-	public double offsetY;
-	public double offsetZ;
+	public String particle; //Default "limeglassparticle"
+	public int particleCount; //Default 1
+	public Material dataMat; //Default Material.DIRT
+	public byte dataID; //Default 0
+	public float speed; //Default 0
+	public double visibleRange; //Default 32
+	public Vector3 offset; //Default (0,0,0)
+	public Vector3 displacement; //Default (0,0,0)
 	
-	public long delayTick;
-	public long pulseTick;
+	public long delayTick; //Default 0
+	public long pulseTick; //Default 20
 		
 	protected final Plugin plugin = DragonSphereCore.dragonSphereCore;
 	protected final EffectManager effectManager = DragonSphereCore.effectManager;
 	
-	public Effect(String idName, String particle, List<?> locations, List<Player> players, int particleCount, Material dataMat, byte dataID, float speed, double visibleRange, double offsetX, double offsetY, double offsetZ) {
-		init(idName, particle, locations, players, particleCount, dataMat, dataID, speed, visibleRange, offsetX, offsetY, offsetZ);
+	public Effect(String idName, String particle, Object center, List<Player> players, long delayTick, long pulseTick, int particleCount, Material dataMat, byte dataID, float speed, double visibleRange, Vector3 offset) {
+		init(idName, particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, offset);
 	}
 	
-	public Effect(String idName, List<?> locations, List<Player> players) {
-		init(idName, ParticleEffect.limeglassparticle.getName(), locations, players, 1, Material.DIRT, (byte) 0, 0F, 32D, 0D, 0D, 0D);
+	public Effect(String idName, Object center, List<Player> players) {
+		init(idName, ParticleEffect.limeglassparticle.getName(), center, players, 0, 20, 1, Material.DIRT, (byte) 0, 0F, 32D, new Vector3(0,0,0));
 	}
 	
-	private void init (String idName, String particle, List<?> locations, List<Player> players, int particleCount, Material dataMat, byte dataID, float speed, double visibleRange, double offsetX, double offsetY, double offsetZ) {
+	private void init (
+			String idName,
+			String particle,
+			Object center,
+			List<Player> players,
+			long delayTick,
+			long pulseTick,
+			int particleCount,
+			Material dataMat,
+			byte dataID,
+			float speed,
+			double visibleRange,
+			Vector3 offset) 
+	{
 
 		this.idName = idName;
 		this.particle = particle;
-		this.locations = locations;
+		this.delayTick = delayTick;
+		this.pulseTick = pulseTick;
+		this.center = center;
 		this.players = players;
 		this.particleCount = particleCount;
 		this.dataMat = dataMat;
 		this.dataID = dataID;
 		this.speed = speed;
 		this.visibleRange = visibleRange;
-		this.offsetX = offsetX;
-		this.offsetY = offsetY;
-		this.offsetZ = offsetZ;
+		this.offset = offset;
 	}
 		
-	public void setOffset(double x, double y, double z) {
-		this.offsetX = x;
-		this.offsetY = y;
-		this.offsetZ = z;
+	public void setOffset(float x, float y, float z) {
+		offset.setXYZ(x, y, z);
 	}
 
 	public void setParticle(String particle, Material dataMat, byte dataID) {

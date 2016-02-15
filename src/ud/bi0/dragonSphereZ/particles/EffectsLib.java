@@ -50,16 +50,6 @@ public class EffectsLib {
 		}
 	}
 	
-
-	
-	
-	
-	
-	
-    
-    
-    
-    
     public static void drawComplexCircle(
 			final String particle, 
 			final Material dataMat, 

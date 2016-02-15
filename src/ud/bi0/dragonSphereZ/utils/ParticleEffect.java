@@ -17,6 +17,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 import ud.bi0.dragonSphereZ.utils.ParticleEffect;
 import ud.bi0.dragonSphereZ.utils.ReflectionUtils;
 import ud.bi0.dragonSphereZ.utils.ReflectionUtils.PackageType;
@@ -1427,6 +1428,10 @@ public enum ParticleEffect {
 			}
 	}
 	
+	/**
+	 * bi0's rainbow method.
+	 * 
+	 */
 	public class Rainbow {
 		
 		protected float hue;
@@ -1498,5 +1503,12 @@ public enum ParticleEffect {
 			this.stepValue = stepValue;
 		}
 	}
-
+	
+	/**
+	 * bi0's display helper method using vectors.
+	 * 
+	 */
+	public void display(Material dataMat, byte dataID, List<Player> players, Location center, double visibleRange, boolean rainbowMode, Vector3 offset, float speed, int particleCount) {
+		display(dataMat, dataID, players, center, visibleRange, rainbowMode, (float) offset.getX(), (float) offset.getY(), (float) offset.getZ(), speed, particleCount);
+	}
 }
