@@ -1,6 +1,3 @@
-DragonSphereZ
-=========
-
 ![logo](http://i.imgur.com/PyrlOOo.png "")
 
 ## Download
