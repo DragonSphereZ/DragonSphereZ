@@ -121,7 +121,6 @@ public class SkriptHandler {
 		return 20;
     }
 
-	
 	/**
 	 * This will place the particle anywhere around the player they want for instance if they want to make their own halo using the circle.
 	 */
@@ -133,7 +132,7 @@ public class SkriptHandler {
     }
 	
 	/**
-	 * For manually rotating the whole effect around its axis.
+	 * For manually rotating the whole effect around its axis prior to any other math.
 	 */
 	public static double inputEffectRotation(@Nullable Event e, @Nullable Expression<Number> inputEffectRotation) {
 		if(inputEffectRotation != null){
