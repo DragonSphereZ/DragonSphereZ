@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import ud.bi0.dragonSphereZ.DragonSphereCore;
+import ud.bi0.dragonSphereZ.utils.EffectUtils;
 import ud.bi0.dragonSphereZ.utils.ParticleEffect;
 import ud.bi0.dragonSphereZ.utils.VectorUtils;
 
@@ -81,18 +82,20 @@ public class EffectsLib {
 						public double angularVelocityY = PI / 170;
 						public double angularVelocityZ = PI / 155;
 						public float step = steps;
-						public float hue;
+						//public float hue;
+						float offsetX;
 						Location location;// = player.getLocation().clone();
 						@Override
 						public void run() {
-							if (center instanceof Entity) {
-								location = ((Entity) center).getLocation();
-							}
-							else if (center instanceof Location){
+							//if (center instanceof Entity) {
+							//	location = ((Entity) center).getLocation();
+							//}
+							//else if (center instanceof Location){
 								//location = ((Location) center);
-								location = new Location(((Location) center).getWorld(), ((Location) center).getX(), ((Location) center).getY(), ((Location) center).getZ());
-							}
+							//	location = new Location(((Location) center).getWorld(), ((Location) center).getX(), ((Location) center).getY(), ((Location) center).getZ());
+							//}
 							//Location locations = new Location(location.getWorld(), location.getX(), location.getY(), location.getZ());
+							location = EffectUtils.getLocation2(center);
 							location.add(0D, 1D, 0D);
 							location.add(disX, disY, disZ);
 							double inc = PI2 / particleDensity;
@@ -108,17 +111,18 @@ public class EffectsLib {
 							VectorUtils.rotateVector(v, xRotation, yRotation, zRotation);
 							if (enableRotation)
 								VectorUtils.rotateVector(v, angularVelocityX * step, angularVelocityY * step, angularVelocityZ * step);
-							if (rainbowMode == true){
-								hue += 0.01F;
-								hue = (hue >= 1.0F ? 0.0F : hue);
-								ParticleEffect.valueOf(particle).display(dataMat, dataID, player, location.add(v), visibleRange, rainbowMode, offsetX, offsetY, offsetZ, speed, 1);
-							}else{
-								//ParticleEffect.valueOf(particle).display(new Vector(Math.cos(angle) * radius, 0, Math.sin(angle) * radius), 1.0f, this.location.clone(), 100.0);
-								//ParticleEffect.valueOf(particle).display(v, speed, location, visibleRange);
-								//ParticleEffect.valueOf(particle).display(dataMat, dataID, player, location, visibleRange, isSinglePlayer, rainbowMode, hue, offsetX, offsetY, offsetZ, speed, 1);
+							
+							if (rainbowMode) 
+								offsetX = (float) (offsetX + 0.01);
+								
+							//if (rainbowMode == true){
+							//	hue += 0.01F;
+							//	hue = (hue >= 1.0F ? 0.0F : hue);
+							//	ParticleEffect.valueOf(particle).display(dataMat, dataID, player, location.add(v), visibleRange, rainbowMode, offsetX, offsetY, offsetZ, speed, 1);
+							//}else{
 
 								ParticleEffect.valueOf(particle).display(dataMat, dataID, player, location.add(v), visibleRange, rainbowMode, offsetX, offsetY, offsetZ, speed, 1);
-							}
+							//}
 							step++;
 						}
 					}, 1, delayByTick).getTaskId();//1,1

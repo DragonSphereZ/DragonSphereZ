@@ -93,7 +93,7 @@ public class ComplexCircle extends Effect {
 					//else if (center instanceof Location){
 					//	location = (Location) center;
 					//}
-					location = EffectUtils.getLocation(center);
+					location = EffectUtils.getLocation2(center);
 					circle.getPoint(thetha, phi).addToLocation(location);
 					ParticleEffect.valueOf(particle).display(dataMat, dataID, players, location, visibleRange, rainbowMode, offset, speed, particleCount);
 					
