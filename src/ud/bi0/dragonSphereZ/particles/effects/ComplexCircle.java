@@ -5,12 +5,12 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import ud.bi0.dragonSphereZ.maths.shape.Ellipsoid;
 import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 import ud.bi0.dragonSphereZ.particles.Effect;
+import ud.bi0.dragonSphereZ.utils.EffectUtils;
 import ud.bi0.dragonSphereZ.utils.ParticleEffect;
 
 public class ComplexCircle extends Effect {
@@ -23,26 +23,26 @@ public class ComplexCircle extends Effect {
 	protected Vector3 axis;
 	
 	public ComplexCircle(
-			//super
-			String idName,
-			String particle,
-			Object center,
-			List<Player> players,
-			long delayTick,
-			long pulseTick,
-			int particleCount,
-			Material dataMat,
-			byte dataID,
-			float speed,
-			double visibleRange,
-			Vector3 offset,
-			Vector3 displacement,
-			//this
-			double radius,
-			double particleDensity,
-			boolean rainbowMode,
-			boolean enableRotation,
-			Vector3 axis)
+		//super
+		String idName,
+		String particle,
+		Object center,
+		List<Player> players,
+		long delayTick,
+		long pulseTick,
+		int particleCount,
+		Material dataMat,
+		byte dataID,
+		float speed,
+		double visibleRange,
+		Vector3 offset,
+		Vector3 displacement,
+		//this
+		double radius,
+		double particleDensity,
+		boolean rainbowMode,
+		boolean enableRotation,
+		Vector3 axis)
 	{
 		super(idName, particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, offset);
 		init(radius, particleDensity, rainbowMode, enableRotation, axis);
@@ -76,7 +76,7 @@ public class ComplexCircle extends Effect {
 				// Holds the change of the displacement angle if enableRotation is true.
 				final double stepThetha = 0.01;
 				final Ellipsoid circle = new Ellipsoid(radius);
-				Location location;
+				//Location location;				<-----changed to EffectUtils helper
 				boolean setAxis = true;
 				
 				@Override
@@ -86,12 +86,13 @@ public class ComplexCircle extends Effect {
 						setAxis = false;
 						circle.getBase().setW(axis.normalize().multiply(radius), true);
 					}
-					if (center instanceof Entity) {
-						location = ((Entity) center).getLocation();
-					}
-					else if (center instanceof Location){
-						location = (Location) center;
-					}
+					//if (center instanceof Entity) {			<-----changed to EffectUtils helper
+					//	location = ((Entity) center).getLocation();
+					//}
+					//else if (center instanceof Location){
+					//	location = (Location) center;
+					//}
+					Location location = EffectUtils.getLocation(center);
 					circle.getPoint(thetha, phi).addToLocation(location);
 					ParticleEffect.valueOf(particle).display(dataMat, dataID, players, location, visibleRange, rainbowMode, offset, speed, particleCount);
 					

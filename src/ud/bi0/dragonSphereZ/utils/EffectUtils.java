@@ -5,7 +5,7 @@ import org.bukkit.entity.Entity;
 
 public class EffectUtils {
 	
-	public static Location getLocation(Object location) {
+	public static Location getLocation2(Object location) {
     	Location finalLocation = null;
     	if (location instanceof Entity) {
     		finalLocation = ((Entity) location).getLocation();
@@ -15,7 +15,16 @@ public class EffectUtils {
         return finalLocation;
     }
 	
-	
+	public static Location getLocation(Object location) {
+    	
+		if (location instanceof Entity) {
+			return ((Entity) location).getLocation();
+		}
+		else if (location instanceof Location){
+			return (Location) location;
+		}
+		return null;
+    }
 	
 	
 }
