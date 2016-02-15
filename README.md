@@ -1,7 +1,7 @@
 DragonSphereZ
 =========
 
-![logo](https://www.dropbox.com/s/2ipmbm2ln8rtbl9/DSZ-Logo.png "")
+![logo](http://i.imgur.com/PyrlOOo.png "")
 
 ## Download
 DragonSphereZ is officially hosted on skUnity and can be downloaded [here](https://forums.skunity.com/t/addon-skdragon-0-07-0-eta-added-drawplanet-drawbreath-and-drawcylinder-particle-trails-effects/2397).
