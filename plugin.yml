@@ -2,6 +2,6 @@ name: DragonSphereZ
 author: [bi0qaw, _Sashie_]
 description: Bringing particle effects to the Skript community.
 version: 0.0.1
-main: ud.bi0.dragonSphereZ.dragonSphereCore
+main: ud.bi0.dragonSphereZ.DragonSphereCore
 depend: [Skript]
 load: POSTWORLD
