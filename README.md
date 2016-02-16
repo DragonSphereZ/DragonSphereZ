@@ -1,4 +1,3 @@
-![logo](http://i.imgur.com/PyrlOOo.png "")
 <p align="center">
   <img src="http://i.imgur.com/PyrlOOo.png?raw=true" alt="Sublime's custom image"/>
 </p>
