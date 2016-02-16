@@ -1,6 +1,7 @@
 package ud.bi0.dragonSphereZ.particles;
 
 import java.util.HashMap;
+import java.util.Set;
 
 import org.bukkit.Bukkit;
 
@@ -45,6 +46,10 @@ public class ParticleEffectManager {
 	public boolean isActive(String idName) {
 		if (effectMap.containsKey(idName)) return true;
 		return false;
+	}
+	
+	public Set<String> getKeys(){
+		return effectMap.keySet();
 	}
 	
 }

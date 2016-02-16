@@ -6,7 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import ud.bi0.dragonSphereZ.maths.shape.Cylinder;
+import ud.bi0.dragonSphereZ.maths.vector.Rotator3;
 import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 import ud.bi0.dragonSphereZ.particles.ParticleEffect;
 import ud.bi0.dragonSphereZ.utils.DynamicLocation;
@@ -26,20 +26,18 @@ public class SimpleHalo extends ParticleEffect {
 		if (!effectManager.isActive(idName))  {
 			idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
 				
-				Cylinder halo = new Cylinder(new Vector3(), 0.5, 0.5);
-				Vector3 vector = new Vector3();
+				Vector3 vector = new Vector3(0.5, 0, 2);
 				DynamicLocation location = DynamicLocation.init(center);
-				double phi = 0;
 				double stepPhi = clockwise ? -0.3 : 0.3;
+				Rotator3 rotator = new Rotator3(new Vector3(0,0,1), stepPhi);
 				
 				@Override
 				public void run() {
 					if (!location.isDynamic() || !location.needsUpdate(pulseTick)) {
-						vector = halo.getPoint(1, phi, 2);
+						vector.rot(rotator);
 						location.add(vector.getY(), vector.getZ(), vector.getX());
 						ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, players, location, visibleRange, false, offset, speed, particleCount);
 						location.subtract(vector.getY(), vector.getZ(), vector.getX());
-						phi += stepPhi;
 					}
 					location.update();
 				}

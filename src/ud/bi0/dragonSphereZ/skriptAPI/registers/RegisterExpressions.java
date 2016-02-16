@@ -19,7 +19,7 @@ public class RegisterExpressions {
 		Skript.registerExpression(ExprTestCubeFace.class, Location.class, ExpressionType.SIMPLE, "testcubefaces at %location% with radius %number% and density %number%");
 		Skript.registerExpression(ExprTestSpiral.class, Location.class, ExpressionType.SIMPLE, "testspiral at %location% with properties %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%");
 		Skript.registerExpression(ExprTestEllipsoidSpiral.class, Location.class, ExpressionType.SIMPLE, "testellspiral at %location% with properties %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%");
-		Skript.registerExpression(ExprAllEffects.class, String.class, ExpressionType.SIMPLE, "all particle effects");
+		Skript.registerExpression(ExprAllEffects.class, String.class, ExpressionType.SIMPLE, "[all ][active ]particle effects");
 	}
 	
 	public static void Biosphere() {

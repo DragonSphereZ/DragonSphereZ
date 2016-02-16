@@ -28,12 +28,12 @@ public class DynamicLocation extends Location {
 	}
 	
 	public boolean needsUpdate() {
-		if (this.distanceSquared(entity.getLocation()) > epsilon * epsilon) return true;
+		if (dynamic && this.distanceSquared(entity.getLocation()) > epsilon * epsilon) return true;
 		return false;
 	}
 	
 	public boolean needsUpdate(long ticks) {
-		if (this.distanceSquared(entity.getLocation()) > epsilon * epsilon / ticks) return true;
+		if (dynamic && this.distanceSquared(entity.getLocation()) > epsilon * epsilon / ticks) return true;
 		return false;
 	}
 	
