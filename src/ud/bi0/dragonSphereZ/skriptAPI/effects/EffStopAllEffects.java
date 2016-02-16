@@ -10,26 +10,21 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import ud.bi0.dragonSphereZ.DragonSphereCore;
 
-public class EffStop extends Effect {
-	
-	Expression<String> effectID;
+public class EffStopAllEffects extends Effect {
 
-	@SuppressWarnings("unchecked")
 	@Override
-	public boolean init(Expression<?>[] expr, int arg1, Kleenean arg2, ParseResult arg3) {
-		effectID = (Expression<String>) expr[0];
+	public boolean init(Expression<?>[] arg0, int arg1, Kleenean arg2, ParseResult arg3) {
 		return true;
 	}
 
 	@Override
 	public String toString(@Nullable Event arg0, boolean arg1) {
-		// TODO Auto-generated method stub
-		return null;
+		return "stop all effects";
 	}
 
 	@Override
-	protected void execute(Event e) {
-		DragonSphereCore.effectManager.stopEffect(effectID.getSingle(e));
+	protected void execute(Event arg0) {
+		DragonSphereCore.effectManager.stopAll();
 	}
 
 }

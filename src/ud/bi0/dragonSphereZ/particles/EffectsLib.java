@@ -12,7 +12,7 @@ import org.bukkit.util.Vector;
 
 import ud.bi0.dragonSphereZ.DragonSphereCore;
 import ud.bi0.dragonSphereZ.utils.EffectUtils;
-import ud.bi0.dragonSphereZ.utils.ParticleEffect;
+import ud.bi0.dragonSphereZ.utils.ParticleEffectUtils;
 import ud.bi0.dragonSphereZ.utils.VectorUtils;
 
 
@@ -121,7 +121,7 @@ public class EffectsLib {
 							//	ParticleEffect.valueOf(particle).display(dataMat, dataID, player, location.add(v), visibleRange, rainbowMode, offsetX, offsetY, offsetZ, speed, 1);
 							//}else{
 
-								ParticleEffect.valueOf(particle).display(dataMat, dataID, player, location.add(v), visibleRange, rainbowMode, offsetX, offsetY, offsetZ, speed, 1);
+								ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, player, location.add(v), visibleRange, rainbowMode, offsetX, offsetY, offsetZ, speed, 1);
 							//}
 							step++;
 						}
@@ -185,7 +185,7 @@ public class EffectsLib {
   					                    location.add(vR);
   					                    location.add(v2);
   					                    //for (int k = 0; k < 2; ++k) {
-  					                    ParticleEffect.valueOf(particle).display(dataMat, dataID, player, location, visibleRange, rainbowMode, offsetX, offsetY, offsetZ, speed, 1);
+  					                    ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, player, location, visibleRange, rainbowMode, offsetX, offsetY, offsetZ, speed, 1);
   					                    //}
   					                    location.subtract(v2);
   					                    location.subtract(vR);
@@ -209,7 +209,7 @@ public class EffectsLib {
   					                    location.add(vL);
   					                    location.add(v2);
   					                    //for (int k = 0; k < 2; ++k) {
-  					                    ParticleEffect.valueOf(particle).display(dataMat, dataID, player, location, visibleRange, rainbowMode, offsetX, offsetY, offsetZ, speed, 1);
+  					                    ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, player, location, visibleRange, rainbowMode, offsetX, offsetY, offsetZ, speed, 1);
   					                    //}
   					                    location.subtract(v2);
   					                    location.subtract(vL);

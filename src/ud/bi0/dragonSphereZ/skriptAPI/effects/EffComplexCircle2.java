@@ -119,7 +119,7 @@ public class EffComplexCircle2 extends Effect {
 		double xRotation = SkriptHandler.inputEffectRotation(e, xRot);
 		double yRotation = SkriptHandler.inputEffectRotation(e, yRot);
 		double zRotation = SkriptHandler.inputEffectRotation(e, zRot);
-		Vector3 axis = new Vector3(0,1,0);
+		Vector3 axis = new Vector3(0,0,1);
 		if (xRotation * xRotation + yRotation * yRotation + zRotation * zRotation > 0) {
 			axis = new Vector3(zRotation, xRotation, yRotation);
 		}

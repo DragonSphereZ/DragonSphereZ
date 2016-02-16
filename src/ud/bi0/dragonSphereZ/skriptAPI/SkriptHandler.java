@@ -11,7 +11,7 @@ import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 
 import ch.njol.skript.lang.Expression;
-import ud.bi0.dragonSphereZ.utils.ParticleEffect;
+import ud.bi0.dragonSphereZ.utils.ParticleEffectUtils;
 
 /**
  * SkriptHandler written by Sashie and bi0qaw.
@@ -25,9 +25,8 @@ public class SkriptHandler {
 	public static boolean hasNull(@Nullable Event e, @Nullable Expression<?>...args) {
 		for (Expression<?> arg : args) {
 			if (arg == null) return true;
-			if (arg.isSingle()) {
-				if (arg.getSingle(e) == null) return true;
-			} else if (arg.getAll(e).length == 0 || arg.getAll(e) == null) return true; 
+			if (arg.isSingle() && arg.getSingle(e) == null) return true;
+			if (arg.getAll(e).length == 0 || arg.getAll(e) == null) return true; 
 		}
 		return false;
 	}
@@ -46,7 +45,7 @@ public class SkriptHandler {
 	 */
 	public static String inputParticleString(@Nullable Event e, @Nullable Expression<String> inputParticleString) {
 		if (inputParticleString != null){
-	    	if (ParticleEffect.NAME_MAP.containsKey(inputParticleString.getSingle(e).toLowerCase()) == true)
+	    	if (ParticleEffectUtils.NAME_MAP.containsKey(inputParticleString.getSingle(e).toLowerCase()) == true)
 				return (String)inputParticleString.getSingle(e).toLowerCase();
 		}
 		return "limeglassparticle";

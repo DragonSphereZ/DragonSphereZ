@@ -7,13 +7,13 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import ud.bi0.dragonSphereZ.maths.shape.Ellipsoid;
+import ud.bi0.dragonSphereZ.maths.shape.Cylinder;
 import ud.bi0.dragonSphereZ.maths.vector.Vector3;
-import ud.bi0.dragonSphereZ.particles.Effect;
+import ud.bi0.dragonSphereZ.particles.ParticleEffect;
 import ud.bi0.dragonSphereZ.utils.EffectUtils;
-import ud.bi0.dragonSphereZ.utils.ParticleEffect;
+import ud.bi0.dragonSphereZ.utils.ParticleEffectUtils;
 
-public class ComplexCircle extends Effect {
+public class ComplexCircle extends ParticleEffect {
 	
 	
 	protected double radius;
@@ -50,7 +50,7 @@ public class ComplexCircle extends Effect {
 	}
 	public ComplexCircle(String idName, Object center, List<Player> players) {
 		super(idName, center, players);
-		init(1,1,false,false, new Vector3(0,1,0));
+		init(1,1,false,false, new Vector3(0,0,1));
 	}
 	
 	public void init(double radius, double particleDensity, boolean rainbowMode, boolean enableRotation, Vector3 axis) {
@@ -64,18 +64,18 @@ public class ComplexCircle extends Effect {
 	@Override
 	public void start() {
 		if (!effectManager.isActive(idName))  {
-			int idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
+			idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
 				// Holds the total number of steps per circle.
 				final int steps = (int) (2 * Math.PI * radius * particleDensity);
 				// Holds the current angle.
 				double phi = 0;
 				// Holds the angle between two following particles.
 				final double stepPhi = 2 * Math.PI / steps;
+				//double height = 0;
+				//double stepHeight = 2 * Math.PI / (4 * steps);
 				// Holds the displacement angle if enableRotation is true.
-				double thetha = 0.5 * Math.PI;
 				// Holds the change of the displacement angle if enableRotation is true.
-				final double stepThetha = 0.01;
-				final Ellipsoid circle = new Ellipsoid(radius);
+				final Cylinder circle = new Cylinder(new Vector3(0,0,0), radius, radius);
 				//Location location;				<-----changed to EffectUtils helper
 				boolean setAxis = true;
 				Location location;
@@ -86,7 +86,7 @@ public class ComplexCircle extends Effect {
 					// Sets the axis of the circle.
 					if (setAxis) {
 						setAxis = false;
-						circle.getBase().setW(axis.normalize().multiply(radius), true);
+						circle.getBase().setNormal(axis);;
 					}
 					//if (center instanceof Entity) {			<-----changed to EffectUtils helper
 					//	location = ((Entity) center).getLocation();
@@ -95,16 +95,20 @@ public class ComplexCircle extends Effect {
 					//	location = (Location) center;
 					//}
 					location = EffectUtils.getLocation2(center);
-					vector.copy(circle.getPoint(thetha, phi));
-					location.add(vector.getX(), vector.getY(), vector.getZ());
-					ParticleEffect.valueOf(particle).display(dataMat, dataID, players, location, visibleRange, rainbowMode, offset, speed, particleCount);
+					//vector.copy(circle.getPoint(1,phi,Math.abs(Math.sin(height))*2));
+					vector.copy(circle.getPoint(1,phi,0));
+					location.add(vector.getY(), vector.getZ(), vector.getX());
+					ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, players, location, visibleRange, rainbowMode, offset, speed, particleCount);
 					
 					if (rainbowMode) offset.setX(offset.getX() + 0.01);
-					if (enableRotation) this.thetha += 0.01D;
+					if (enableRotation) {
+						circle.getBase().setNormal(circle.getBase().getNormal().rotXYZ(1, 1, 1));
+						//height += stepHeight;
+					}
 					phi += stepPhi;
 				}
 			}, delayTick, pulseTick).getTaskId();
-			effectManager.startEffect(idName, idTask);
+			effectManager.startEffect(this);
 		}
 		
 	}

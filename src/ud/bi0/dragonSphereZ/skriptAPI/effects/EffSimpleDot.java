@@ -17,7 +17,7 @@ import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import ud.bi0.dragonSphereZ.skriptAPI.SkriptHandler;
 import ud.bi0.dragonSphereZ.utils.EffectUtils;
-import ud.bi0.dragonSphereZ.utils.ParticleEffect;
+import ud.bi0.dragonSphereZ.utils.ParticleEffectUtils;
 
 public class EffSimpleDot extends Effect {
 	private Expression<Number> partCount;
@@ -87,7 +87,7 @@ public class EffSimpleDot extends Effect {
 			//TODO Must add an on delay for rainbow mode to work and also just because :)
 			if (rainbowMode == true)
 				offsetX = (float) (offsetX + 0.01);
-			ParticleEffect.valueOf(particle).display(dataMat, dataID, players, location, visibleRange, rainbowMode, offsetX, offsetY, offsetZ, finalSpeed, count);
+			ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, players, location, visibleRange, rainbowMode, offsetX, offsetY, offsetZ, finalSpeed, count);
         }
 
 	}

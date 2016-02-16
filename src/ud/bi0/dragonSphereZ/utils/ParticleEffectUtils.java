@@ -18,7 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import ud.bi0.dragonSphereZ.maths.vector.Vector3;
-import ud.bi0.dragonSphereZ.utils.ParticleEffect;
+import ud.bi0.dragonSphereZ.utils.ParticleEffectUtils;
 import ud.bi0.dragonSphereZ.utils.ReflectionUtils;
 import ud.bi0.dragonSphereZ.utils.ReflectionUtils.PackageType;
 
@@ -49,7 +49,7 @@ import ud.bi0.dragonSphereZ.utils.ReflectionUtils.PackageType;
  * @author DarkBlade12
  * @version 1.7
  */
-public enum ParticleEffect {
+public enum ParticleEffectUtils {
 	/**
 	 * Sashies version of enum names made at the request of iCraftKSA
 	 * using lowercase
@@ -98,8 +98,8 @@ public enum ParticleEffect {
 	itemtake("itemtake", 40, 8),
 	mobappearance("mobappearance", 41, 8);
 
-	public static final Map<String, ParticleEffect> NAME_MAP = new HashMap<String, ParticleEffect>();
-	public static final Map<Integer, ParticleEffect> ID_MAP = new HashMap<Integer, ParticleEffect>();
+	public static final Map<String, ParticleEffectUtils> NAME_MAP = new HashMap<String, ParticleEffectUtils>();
+	public static final Map<Integer, ParticleEffectUtils> ID_MAP = new HashMap<Integer, ParticleEffectUtils>();
 	private final String name;
 	private final int id;
 	private final int requiredVersion;
@@ -107,7 +107,7 @@ public enum ParticleEffect {
 
 	// Initialize map for quick name and id lookup
 	static {
-		for (ParticleEffect effect : values()) {
+		for (ParticleEffectUtils effect : values()) {
 			NAME_MAP.put(effect.name, effect);
 			ID_MAP.put(effect.id, effect);
 		}
@@ -121,7 +121,7 @@ public enum ParticleEffect {
 	 * @param requiredVersion Version which is required (1.x)
 	 * @param properties Properties of this particle effect
 	 */
-	private ParticleEffect(String name, int id, int requiredVersion, ParticleProperty... properties) {
+	private ParticleEffectUtils(String name, int id, int requiredVersion, ParticleProperty... properties) {
 		this.name = name;
 		this.id = id;
 		this.requiredVersion = requiredVersion;
@@ -182,8 +182,8 @@ public enum ParticleEffect {
 	 * @param name Name of the particle effect
 	 * @return The particle effect
 	 */
-	public static ParticleEffect fromName(String name) {
-		for (Entry<String, ParticleEffect> entry : NAME_MAP.entrySet()) {
+	public static ParticleEffectUtils fromName(String name) {
+		for (Entry<String, ParticleEffectUtils> entry : NAME_MAP.entrySet()) {
 			if (!entry.getKey().equalsIgnoreCase(name)) {
 				continue;
 			}
@@ -198,8 +198,8 @@ public enum ParticleEffect {
 	 * @param id Id of the particle effect
 	 * @return The particle effect
 	 */
-	public static ParticleEffect fromId(int id) {
-		for (Entry<Integer, ParticleEffect> entry : ID_MAP.entrySet()) {
+	public static ParticleEffectUtils fromId(int id) {
+		for (Entry<Integer, ParticleEffectUtils> entry : ID_MAP.entrySet()) {
 			if (entry.getKey() != id) {
 				continue;
 			}
@@ -244,7 +244,7 @@ public enum ParticleEffect {
 	 * @param data Particle data
 	 * @return Whether the data type is correct or not
 	 */
-	private static boolean isDataCorrect(ParticleEffect effect, ParticleData data) {
+	private static boolean isDataCorrect(ParticleEffectUtils effect, ParticleData data) {
 		return ((effect == blockcrack || effect == blockdust) && data instanceof BlockData) || ((effect == itemcrack) && data instanceof ItemData);
 	}
 
@@ -255,7 +255,7 @@ public enum ParticleEffect {
 	 * @param color Particle color
 	 * @return Whether the color type is correct or not
 	 */
-	private static boolean isColorCorrect(ParticleEffect effect, ParticleColor color) {
+	private static boolean isColorCorrect(ParticleEffectUtils effect, ParticleColor color) {
 		return ((effect == mobspell || effect == mobspellambient || effect == redstone) && color instanceof OrdinaryColor) || ((effect == note) && color instanceof NoteColor);
 	}
 
@@ -347,7 +347,7 @@ public enum ParticleEffect {
 	 * @throws ParticleVersionException If the particle effect is not supported by the server version
 	 * @throws ParticleDataException If the particle effect requires additional data
 	 * @throws IllegalArgumentException If the particle effect is not directional or if it requires water and none is at the center location
-	 * @see ParticlePacket#ParticlePacket(ParticleEffect, Vector, float, boolean, ParticleData)
+	 * @see ParticlePacket#ParticlePacket(ParticleEffectUtils, Vector, float, boolean, ParticleData)
 	 * @see ParticlePacket#sendTo(Location, double)
 	 */
 	public void display(Vector direction, float speed, Location center, double range) throws ParticleVersionException, ParticleDataException, IllegalArgumentException {
@@ -377,7 +377,7 @@ public enum ParticleEffect {
 	 * @throws ParticleVersionException If the particle effect is not supported by the server version
 	 * @throws ParticleDataException If the particle effect requires additional data
 	 * @throws IllegalArgumentException If the particle effect is not directional or if it requires water and none is at the center location
-	 * @see ParticlePacket#ParticlePacket(ParticleEffect, Vector, float, boolean, ParticleData)
+	 * @see ParticlePacket#ParticlePacket(ParticleEffectUtils, Vector, float, boolean, ParticleData)
 	 * @see ParticlePacket#sendTo(Location, List)
 	 */
 	public void display(Vector direction, float speed, Location center, List<Player> players) throws ParticleVersionException, ParticleDataException, IllegalArgumentException {
@@ -420,7 +420,7 @@ public enum ParticleEffect {
 	 * @param range Range of the visibility
 	 * @throws ParticleVersionException If the particle effect is not supported by the server version
 	 * @throws ParticleColorException If the particle effect is not colorable or the color type is incorrect
-	 * @see ParticlePacket#ParticlePacket(ParticleEffect, ParticleColor, boolean)
+	 * @see ParticlePacket#ParticlePacket(ParticleEffectUtils, ParticleColor, boolean)
 	 * @see ParticlePacket#sendTo(Location, double)
 	 */
 	public void display(ParticleColor color, Location center, double range) throws ParticleVersionException, ParticleColorException {
@@ -446,7 +446,7 @@ public enum ParticleEffect {
 	 * @param players Receivers of the effect
 	 * @throws ParticleVersionException If the particle effect is not supported by the server version
 	 * @throws ParticleColorException If the particle effect is not colorable or the color type is incorrect
-	 * @see ParticlePacket#ParticlePacket(ParticleEffect, ParticleColor, boolean)
+	 * @see ParticlePacket#ParticlePacket(ParticleEffectUtils, ParticleColor, boolean)
 	 * @see ParticlePacket#sendTo(Location, List)
 	 */
 	public void display(ParticleColor color, Location center, List<Player> players) throws ParticleVersionException, ParticleColorException {
@@ -651,7 +651,7 @@ public enum ParticleEffect {
 	}
 
 	/**
-	 * Represents the particle data for effects like {@link ParticleEffect#ITEM_CRACK}, {@link ParticleEffect#BLOCK_CRACK} and {@link ParticleEffect#BLOCK_DUST}
+	 * Represents the particle data for effects like {@link ParticleEffectUtils#ITEM_CRACK}, {@link ParticleEffectUtils#BLOCK_CRACK} and {@link ParticleEffectUtils#BLOCK_DUST}
 	 * <p>
 	 * This class is part of the <b>ParticleEffect Library</b> and follows the same usage conditions
 	 * 
@@ -714,7 +714,7 @@ public enum ParticleEffect {
 	}
 
 	/**
-	 * Represents the item data for the {@link ParticleEffect#ITEM_CRACK} effect
+	 * Represents the item data for the {@link ParticleEffectUtils#ITEM_CRACK} effect
 	 * <p>
 	 * This class is part of the <b>ParticleEffect Library</b> and follows the same usage conditions
 	 * 
@@ -735,7 +735,7 @@ public enum ParticleEffect {
 	}
 
 	/**
-	 * Represents the block data for the {@link ParticleEffect#BLOCK_CRACK} and {@link ParticleEffect#BLOCK_DUST} effects
+	 * Represents the block data for the {@link ParticleEffectUtils#BLOCK_CRACK} and {@link ParticleEffectUtils#BLOCK_DUST} effects
 	 * <p>
 	 * This class is part of the <b>ParticleEffect Library</b> and follows the same usage conditions
 	 * 
@@ -760,7 +760,7 @@ public enum ParticleEffect {
 	}
 
 	/**
-	 * Represents the color for effects like {@link ParticleEffect#SPELL_MOB}, {@link ParticleEffect#SPELL_MOB_AMBIENT}, {@link ParticleEffect#REDSTONE} and {@link ParticleEffect#NOTE}
+	 * Represents the color for effects like {@link ParticleEffectUtils#SPELL_MOB}, {@link ParticleEffectUtils#SPELL_MOB_AMBIENT}, {@link ParticleEffectUtils#REDSTONE} and {@link ParticleEffectUtils#NOTE}
 	 * <p>
 	 * This class is part of the <b>ParticleEffect Library</b> and follows the same usage conditions
 	 * 
@@ -791,7 +791,7 @@ public enum ParticleEffect {
 	}
 
 	/**
-	 * Represents the color for effects like {@link ParticleEffect#SPELL_MOB}, {@link ParticleEffect#SPELL_MOB_AMBIENT} and {@link ParticleEffect#NOTE}
+	 * Represents the color for effects like {@link ParticleEffectUtils#SPELL_MOB}, {@link ParticleEffectUtils#SPELL_MOB_AMBIENT} and {@link ParticleEffectUtils#NOTE}
 	 * <p>
 	 * This class is part of the <b>ParticleEffect Library</b> and follows the same usage conditions
 	 * 
@@ -903,7 +903,7 @@ public enum ParticleEffect {
 	}
 
 	/**
-	 * Represents the color for the {@link ParticleEffect#NOTE} effect
+	 * Represents the color for the {@link ParticleEffectUtils#NOTE} effect
 	 * <p>
 	 * This class is part of the <b>ParticleEffect Library</b> and follows the same usage conditions
 	 * 
@@ -1040,7 +1040,7 @@ public enum ParticleEffect {
 		private static Field playerConnection;
 		private static Method sendPacket;
 		private static boolean initialized;
-		private final ParticleEffect effect;
+		private final ParticleEffectUtils effect;
 		private float offsetX;
 		private final float offsetY;
 		private final float offsetZ;
@@ -1064,7 +1064,7 @@ public enum ParticleEffect {
 		 * @throws IllegalArgumentException If the speed or amount is lower than 0
 		 * @see #initialize()
 		 */
-		public ParticlePacket(ParticleEffect effect, float offsetX, float offsetY, float offsetZ, float speed, int amount, boolean longDistance, ParticleData data) throws IllegalArgumentException {
+		public ParticlePacket(ParticleEffectUtils effect, float offsetX, float offsetY, float offsetZ, float speed, int amount, boolean longDistance, ParticleData data) throws IllegalArgumentException {
 			initialize();
 			if (speed < 0) {
 				throw new IllegalArgumentException("The speed is lower than 0");
@@ -1091,9 +1091,9 @@ public enum ParticleEffect {
 		 * @param longDistance Indicates whether the maximum distance is increased from 256 to 65536
 		 * @param data Data of the effect
 		 * @throws IllegalArgumentException If the speed is lower than 0
-		 * @see #ParticleEffect(ParticleEffect, float, float, float, float, int, boolean, ParticleData)
+		 * @see #ParticleEffect(ParticleEffectUtils, float, float, float, float, int, boolean, ParticleData)
 		 */
-		public ParticlePacket(ParticleEffect effect, Vector direction, float speed, boolean longDistance, ParticleData data) throws IllegalArgumentException {
+		public ParticlePacket(ParticleEffectUtils effect, Vector direction, float speed, boolean longDistance, ParticleData data) throws IllegalArgumentException {
 			this(effect, (float) direction.getX(), (float) direction.getY(), (float) direction.getZ(), speed, 0, longDistance, data);
 		}
 
@@ -1103,11 +1103,11 @@ public enum ParticleEffect {
 		 * @param effect Particle effect
 		 * @param color Color of the particle
 		 * @param longDistance Indicates whether the maximum distance is increased from 256 to 65536
-		 * @see #ParticleEffect(ParticleEffect, float, float, float, float, int, boolean, ParticleData)
+		 * @see #ParticleEffect(ParticleEffectUtils, float, float, float, float, int, boolean, ParticleData)
 		 */
-		public ParticlePacket(ParticleEffect effect, ParticleColor color, boolean longDistance) {
+		public ParticlePacket(ParticleEffectUtils effect, ParticleColor color, boolean longDistance) {
 			this(effect, color.getValueX(), color.getValueY(), color.getValueZ(), 1, 0, longDistance, null);
-			if ((effect == ParticleEffect.redstone) && color instanceof OrdinaryColor && ((OrdinaryColor) color).getRed() == 0) {
+			if ((effect == ParticleEffectUtils.redstone) && color instanceof OrdinaryColor && ((OrdinaryColor) color).getRed() == 0) {
 				offsetX = Float.MIN_NORMAL;
 			}
 		}
@@ -1184,7 +1184,7 @@ public enum ParticleEffect {
 					ReflectionUtils.setValue(packet, true, "j", longDistance);
 					if (data != null) {
 						int[] packetData = data.getPacketData();
-						ReflectionUtils.setValue(packet, true, "k", (effect == ParticleEffect.itemcrack) ? packetData : new int[] { packetData[0] | (packetData[1] << 12) });
+						ReflectionUtils.setValue(packet, true, "k", (effect == ParticleEffectUtils.itemcrack) ? packetData : new int[] { packetData[0] | (packetData[1] << 12) });
 					}
 				}
 				ReflectionUtils.setValue(packet, true, "b", (float) center.getX());
@@ -1346,7 +1346,7 @@ public enum ParticleEffect {
 	 */
 	public void display(Material dataMat, byte dataID, List<Player> players, Location center, double visibleRange, boolean rainbowMode, float offsetX, float offsetY, float offsetZ, float speed, int particleCount) {
 		// Color these particles only please also add rainbow if asked for.
-		if (this == ParticleEffect.redstone || this == ParticleEffect.mobspell || this == ParticleEffect.mobspellambient) {
+		if (this == ParticleEffectUtils.redstone || this == ParticleEffectUtils.mobspell || this == ParticleEffectUtils.mobspellambient) {
 			//TODO Add message about limiting offset to 0-255 for color...(or at input if < 0 = 0 if > 255 = 255 also could do if > 255 = 0 for a loop.
 			if (rainbowMode == true){
 				OrdinaryColor color = new OrdinaryColor(Color.getHSBColor(offsetX, offsetY, offsetZ));
@@ -1368,7 +1368,7 @@ public enum ParticleEffect {
 		}
 		//Blend in some data values if needed.
 		else if (hasProperty(ParticleProperty.REQUIRES_DATA)) {
-			if ((this == ParticleEffect.blockcrack || this == ParticleEffect.blockdust) && dataMat != null){
+			if ((this == ParticleEffectUtils.blockcrack || this == ParticleEffectUtils.blockdust) && dataMat != null){
 				BlockData finalData = new BlockData(dataMat, dataID);
 				if (players != null){
 					//display(finalData, offsetX, offsetY, offsetZ, speed, particleCount, center, player);
@@ -1377,7 +1377,7 @@ public enum ParticleEffect {
 					display(finalData, offsetX, offsetY, offsetZ, speed, particleCount, center, visibleRange);
 				}
 			}
-			else if((this == ParticleEffect.itemcrack) && dataMat != null){
+			else if((this == ParticleEffectUtils.itemcrack) && dataMat != null){
 				ItemData finalData = new ItemData(dataMat, dataID);
 				if (players != null){
 					//display(finalData, offsetX, offsetY, offsetZ, speed, particleCount, center, player);
@@ -1402,7 +1402,7 @@ public enum ParticleEffect {
 	 */
 	public void display(List<Player> players, Location center, double visibleRange, float hue) {
 		// Color these particles only please also add rainbow if asked for.
-		if (this == ParticleEffect.redstone || this == ParticleEffect.mobspell || this == ParticleEffect.mobspellambient) {
+		if (this == ParticleEffectUtils.redstone || this == ParticleEffectUtils.mobspell || this == ParticleEffectUtils.mobspellambient) {
 			OrdinaryColor color = new OrdinaryColor(Color.getHSBColor(hue / 20, 1F, 1F));
 			if (players != null){
 				//display(color, center, player);
@@ -1417,7 +1417,7 @@ public enum ParticleEffect {
      * Sashies ColorImage helper :3
 	 */
 	public void display(Location center, double visibleRange, List<Player> players, int r, int g, int b) {
-			if (this == ParticleEffect.redstone || this == ParticleEffect.mobspell || this == ParticleEffect.mobspellambient) {
+			if (this == ParticleEffectUtils.redstone || this == ParticleEffectUtils.mobspell || this == ParticleEffectUtils.mobspellambient) {
 				OrdinaryColor color = new OrdinaryColor(r,g,b);
 				if (players != null){
 					//display(color, center, player);

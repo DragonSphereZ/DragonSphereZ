@@ -11,10 +11,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import ud.bi0.dragonSphereZ.DragonSphereCore;
 import ud.bi0.dragonSphereZ.maths.vector.Vector3;
-import ud.bi0.dragonSphereZ.utils.ParticleEffect;
+import ud.bi0.dragonSphereZ.utils.ParticleEffectUtils;
 
 
-public class Effect extends BukkitRunnable {
+public class ParticleEffect extends BukkitRunnable {
 	
 	
 	public String idName; 
@@ -35,16 +35,17 @@ public class Effect extends BukkitRunnable {
 	
 	public long delayTick; //Default 0
 	public long pulseTick; //Default 20
-		
-	protected final Plugin plugin = DragonSphereCore.dragonSphereCore;
-	protected final EffectManager effectManager = DragonSphereCore.effectManager;
 	
-	public Effect(String idName, String particle, Object center, List<Player> players, long delayTick, long pulseTick, int particleCount, Material dataMat, byte dataID, float speed, double visibleRange, Vector3 offset) {
+	protected int idTask = 0;
+	protected final Plugin plugin = DragonSphereCore.dragonSphereCore;
+	protected final ParticleEffectManager effectManager = DragonSphereCore.effectManager;
+	
+	public ParticleEffect(String idName, String particle, Object center, List<Player> players, long delayTick, long pulseTick, int particleCount, Material dataMat, byte dataID, float speed, double visibleRange, Vector3 offset) {
 		init(idName, particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, offset);
 	}
 	
-	public Effect(String idName, Object center, List<Player> players) {
-		init(idName, ParticleEffect.limeglassparticle.getName(), center, players, 0, 20, 1, Material.DIRT, (byte) 0, 0F, 32D, new Vector3(0,0,0));
+	public ParticleEffect(String idName, Object center, List<Player> players) {
+		init(idName, ParticleEffectUtils.limeglassparticle.getName(), center, players, 0, 20, 1, Material.DIRT, (byte) 0, 0F, 32D, new Vector3(0,0,0));
 	}
 	
 	private void init (
@@ -84,6 +85,14 @@ public class Effect extends BukkitRunnable {
 		this.particle = particle;
 		this.dataMat = dataMat;
 		this.dataID = dataID;
+	}
+	
+	public int getID() {
+		return idTask;
+	}
+	
+	public String getNameID() {
+		return idName;
 	}
 	
 	public void stop() {

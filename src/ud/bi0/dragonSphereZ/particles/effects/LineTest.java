@@ -9,10 +9,10 @@ import org.bukkit.entity.Player;
 
 import ud.bi0.dragonSphereZ.maths.shape.Line;
 import ud.bi0.dragonSphereZ.maths.vector.Vector3;
-import ud.bi0.dragonSphereZ.particles.Effect;
-import ud.bi0.dragonSphereZ.utils.ParticleEffect;
+import ud.bi0.dragonSphereZ.particles.ParticleEffect;
+import ud.bi0.dragonSphereZ.utils.ParticleEffectUtils;
 
-public class LineTest extends Effect {
+public class LineTest extends ParticleEffect {
 	
 
 	public LineTest(String idName, Object center, List<Player> players) {
@@ -22,7 +22,7 @@ public class LineTest extends Effect {
 	@Override
 	public void start() {
 		if (!effectManager.isActive(idName))  {
-			Integer idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
+			idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
 				
 				Location location;
 				Line line = new Line(new Vector3(0,0,0), new Vector3(0,0,0));
@@ -45,12 +45,12 @@ public class LineTest extends Effect {
 						line.setDirection(new Vector3(player.getLocation()).subtract(origin));
 						points = line.render();
 						for (Vector3 point : points) {
-							ParticleEffect.valueOf(particle).display(dataMat, dataID, players, point.toLocation(location), visibleRange, false, offset, speed, particleCount);
+							ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, players, point.toLocation(location), visibleRange, false, offset, speed, particleCount);
 						}
 					}
 				}
 			}, delayTick, pulseTick).getTaskId();
-			effectManager.startEffect(idName, idTask);
+			effectManager.startEffect(this);
 		}
 		
 	}
