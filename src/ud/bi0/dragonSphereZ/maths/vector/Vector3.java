@@ -1154,7 +1154,7 @@ public class Vector3
      * 
      */
     public Location addToLocation(Location location) {
-    	location.add(y, z, x);
+    	location.add(this.y, this.z, this.x);
     	return location;
     }
 

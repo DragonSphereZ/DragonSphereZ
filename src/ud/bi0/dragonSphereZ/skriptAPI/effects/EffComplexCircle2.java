@@ -119,8 +119,11 @@ public class EffComplexCircle2 extends Effect {
 		double xRotation = SkriptHandler.inputEffectRotation(e, xRot);
 		double yRotation = SkriptHandler.inputEffectRotation(e, yRot);
 		double zRotation = SkriptHandler.inputEffectRotation(e, zRot);
-		Vector3 axis = new Vector3(zRotation, xRotation, yRotation);
-		int finalParticleDensity = SkriptHandler.inputParticleDensity(e, inputParticleDensity);
+		Vector3 axis = new Vector3(0,1,0);
+		if (xRotation * xRotation + yRotation * yRotation + zRotation * zRotation > 0) {
+			axis = new Vector3(zRotation, xRotation, yRotation);
+		}
+		double finalParticleDensity = SkriptHandler.inputParticleDensity(e, inputParticleDensity);
 		
 		Object center = entLoc.getSingle(e);
 		String idName = (String)this.idName.getSingle(e);
@@ -141,7 +144,7 @@ public class EffComplexCircle2 extends Effect {
 		Material dataMat = SkriptHandler.inputParticleDataMat(e, inputParticleData);
 		byte dataID = SkriptHandler.inputParticleDataID(e, inputParticleData);
 		
-		new ComplexCircle(idName, particle, center, players, 0L, finalTickDelay, finalParticleDensity, dataMat, dataID, finalSpeed, visibleRange, offset, displacement, radius, 1D, rainbowMode, enableRotation, axis).start();
+		new ComplexCircle(idName, particle, center, players, 0L, finalTickDelay, 1, dataMat, dataID, finalSpeed, visibleRange, offset, displacement, radius, finalParticleDensity, rainbowMode, enableRotation, axis).start();
 		//EffectsLib.drawComplexCircle(particle, dataMat, dataID, center, idName, p, rainbowMode, enableRotation, radius, finalSpeed, finalParticleDensity, finalStep, visibleRange, xRotation, yRotation, zRotation, offsetX, offsetY, offsetZ, disX, disY, disZ, finalTickDelay);
 
 	}

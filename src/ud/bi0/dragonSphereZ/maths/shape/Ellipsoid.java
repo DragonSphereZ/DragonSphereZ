@@ -71,7 +71,7 @@ public class Ellipsoid extends Shape {
 	}
 	
 	public Vector3 getPoint(double angleThetha, double anglePhi) {
-		return getPoint(1, 1, 1, angleThetha, anglePhi);
+		return getPoint(1, angleThetha, anglePhi);
 	}
 	
 	public Vector3 getPoint(double radius, double angleThetha, double anglePhi) {
