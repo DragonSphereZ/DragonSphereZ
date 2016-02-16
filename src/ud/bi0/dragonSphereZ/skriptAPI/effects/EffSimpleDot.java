@@ -68,7 +68,7 @@ public class EffSimpleDot extends Effect {
 	@Override
 	protected void execute(@Nullable Event e) {
 		int count = SkriptHandler.inputParticleCount(e, partCount);
-		List<Player> p = SkriptHandler.inputPlayers(e, inputPlayers);
+		List<Player> players = SkriptHandler.inputPlayers(e, inputPlayers);
 		String particle = SkriptHandler.inputParticleString(e, inputParticleString);
 		boolean rainbowMode = SkriptHandler.inputRainbowMode(e, isRainbowTrue);
 		float finalSpeed = SkriptHandler.inputParticleSpeed(e, inputParticleSpeed);
@@ -77,20 +77,17 @@ public class EffSimpleDot extends Effect {
 		float offsetZ = SkriptHandler.inputParticleOffset(e, offZ);
 		
 		double visibleRange = range.getSingle(e).doubleValue();
-		
-		
 
 		Material dataMat = SkriptHandler.inputParticleDataMat(e, inputParticleData);
 		byte dataID = SkriptHandler.inputParticleDataID(e, inputParticleData);
 
-		
 		Object[] center = (Object[])entLoc.getAll(e);
 		for (final Object loc : center) {
 			Location location = EffectUtils.getLocation(loc);
 			//TODO Must add an on delay for rainbow mode to work and also just because :)
 			if (rainbowMode == true)
 				offsetX = (float) (offsetX + 0.01);
-			ParticleEffect.valueOf(particle).display(dataMat, dataID, p, location, visibleRange, rainbowMode, offsetX, offsetY, offsetZ, finalSpeed, count);
+			ParticleEffect.valueOf(particle).display(dataMat, dataID, players, location, visibleRange, rainbowMode, offsetX, offsetY, offsetZ, finalSpeed, count);
         }
 
 	}

@@ -107,7 +107,7 @@ public class EffComplexCircle extends Effect {
 		float offsetX = SkriptHandler.inputParticleOffset(e, offX);
 		float offsetY = SkriptHandler.inputParticleOffset(e, offY);
 		float offsetZ = SkriptHandler.inputParticleOffset(e, offZ);
-		List<Player> p = SkriptHandler.inputPlayers(e, inputPlayers);
+		List<Player> players = SkriptHandler.inputPlayers(e, inputPlayers);
 		
 		boolean rainbowMode = SkriptHandler.inputRainbowMode(e, isRainbowTrue);
 		double disX = SkriptHandler.inputLocDisplacement(e, displaceX);
@@ -136,7 +136,7 @@ public class EffComplexCircle extends Effect {
 		
 		Material dataMat = SkriptHandler.inputParticleDataMat(e, inputParticleData);
 		byte dataID = SkriptHandler.inputParticleDataID(e, inputParticleData);
-		EffectsLib.drawComplexCircle(particle, dataMat, dataID, center, idName, p, rainbowMode, enableRotation, radius, finalSpeed, finalParticleDensity, finalStep, visibleRange, xRotation, yRotation, zRotation, offsetX, offsetY, offsetZ, disX, disY, disZ, finalTickDelay);
+		EffectsLib.drawComplexCircle(particle, dataMat, dataID, center, idName, players, rainbowMode, enableRotation, radius, finalSpeed, finalParticleDensity, finalStep, visibleRange, xRotation, yRotation, zRotation, offsetX, offsetY, offsetZ, disX, disY, disZ, finalTickDelay);
 
 	}
 }
