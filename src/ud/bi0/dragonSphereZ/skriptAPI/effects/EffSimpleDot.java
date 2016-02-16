@@ -22,8 +22,8 @@ import ud.bi0.dragonSphereZ.utils.ParticleEffect;
 public class EffSimpleDot extends Effect {
 	private Expression<Number> partCount;
 	private Expression<String> inputParticleString;
-	private Expression<ItemStack> data;
-	private Expression<Number> partSpeed;
+	private Expression<ItemStack> inputParticleData;
+	private Expression<Number> inputParticleSpeed;
 	private Expression<Number> offX;
 	private Expression<Number> offY;
 	private Expression<Number> offZ;
@@ -37,8 +37,8 @@ public class EffSimpleDot extends Effect {
 	public boolean init(Expression<?>[] exprs, int matchedPattern, Kleenean isDelayed, ParseResult parseResult) {
 		partCount = (Expression<Number>) exprs[0];
 		inputParticleString = (Expression<String>) exprs[1];
-		data = (Expression<ItemStack>) exprs[2];
-		partSpeed = (Expression<Number>) exprs[3];
+		inputParticleData = (Expression<ItemStack>) exprs[2];
+		inputParticleSpeed = (Expression<Number>) exprs[3];
 		offX = (Expression<Number>) exprs[4];
 		offY = (Expression<Number>) exprs[5];
 		offZ = (Expression<Number>) exprs[6];
@@ -65,56 +65,32 @@ public class EffSimpleDot extends Effect {
 		return "drawDot [count %-number%], particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %locations/entities%[, onlyFor %-player%][, r[ainbow]M[ode] %-boolean%], visibleRange %number%";
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	protected void execute(@Nullable Event e) {
-		float offsetX = 0;
-		float offsetY = 0;
-		float offsetZ = 0;
-		float speed = 0;
-		
 		int count = SkriptHandler.inputParticleCount(e, partCount);
 		List<Player> p = SkriptHandler.inputPlayers(e, inputPlayers);
 		String particle = SkriptHandler.inputParticleString(e, inputParticleString);
 		boolean rainbowMode = SkriptHandler.inputRainbowMode(e, isRainbowTrue);
-
-		
-		if(offX != null && offY != null && offZ != null){
-			offsetX = offX.getSingle(e).floatValue();
-			offsetY = offY.getSingle(e).floatValue();
-			offsetZ = offZ.getSingle(e).floatValue();
-		}
-		
-		if(partSpeed != null){
-			speed = partSpeed.getSingle(e).floatValue();	
-		}
+		float finalSpeed = SkriptHandler.inputParticleSpeed(e, inputParticleSpeed);
+		float offsetX = SkriptHandler.inputParticleOffset(e, offX);
+		float offsetY = SkriptHandler.inputParticleOffset(e, offY);
+		float offsetZ = SkriptHandler.inputParticleOffset(e, offZ);
 		
 		double visibleRange = range.getSingle(e).doubleValue();
-		Material dataMat = Material.DIRT;
-		byte dataID = 0;
-		if(data != null){
-			dataMat = data.getSingle(e).getType();
-			dataID = data.getSingle(e).getData().getData();
-		}
+		
+		
+
+		Material dataMat = SkriptHandler.inputParticleDataMat(e, inputParticleData);
+		byte dataID = SkriptHandler.inputParticleDataID(e, inputParticleData);
+
 		
 		Object[] center = (Object[])entLoc.getAll(e);
-		//Location[] loc = (Location[])entLoc.getAll(e);
-		//Location location = null;
 		for (final Object loc : center) {
-			//if (loc instanceof Entity) {
-			//	location = ((Entity) loc).getLocation();
-			//}else if (loc instanceof Location){
-			//	location = new Location(((Location) loc).getWorld(), ((Location) loc).getX(), ((Location) loc).getY(), ((Location) loc).getZ());
-			//}
 			Location location = EffectUtils.getLocation(loc);
-			float hue = 0;
+			//TODO Must add an on delay for rainbow mode to work and also just because :)
 			if (rainbowMode == true)
-				
-				hue += 0.01F;
-				hue = (hue >= 1.0F ? 0.0F : hue);
-			ParticleEffect.valueOf(particle).display(dataMat, dataID, p, location, visibleRange, rainbowMode, offsetX, offsetY, offsetZ, speed, count);
-		//EffectsLib.drawSimpleDot(count, particle, dataMat, dataID, speed, offsetX, offsetY, offsetZ, center, isSinglePlayer, p, rainbowMode, visibleRange, delayTicks, delayBySecond);
-
+				offsetX = (float) (offsetX + 0.01);
+			ParticleEffect.valueOf(particle).display(dataMat, dataID, p, location, visibleRange, rainbowMode, offsetX, offsetY, offsetZ, finalSpeed, count);
         }
 
 	}
