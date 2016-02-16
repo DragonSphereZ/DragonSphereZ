@@ -19,6 +19,7 @@ public class SimpleHalo extends ParticleEffect {
 	public SimpleHalo(String idName, String particle, Object center, List<Player> players, boolean clockwise) {
 		super(idName, particle, center, players, 0, 2, 1, Material.DIRT,(byte) 0, 0, 32, new Vector3(0,0,0));
 		this.clockwise = clockwise;
+		if (!ParticleEffectUtils.NAME_MAP.containsKey(particle)) this.particle = "limeglassparticle";
 	}
 	
 	@Override

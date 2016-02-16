@@ -35,9 +35,9 @@ public class ParticleEffectManager {
 	 * Stops all effects.
 	 */
 	public void stopAll() {
-		for (String key : effectMap.keySet()) {
-			stopEffect(key);
-		}
+		String[] keys = new String[effectMap.keySet().size()];
+		effectMap.keySet().toArray(keys);
+		for (String key : keys) stopEffect(key);
 	}
 	
 	/**

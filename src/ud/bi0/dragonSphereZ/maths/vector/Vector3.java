@@ -1153,8 +1153,13 @@ public class Vector3
      * Adds the vector to a location.
      * 
      */
-    public Location addToLocation(Location location) {
+    public Location addTo(Location location) {
     	location.add(this.y, this.z, this.x);
+    	return location;
+    }
+    
+    public Location subtractFrom(Location location) {
+    	location.subtract(this.y, this.z, this.x);
     	return location;
     }
 

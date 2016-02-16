@@ -59,4 +59,6 @@ public class DynamicLocation extends Location {
 		if (center instanceof Entity) return new DynamicLocation((Entity) center);
 		return new DynamicLocation(new Location(((Location) center).getWorld(), ((Location) center).getX(), ((Location) center).getY(), ((Location) center).getZ()));
 	}
+	
+	
 }
