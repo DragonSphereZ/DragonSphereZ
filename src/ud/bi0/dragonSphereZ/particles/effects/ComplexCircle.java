@@ -50,7 +50,7 @@ public class ComplexCircle extends Effect {
 	}
 	public ComplexCircle(String idName, Object center, List<Player> players) {
 		super(idName, center, players);
-		init(1,1,false,false, new Vector3(0,0,0));
+		init(1,1,false,false, new Vector3(0,1,0));
 	}
 	
 	public void init(double radius, double particleDensity, boolean rainbowMode, boolean enableRotation, Vector3 axis) {
@@ -79,6 +79,7 @@ public class ComplexCircle extends Effect {
 				//Location location;				<-----changed to EffectUtils helper
 				boolean setAxis = true;
 				Location location;
+				Vector3 vector = new Vector3(0,0,0);
 				
 				@Override
 				public void run() {
@@ -94,12 +95,13 @@ public class ComplexCircle extends Effect {
 					//	location = (Location) center;
 					//}
 					location = EffectUtils.getLocation2(center);
-					circle.getPoint(thetha, phi).addToLocation(location);
+					vector.copy(circle.getPoint(thetha, phi));
+					location.add(vector.getX(), vector.getY(), vector.getZ());
 					ParticleEffect.valueOf(particle).display(dataMat, dataID, players, location, visibleRange, rainbowMode, offset, speed, particleCount);
 					
 					if (rainbowMode) offset.setX(offset.getX() + 0.01);
+					if (enableRotation) this.thetha += 0.01D;
 					phi += stepPhi;
-					thetha += stepThetha;
 				}
 			}, delayTick, pulseTick).getTaskId();
 			effectManager.startEffect(idName, idTask);
