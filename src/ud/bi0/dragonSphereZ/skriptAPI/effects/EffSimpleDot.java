@@ -56,13 +56,13 @@ public class EffSimpleDot extends Effect {
 	 * [, speed %-number%]
 	 * [, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], 
 	 * center %locations/entities%, 
-	 * [, isSingle %-boolean%, %-player%]
+	 * [, onlyFor %-player%]
 	 * [, r[ainbow]M[ode] %-boolean%], 
 	 * visibleRange %number%, 
 	*/
 	@Override
 	public String toString(@Nullable Event e, boolean debug) {
-		return "drawDot [count %-number%], particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %locations/entities%[, isSingle %-boolean%, %-player%][, r[ainbow]M[ode] %-boolean%], visibleRange %number%";
+		return "drawDot [count %-number%], particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %locations/entities%[, onlyFor %-player%][, r[ainbow]M[ode] %-boolean%], visibleRange %number%";
 	}
 
 	@SuppressWarnings("deprecation")
