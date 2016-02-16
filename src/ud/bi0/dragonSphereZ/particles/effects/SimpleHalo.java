@@ -26,7 +26,7 @@ public class SimpleHalo extends ParticleEffect {
 		if (!effectManager.isActive(idName))  {
 			idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
 				
-				Vector3 vector = new Vector3(0.5, 0, 2);
+				Vector3 vector = new Vector3(0.5, 0.5, 2);
 				DynamicLocation location = DynamicLocation.init(center);
 				double stepPhi = clockwise ? -0.3 : 0.3;
 				Rotator3 rotator = new Rotator3(new Vector3(0,0,1), stepPhi);
@@ -34,12 +34,12 @@ public class SimpleHalo extends ParticleEffect {
 				@Override
 				public void run() {
 					if (!location.isDynamic() || !location.needsUpdate(pulseTick)) {
+						location.update();
 						vector.rot(rotator);
 						location.add(vector.getY(), vector.getZ(), vector.getX());
 						ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, players, location, visibleRange, false, offset, speed, particleCount);
 						location.subtract(vector.getY(), vector.getZ(), vector.getX());
-					}
-					location.update();
+					} else location.update();
 				}
 			}, this.delayTick, this.pulseTick).getTaskId();
 			effectManager.startEffect(this);

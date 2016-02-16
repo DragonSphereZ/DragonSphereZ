@@ -19,7 +19,7 @@ public class EffStopAllEffects extends Effect {
 
 	@Override
 	public String toString(@Nullable Event arg0, boolean arg1) {
-		return "stop all effects";
+		return "stop all[ running][ particle] effects";
 	}
 
 	@Override

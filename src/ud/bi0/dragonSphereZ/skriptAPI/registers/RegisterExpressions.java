@@ -20,6 +20,7 @@ public class RegisterExpressions {
 		Skript.registerExpression(ExprTestSpiral.class, Location.class, ExpressionType.SIMPLE, "testspiral at %location% with properties %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%");
 		Skript.registerExpression(ExprTestEllipsoidSpiral.class, Location.class, ExpressionType.SIMPLE, "testellspiral at %location% with properties %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%, %number%");
 		Skript.registerExpression(ExprAllEffects.class, String.class, ExpressionType.SIMPLE, "[all ][active ]particle effects");
+		Skript.registerExpression(ExprActiveEffect, Boolean.class, ExpressionType.SIMPLE, "[particle ]effect %string% is active");
 	}
 	
 	public static void Biosphere() {
