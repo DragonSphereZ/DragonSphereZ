@@ -70,11 +70,11 @@ public class SimpleYinYang extends ParticleEffect {
 		init(yin, yin, count);
 	}
 	private void init(String yin, String yang) {
-		init(yin, yang, Material.DIRT, Material.DIRT, 1, 1);
+		init(yin, yang, matYin, matYang, 1, 1);
 	}
 	
 	private void init(String yin, String yang, int count) {
-		init(yin, yang, Material.DIRT, Material.DIRT, count, count);
+		init(yin, yang, matYin, matYang, count, count);
 	}
 	private void init(String yin, String yang, Material matYin, Material matYang, int countYin, int countYang) {
 		this.yin = yin;
