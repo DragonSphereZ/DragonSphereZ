@@ -20,8 +20,8 @@ public class SimpleYinYang extends ParticleEffect {
 	String yang;
 	Material matYin = Material.DIRT;
 	Material matYang = Material.DIRT;
-	byte dataYin = 0;
-	byte dataYang = 0;
+	byte dataYin = (byte) 0;
+	byte dataYang = (byte) 0;
 	int countYin = 1;
 	int countYang = 1;
 	double angle = 0.3;
@@ -46,14 +46,13 @@ public class SimpleYinYang extends ParticleEffect {
 			color = true;
 			break;
 		case "redstone":
-			init("redstone", 3);
+			init("redstone", 4);
+			angle = 0.2;
 			color = true;
 			break;
 		case "blockdust":
 			matYin = Material.LAVA;
 			matYang = Material.WATER;
-			dataYin = 11;
-			dataYang = 9;
 			init("blockdust", 5);
 			break;
 		default:
