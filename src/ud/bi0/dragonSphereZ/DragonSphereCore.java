@@ -35,7 +35,7 @@ public class DragonSphereCore extends JavaPlugin {
 			Skript.registerAddon(this);
 			Bukkit.getServer().getLogger().info("[DragonSphereZ] Plugin has been Enabled");
 			RegisterEffects.DragonSphereZ();
-			RegisterEffects.BetaTests();
+			RegisterEffects.BetaTests();//TODO remove this eventually
 			RegisterExpressions.DragonSphereZ();
 			effectManager = new ParticleEffectManager();
 			Plugin Biosphere = Bukkit.getServer().getPluginManager().getPlugin("Biosphere");
