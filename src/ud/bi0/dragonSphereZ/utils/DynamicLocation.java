@@ -3,6 +3,7 @@ package ud.bi0.dragonSphereZ.utils;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 
+import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 import ud.bi0.dragonSphereZ.particles.ParticleEffect;
 
 public class DynamicLocation extends Location {
@@ -56,6 +57,18 @@ public class DynamicLocation extends Location {
 	
 	public Entity getEntity() {
 		return entity;
+	}
+	
+	/**
+	 * Gets the displacement vector between the location and the
+	 * entity's location divided by the time interval.
+	 */
+	public Vector3 displacement(Vector3 direction, long pulseTick) {
+		if (dynamic) {
+			direction.copy(this.getEntity().getLocation());
+			direction.add(-this.getZ(), -this.getX(), -this.getY());
+			return direction.multiply(1D / pulseTick);
+		} else return null;
 	}
 	
 	public static DynamicLocation init(Object center) {

@@ -34,12 +34,12 @@ public class SimpleTrail extends ParticleEffect {
 				@Override
 				public void run() {
 					if (location.needsUpdate(pulseTick)) {
+						location.displacement(vector, pulseTick);
+						vector.normalize().multiply(-0.3);
 						location.update();
-						vector.copy(location.getEntity().getVelocity());
-						vector.normalize().multiply(-0.3); // Gets location 0.3 horizontally behind and 0.3 above player
-						x = random.nextDouble() * 0.3 - 0.3;
-						y = random.nextDouble() * 0.3 - 0.3;
-						z = random.nextDouble() * 0.3 - 0.3;
+						x = random.nextDouble() * 0.5 - 0.25;
+						y = random.nextDouble() * 0.5 - 0.25;
+						z = random.nextDouble() * 0.25;
 						vector.add(x, y, z);
 						vector.addTo(location);
 						location.display(SimpleTrail.this);
