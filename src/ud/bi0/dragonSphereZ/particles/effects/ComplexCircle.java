@@ -3,15 +3,13 @@ package ud.bi0.dragonSphereZ.particles.effects;
 import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import ud.bi0.dragonSphereZ.maths.shape.Cylinder;
 import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 import ud.bi0.dragonSphereZ.particles.ParticleEffect;
-import ud.bi0.dragonSphereZ.utils.EffectUtils;
-import ud.bi0.dragonSphereZ.utils.ParticleEffectUtils;
+import ud.bi0.dragonSphereZ.utils.DynamicLocation;
 
 public class ComplexCircle extends ParticleEffect {
 	
@@ -44,19 +42,18 @@ public class ComplexCircle extends ParticleEffect {
 		boolean enableRotation,
 		Vector3 axis)
 	{
-		super(idName, particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, offset);
-		init(radius, particleDensity, rainbowMode, enableRotation, axis);
+		super(idName, particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, rainbowMode, offset);
+		init(radius, particleDensity, enableRotation, axis);
 
 	}
 	public ComplexCircle(String idName, Object center, List<Player> players) {
 		super(idName, center, players);
-		init(1,1,false,false, new Vector3(0,0,1));
+		init(1,1,false, new Vector3(0,0,1));
 	}
 	
-	public void init(double radius, double particleDensity, boolean rainbowMode, boolean enableRotation, Vector3 axis) {
+	public void init(double radius, double particleDensity, boolean enableRotation, Vector3 axis) {
 		this.radius = radius;
 		this.particleDensity = particleDensity;
-		this.rainbowMode = rainbowMode;
 		this.enableRotation = enableRotation;
 		this.axis = axis;
 	}
@@ -65,6 +62,7 @@ public class ComplexCircle extends ParticleEffect {
 	public void start() {
 		if (!effectManager.isActive(idName))  {
 			idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
+
 				// Holds the total number of steps per circle.
 				final int steps = (int) (2 * Math.PI * radius * particleDensity);
 				// Holds the current angle.
@@ -78,7 +76,7 @@ public class ComplexCircle extends ParticleEffect {
 				final Cylinder circle = new Cylinder(new Vector3(0,0,0), radius, radius);
 				//Location location;				<-----changed to EffectUtils helper
 				boolean setAxis = true;
-				Location location;
+				DynamicLocation location = DynamicLocation.init(center);
 				Vector3 vector = new Vector3(0,0,0);
 				
 				@Override
@@ -88,22 +86,14 @@ public class ComplexCircle extends ParticleEffect {
 						setAxis = false;
 						circle.getBase().setNormal(axis);;
 					}
-					//if (center instanceof Entity) {			<-----changed to EffectUtils helper
-					//	location = ((Entity) center).getLocation();
-					//}
-					//else if (center instanceof Location){
-					//	location = (Location) center;
-					//}
-					location = EffectUtils.getLocation2(center);
-					//vector.copy(circle.getPoint(1,phi,Math.abs(Math.sin(height))*2));
+
+					location.update();
 					vector.copy(circle.getPoint(1,phi,0));
 					location.add(vector.getY(), vector.getZ(), vector.getX());
-					ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, players, location, visibleRange, rainbowMode, offset, speed, particleCount);
-					
+					location.display(ComplexCircle.this);
 					if (rainbowMode) offset.setX(offset.getX() + 0.01);
 					if (enableRotation) {
 						circle.getBase().setNormal(circle.getBase().getNormal().rotXYZ(1, 1, 1));
-						//height += stepHeight;
 					}
 					phi += stepPhi;
 				}

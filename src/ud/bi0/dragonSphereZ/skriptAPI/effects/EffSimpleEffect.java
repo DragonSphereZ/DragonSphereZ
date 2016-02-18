@@ -48,7 +48,7 @@ public class EffSimpleEffect extends Effect {
 		String particle = effectParticle.getSingle(e);
 		Object target = effectTarget.getSingle(e);
 		List<Player> players = Arrays.asList(effectPlayers.getAll(e));
-		ParticleEffect effect = SimpleEffectHelper.getEffect(name, id, particle, target, players);
+		ParticleEffect effect = new SimpleEffectHelper().getEffect(name, id, particle, target, players);
 		if (effect == null) return;
 		effect.start();
 	}

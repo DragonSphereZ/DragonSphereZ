@@ -1,4 +1,4 @@
-package ud.bi0.dragonSphereZ.particles.effects;
+package ud.bi0.dragonSphereZ.particles.effects.simple;
 
 import java.util.List;
 
@@ -27,7 +27,7 @@ public class SimpleYinYang extends ParticleEffect {
 	double angle = 0.3;
 	
 	public SimpleYinYang(String idName, String particle, Object center, List<Player> players, boolean clockwise) {
-		super(idName, particle, center, players, 0, 2, 1, Material.DIRT,(byte) 0, 0, 32, new Vector3(0,0,0));
+		super(idName, particle, center, players, 0, 2, 1, Material.DIRT,(byte) 0, 0, 32, false, new Vector3(0,0,0));
 		this.clockwise = clockwise;
 		particle.toLowerCase();
 		switch(particle) {
@@ -38,10 +38,10 @@ public class SimpleYinYang extends ParticleEffect {
 			angle = 0.2;
 			break;
 		case "mobspell":
-			init("mobspell", 3);
+			init("mobspell", 20);
 			color = true;
 			break;
-		case "mobspellambiet":
+		case "mobspellambient":
 			init("mobspellambient", 3);
 			color = true;
 			break;
@@ -53,7 +53,8 @@ public class SimpleYinYang extends ParticleEffect {
 		case "blockdust":
 			matYin = Material.LAVA;
 			matYang = Material.WATER;
-			init("blockdust", 5);
+			yin = "blockdust";
+			yang = "blockdust";
 			break;
 		default:
 			init("lavadrip", "waterdrip", 3);

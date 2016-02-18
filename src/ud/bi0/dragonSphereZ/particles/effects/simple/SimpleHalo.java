@@ -1,4 +1,4 @@
-package ud.bi0.dragonSphereZ.particles.effects;
+package ud.bi0.dragonSphereZ.particles.effects.simple;
 
 import java.util.List;
 
@@ -10,16 +10,14 @@ import ud.bi0.dragonSphereZ.maths.vector.Rotator3;
 import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 import ud.bi0.dragonSphereZ.particles.ParticleEffect;
 import ud.bi0.dragonSphereZ.utils.DynamicLocation;
-import ud.bi0.dragonSphereZ.utils.ParticleEffectUtils;
 
 public class SimpleHalo extends ParticleEffect {
 	
 	boolean clockwise;
 	
 	public SimpleHalo(String idName, String particle, Object center, List<Player> players, boolean clockwise) {
-		super(idName, particle, center, players, 0, 2, 1, Material.DIRT,(byte) 0, 0, 32, new Vector3(0,0,0));
+		super(idName, particle, center, players, 0, 2, 1, Material.DIRT,(byte) 0, 0, 32, false, new Vector3(0,0,0));
 		this.clockwise = clockwise;
-		if (!ParticleEffectUtils.NAME_MAP.containsKey(particle)) this.particle = "limeglassparticle";
 	}
 	
 	@Override
@@ -37,9 +35,9 @@ public class SimpleHalo extends ParticleEffect {
 					if (!location.isDynamic() || !location.needsUpdate(pulseTick)) {
 						location.update();
 						vector.rot(rotator);
-						location.add(vector.getY(), vector.getZ(), vector.getX());
-						ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, players, location, visibleRange, false, offset, speed, particleCount);
-						location.subtract(vector.getY(), vector.getZ(), vector.getX());
+						vector.addTo(location);
+						location.display(SimpleHalo.this);
+						vector.subtractFrom(location);
 					} else location.update();
 				}
 			}, this.delayTick, this.pulseTick).getTaskId();

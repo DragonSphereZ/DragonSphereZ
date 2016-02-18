@@ -30,6 +30,7 @@ public class ParticleEffect extends BukkitRunnable {
 	public byte dataID; //Default 0
 	public float speed; //Default 0
 	public double visibleRange; //Default 32
+	public boolean rainbowMode; //Default false
 	public Vector3 offset; //Default (0,0,0)
 	public Vector3 displacement; //Default (0,0,0)
 	
@@ -40,12 +41,16 @@ public class ParticleEffect extends BukkitRunnable {
 	protected final Plugin plugin = DragonSphereCore.dragonSphereCore;
 	protected final ParticleEffectManager effectManager = DragonSphereCore.effectManager;
 	
-	public ParticleEffect(String idName, String particle, Object center, List<Player> players, long delayTick, long pulseTick, int particleCount, Material dataMat, byte dataID, float speed, double visibleRange, Vector3 offset) {
-		init(idName, particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, offset);
+	public ParticleEffect(String idName, String particle, Object center, List<Player> players, long delayTick, long pulseTick, int particleCount, Material dataMat, byte dataID, float speed, double visibleRange, boolean rainbowMode, Vector3 offset) {
+		init(idName, particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, rainbowMode, offset);
 	}
 	
 	public ParticleEffect(String idName, Object center, List<Player> players) {
-		init(idName, ParticleEffectUtils.limeglassparticle.getName(), center, players, 0, 20, 1, Material.DIRT, (byte) 0, 0F, 32D, new Vector3(0,0,0));
+		init(idName, ParticleEffectUtils.limeglassparticle.getName(), center, players, 0, 20, 1, Material.DIRT, (byte) 0, 0F, 32D, false, new Vector3(0,0,0));
+	}
+	
+	public ParticleEffect(String idName, String particle, Object center, List<Player> players) {
+		init(idName, particle, center, players, 0, 20, 1, Material.DIRT, (byte) 0, 0F, 32D, false, new Vector3(0,0,0));
 	}
 	
 	private void init (
@@ -60,6 +65,7 @@ public class ParticleEffect extends BukkitRunnable {
 			byte dataID,
 			float speed,
 			double visibleRange,
+			boolean rainbowMode,
 			Vector3 offset) 
 	{
 

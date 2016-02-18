@@ -3,6 +3,8 @@ package ud.bi0.dragonSphereZ.utils;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 
+import ud.bi0.dragonSphereZ.particles.ParticleEffect;
+
 public class DynamicLocation extends Location {
 
 	private Entity entity = null;
@@ -19,12 +21,13 @@ public class DynamicLocation extends Location {
     	this.dynamic = true;
 	}
 	
-	public void update() {
+	public DynamicLocation update() {
 		if (dynamic) {
 			this.setX(entity.getLocation().getX());
 			this.setY(entity.getLocation().getY());
 			this.setZ(entity.getLocation().getZ());
 		}
+		return this;
 	}
 	
 	public boolean needsUpdate() {
@@ -60,5 +63,8 @@ public class DynamicLocation extends Location {
 		return new DynamicLocation(new Location(((Location) center).getWorld(), ((Location) center).getX(), ((Location) center).getY(), ((Location) center).getZ()));
 	}
 	
+	public void display(ParticleEffect effect) {
+		ParticleEffectUtils.valueOf(effect.particle).display(effect.dataMat, effect.dataID, effect.players, this, effect.visibleRange, effect.rainbowMode, effect.offset, effect.speed, effect.particleCount);
+	}
 	
 }

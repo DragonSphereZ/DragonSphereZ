@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 
 public class ParticleEffectManager {
 	
@@ -28,6 +29,20 @@ public class ParticleEffectManager {
 		if (effectMap.containsKey(idName)) {
 			Bukkit.getScheduler().cancelTask(effectMap.get(idName).getID());
 			effectMap.remove(idName);
+		}
+	}
+	
+	/**
+	 * Stops all effects targeting this entity.
+	 * 
+	 */
+	public void stopEffect(Entity entity) {
+		if (entity != null) {
+			ParticleEffect[] values = new ParticleEffect[effectMap.values().size()];
+			effectMap.values().toArray(values);
+			for (ParticleEffect effect : values) {
+				if (effect.center.equals(entity)) stopEffect(effect.idName);
+			}
 		}
 	}
 	

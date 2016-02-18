@@ -6,12 +6,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import ud.bi0.dragonSphereZ.utils.DynamicLocation;
+import ud.bi0.dragonSphereZ.particles.ParticleEffect;;
 
 public class ExampleEffect extends ParticleEffect {
 	
 
-	public ExampleEffect(String idName, Object center, List<Player> players) {
-		super(idName, center, players);
+	public ExampleEffect(String idName, String particle, Object center, List<Player> players) {
+		super(idName, particle, center, players);
 		
 	}
 	

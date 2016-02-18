@@ -278,6 +278,16 @@ public class Vector3
 		this.z = location.getY();
 		return this;
 	}
+
+	/**
+	 * Copies the coordinates of a bukkit vector to a vector.
+	 */
+	public Vector3 copy(Vector vector) {
+		this.x = vector.getZ();
+		this.y = vector.getX();
+		this.z = vector.getY();
+		return this;
+	}
 	
 	/**
 	 * Gets the length of this vector.
