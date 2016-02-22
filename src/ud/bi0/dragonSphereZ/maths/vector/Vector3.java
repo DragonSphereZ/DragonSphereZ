@@ -25,7 +25,7 @@ public class Vector3
 	 * Class for 3D vectors in the Cartesian coordinate system.
 	 * Each vector has a x, y and z value.
 	 * Note that the x, y and z coordinates are different from
-	 * the minecraft x, y and z coordinates! Take this notch!
+	 * the minecraft x, y and z coordinates!
 	 * The conversion is as follows:
 	 * 	Vector3		Minecraft
 	 * 		x	=	z
@@ -477,11 +477,11 @@ public class Vector3
 	 * 
 	 */
 	public Vector3 normalize() {
-        double invLengthSquared = 1 / lengthSquared();
+        double invLength = 1 / length();
 
-        x *= Math.abs(x)*invLengthSquared;
-        y *= Math.abs(y)*invLengthSquared;
-        z *= Math.abs(z)*invLengthSquared;
+        x *= invLength;
+        y *= invLength;
+        z *= invLength;
 
         return this;
     }

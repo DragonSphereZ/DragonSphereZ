@@ -150,10 +150,10 @@ public class Vector2
     }
 	
 	public Vector2 normalize() {
-        double lengthSquared = lengthSquared();
+        double invLength = length();
 
-        x *= Math.abs(x)/lengthSquared;
-        y *= Math.abs(y)/lengthSquared;
+        x *= invLength;
+        y *= invLength;
 
         return this;
     }
