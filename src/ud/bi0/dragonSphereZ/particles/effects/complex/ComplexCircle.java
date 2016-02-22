@@ -1,4 +1,4 @@
-package ud.bi0.dragonSphereZ.particles.effects;
+package ud.bi0.dragonSphereZ.particles.effects.complex;
 
 import java.util.List;
 

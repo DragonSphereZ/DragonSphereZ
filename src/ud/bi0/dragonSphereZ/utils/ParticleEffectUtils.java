@@ -104,7 +104,7 @@ public enum ParticleEffectUtils {
 	private final int id;
 	private final int requiredVersion;
 	private final List<ParticleProperty> properties;
-
+	
 	// Initialize map for quick name and id lookup
 	static {
 		for (ParticleEffectUtils effect : values()) {
@@ -1349,7 +1349,7 @@ public enum ParticleEffectUtils {
 		if (this == ParticleEffectUtils.redstone || this == ParticleEffectUtils.mobspell || this == ParticleEffectUtils.mobspellambient) {
 			//TODO Add message about limiting offset to 0-255 for color...(or at input if < 0 = 0 if > 255 = 255 also could do if > 255 = 0 for a loop.
 			if (rainbowMode == true){
-				OrdinaryColor color = new OrdinaryColor(Color.getHSBColor(offsetX, offsetY, offsetZ));
+				OrdinaryColor color = new OrdinaryColor(Color.getHSBColor((float)(offsetX / 100), offsetY, offsetZ));
 				if (players != null){
 					//display(color, center, players);
 					display(color, center, players);
@@ -1363,6 +1363,22 @@ public enum ParticleEffectUtils {
 					display(color, center, players);
 				} else {
 					display(color, center, visibleRange);
+				}
+			}
+		} else if (this == ParticleEffectUtils.note){
+			if (rainbowMode == true){
+				if (offsetX >= 24)
+					offsetX = 0;
+				if (players != null){
+					display(new ParticleEffectUtils.NoteColor((int) offsetX), center, players);
+				} else {
+					display(new ParticleEffectUtils.NoteColor((int) offsetX), center, visibleRange);
+				}
+			} else{
+				if (players != null){
+					display(new ParticleEffectUtils.NoteColor((int) offsetX), center, players);
+				} else {
+					display(new ParticleEffectUtils.NoteColor((int) offsetX), center, visibleRange);
 				}
 			}
 		}
@@ -1428,6 +1444,16 @@ public enum ParticleEffectUtils {
 			}
 	}
 	
+	public static float simpleRainbowHelper(float offsetX, String particle) {
+		if (particle == "note"){
+			return (float) (offsetX + 1);
+		}else if (particle == "redstone" || particle == "mobspell" || particle == "mobspellambient"){
+			if (offsetX >= 24)
+				offsetX = 0;
+			return (float) (offsetX + 0.01);
+		}
+		return offsetX;
+    }
 	/**
 	 * bi0's rainbow method.
 	 * 
@@ -1511,4 +1537,6 @@ public enum ParticleEffectUtils {
 	public void display(Material dataMat, byte dataID, List<Player> players, Location center, double visibleRange, boolean rainbowMode, Vector3 offset, float speed, int particleCount) {
 		display(dataMat, dataID, players, center, visibleRange, rainbowMode, (float) offset.getX(), (float) offset.getY(), (float) offset.getZ(), speed, particleCount);
 	}
+	
+
 }

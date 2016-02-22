@@ -111,9 +111,17 @@ public class EffectsLib {
 							VectorUtils.rotateVector(v, xRotation, yRotation, zRotation);
 							if (enableRotation)
 								VectorUtils.rotateVector(v, angularVelocityX * step, angularVelocityY * step, angularVelocityZ * step);
-							
-							if (rainbowMode) 
-								offsetX = (float) (offsetX + 0.01);
+							if (rainbowMode) offsetX += 1;
+								//offsetX = ParticleEffectUtils.simpleRainbowHelper(offsetX, particle);
+								//if (particle == "note"){
+								//	offsetX = (float) (offsetX + 1);
+								//	if (offsetX >= 24)
+								//		offsetX = 0;
+								//}else if (particle == "redstone" || particle == "mobspell" || particle == "mobspellambient"){
+								//	offsetX = (float) (offsetX + 0.01);
+								//}
+							//if (rainbowMode)
+							//	offsetX = (float) (offsetX + 0.01);
 								
 							//if (rainbowMode == true){
 							//	hue += 0.01F;
@@ -121,7 +129,7 @@ public class EffectsLib {
 							//	ParticleEffect.valueOf(particle).display(dataMat, dataID, player, location.add(v), visibleRange, rainbowMode, offsetX, offsetY, offsetZ, speed, 1);
 							//}else{
 
-								ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, player, location.add(v), visibleRange, rainbowMode, offsetX, offsetY, offsetZ, speed, 1);
+							ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, player, location.add(v), visibleRange, rainbowMode, offsetX, offsetY, offsetZ, speed, 1);
 							//}
 							step++;
 						}
