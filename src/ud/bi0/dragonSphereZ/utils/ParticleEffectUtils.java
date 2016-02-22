@@ -1349,7 +1349,9 @@ public enum ParticleEffectUtils {
 		if (this == ParticleEffectUtils.redstone || this == ParticleEffectUtils.mobspell || this == ParticleEffectUtils.mobspellambient) {
 			//TODO Add message about limiting offset to 0-255 for color...(or at input if < 0 = 0 if > 255 = 255 also could do if > 255 = 0 for a loop.
 			if (rainbowMode == true){
-				OrdinaryColor color = new OrdinaryColor(Color.getHSBColor((float)(offsetX / 100), offsetY, offsetZ));
+				float test = offsetX / 100;
+				OrdinaryColor color = new OrdinaryColor(Color.getHSBColor(test, offsetY, offsetZ));
+				Bukkit.getServer().broadcastMessage("[test] hmm " + test);
 				if (players != null){
 					//display(color, center, players);
 					display(color, center, players);

@@ -14,7 +14,7 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import ud.bi0.dragonSphereZ.maths.vector.Vector3;
-import ud.bi0.dragonSphereZ.particles.effects.complex.ComplexCircle;
+import ud.bi0.dragonSphereZ.particles.effects.complex.ComplexCircle2;
 import ud.bi0.dragonSphereZ.skriptAPI.SkriptHandler;
 
 
@@ -144,7 +144,7 @@ public class EffComplexCircle2 extends Effect {
 		Material dataMat = SkriptHandler.inputParticleDataMat(e, inputParticleData);
 		byte dataID = SkriptHandler.inputParticleDataID(e, inputParticleData);
 		
-		new ComplexCircle(idName, particle, center, players, 0L, finalTickDelay, 1, dataMat, dataID, finalSpeed, visibleRange, offset, displacement, radius, finalParticleDensity, rainbowMode, enableRotation, axis).start();
+		new ComplexCircle2(idName, particle, center, players, 0L, finalTickDelay, 1, dataMat, dataID, finalSpeed, visibleRange, offset, displacement, radius, finalParticleDensity, rainbowMode, enableRotation, axis).start();
 		//EffectsLib.drawComplexCircle(particle, dataMat, dataID, center, idName, p, rainbowMode, enableRotation, radius, finalSpeed, finalParticleDensity, finalStep, visibleRange, xRotation, yRotation, zRotation, offsetX, offsetY, offsetZ, disX, disY, disZ, finalTickDelay);
 
 	}
