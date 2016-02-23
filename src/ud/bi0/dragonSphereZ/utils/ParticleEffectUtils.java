@@ -1345,13 +1345,13 @@ public enum ParticleEffectUtils {
 	 * @param particleCount
 	 */
 	public void display(Material dataMat, byte dataID, List<Player> players, Location center, double visibleRange, boolean rainbowMode, float offsetX, float offsetY, float offsetZ, float speed, int particleCount) {
+		
 		// Color these particles only please also add rainbow if asked for.
 		if (this == ParticleEffectUtils.redstone || this == ParticleEffectUtils.mobspell || this == ParticleEffectUtils.mobspellambient) {
 			//TODO Add message about limiting offset to 0-255 for color...(or at input if < 0 = 0 if > 255 = 255 also could do if > 255 = 0 for a loop.
 			if (rainbowMode == true){
-				float test = offsetX / 100;
-				OrdinaryColor color = new OrdinaryColor(Color.getHSBColor(test, offsetY, offsetZ));
-				Bukkit.getServer().broadcastMessage("[test] hmm " + test);
+				//float test = offsetX / 100;
+				OrdinaryColor color = new OrdinaryColor(Color.getHSBColor((float)(offsetX / 100), offsetY, offsetZ));
 				if (players != null){
 					//display(color, center, players);
 					display(color, center, players);
@@ -1368,19 +1368,23 @@ public enum ParticleEffectUtils {
 				}
 			}
 		} else if (this == ParticleEffectUtils.note){
+			int test = (int) offsetX;
 			if (rainbowMode == true){
-				if (offsetX >= 24)
-					offsetX = 0;
+				NoteColor color = new NoteColor(test);
+				test++;
+				if (test >= 24)
+					test = 0;
 				if (players != null){
-					display(new ParticleEffectUtils.NoteColor((int) offsetX), center, players);
+					display(color, center, players);
 				} else {
-					display(new ParticleEffectUtils.NoteColor((int) offsetX), center, visibleRange);
+					display(color, center, visibleRange);
 				}
 			} else{
+				NoteColor color = new NoteColor((int) offsetX);
 				if (players != null){
-					display(new ParticleEffectUtils.NoteColor((int) offsetX), center, players);
+					display(color, center, players);
 				} else {
-					display(new ParticleEffectUtils.NoteColor((int) offsetX), center, visibleRange);
+					display(color, center, visibleRange);
 				}
 			}
 		}
@@ -1448,13 +1452,24 @@ public enum ParticleEffectUtils {
 	
 	public static float simpleRainbowHelper(float offsetX, String particle) {
 		if (particle == "note"){
-			return (float) (offsetX + 1);
-		}else if (particle == "redstone" || particle == "mobspell" || particle == "mobspellambient"){
 			if (offsetX >= 24)
 				offsetX = 0;
+			return (float) (offsetX + 1);
+		}else if (particle == "redstone" || particle == "mobspell" || particle == "mobspellambient"){
 			return (float) (offsetX + 0.01);
 		}
 		return offsetX;
+    }
+	public static Vector3 simpleRainbowHelper(Vector3 offset, String particle) {
+		if (particle == "note"){
+			//offset.setX(offset.getX() + 1);
+			if (offset.getX() >= 24)
+				offset.setX(0);
+			return offset.setX(offset.getX() + 1);
+		}else if (particle == "redstone" || particle == "mobspell" || particle == "mobspellambient"){
+			return offset.setX(offset.getX() + 0.01);
+		}
+		return offset;
     }
 	/**
 	 * bi0's rainbow method.
