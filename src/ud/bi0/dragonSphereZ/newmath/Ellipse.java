@@ -28,16 +28,19 @@ public class Ellipse extends Shape {
 		return radiusV;
 	}
 	
-	public void setBase(Base3d base) {
+	public Ellipse setBase(Base3d base) {
 		this.base = base;
+		return this;
 	}
 	
-	public void setRadiusU(double radiusU) {
+	public Ellipse setRadiusU(double radiusU) {
 		this.radiusU = radiusU;
+		return this;
 	}
 	
-	public void setRadiusV(double radiusV) {
+	public Ellipse setRadiusV(double radiusV) {
 		this.radiusV = radiusV;
+		return this;
 	}
 	
 	public Vector3d getPoint(double angle) {

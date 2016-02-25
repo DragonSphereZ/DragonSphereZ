@@ -20,14 +20,16 @@ public class Line extends Shape	{
 		direction = new Vector3d(0,1,0);
 	}
 	
-	public void setStart(Vector3d start) {
+	public Line setStart(Vector3d start) {
 		this.start = start;
 		updateDirection();
+		return this;
 	}
 	
-	public void setEnd(Vector3d end) {
+	public Line setEnd(Vector3d end) {
 		this.end = end;
 		updateDirection();
+		return this;
 	}
 	
 	public Vector3d getStart() {
