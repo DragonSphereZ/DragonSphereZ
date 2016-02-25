@@ -5,6 +5,7 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import ud.bi0.dragonSphereZ.maths.vector.Rotator3;
 import ud.bi0.dragonSphereZ.maths.vector.Vector3;
@@ -27,7 +28,7 @@ public class SimpleYinYang extends ParticleEffect {
 	double angle = 0.3;
 	
 	public SimpleYinYang(String idName, String particle, Object center, List<Player> players, boolean clockwise) {
-		super(idName, particle, center, players, 0, 2, 1, Material.DIRT,(byte) 0, 0, 32, false, new Vector3(0,0,0));
+		super(idName, particle, center, players, 0, 2, 1, Material.DIRT,(byte) 0, 0, 32, false, new Vector(0,0,0));
 		this.clockwise = clockwise;
 		particle.toLowerCase();
 		switch(particle) {
@@ -97,8 +98,8 @@ public class SimpleYinYang extends ParticleEffect {
 				final double stepPhi = clockwise ? -angle : angle;
 				final Rotator3 rotatorYin = new Rotator3(new Vector3(0,0,1), stepPhi);
 				final Rotator3 rotatorYang = new Rotator3(new Vector3(0,0,1), -stepPhi);
-				final Vector3 black = new Vector3(0, 0, 0);
-				final Vector3 white = color ? new Vector3(254, 254, 254) : new Vector3(0,0,0);
+				final Vector black = new Vector(0, 0, 0);
+				final Vector white = color ? new Vector(254, 254, 254) : new Vector(0,0,0);
 				
 				@Override
 				public void run() {

@@ -5,6 +5,7 @@ import java.util.List;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.util.Vector;
 
 import ud.bi0.dragonSphereZ.maths.vector.Rotator3;
 import ud.bi0.dragonSphereZ.maths.vector.Vector3;
@@ -16,7 +17,7 @@ public class SimpleHalo extends ParticleEffect {
 	boolean clockwise;
 	
 	public SimpleHalo(String idName, String particle, Object center, List<Player> players, boolean clockwise) {
-		super(idName, particle, center, players, 0, 2, 1, Material.DIRT,(byte) 0, 0, 32, false, new Vector3(0,0,0));
+		super(idName, particle, center, players, 0, 2, 1, Material.DIRT,(byte) 0, 0, 32, false, new Vector(0,0,0));
 		this.clockwise = clockwise;
 	}
 	

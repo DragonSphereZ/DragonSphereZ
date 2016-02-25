@@ -8,9 +8,10 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import ud.bi0.dragonSphereZ.DragonSphereCore;
-import ud.bi0.dragonSphereZ.maths.vector.Vector3;
+//import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 import ud.bi0.dragonSphereZ.utils.ParticleEffectUtils;
 
 
@@ -31,8 +32,8 @@ public class ParticleEffect extends BukkitRunnable {
 	public float speed; //Default 0
 	public double visibleRange; //Default 32
 	public boolean rainbowMode; //Default false
-	public Vector3 offset; //Default (0,0,0)
-	public Vector3 displacement; //Default (0,0,0)
+	public Vector offset; //Default (0,0,0)
+	public Vector displacement; //Default (0,0,0)
 	
 	public long delayTick; //Default 0
 	public long pulseTick; //Default 20
@@ -41,16 +42,16 @@ public class ParticleEffect extends BukkitRunnable {
 	protected final Plugin plugin = DragonSphereCore.dragonSphereCore;
 	protected final ParticleEffectManager effectManager = DragonSphereCore.effectManager;
 	
-	public ParticleEffect(String idName, String particle, Object center, List<Player> players, long delayTick, long pulseTick, int particleCount, Material dataMat, byte dataID, float speed, double visibleRange, boolean rainbowMode, Vector3 offset) {
+	public ParticleEffect(String idName, String particle, Object center, List<Player> players, long delayTick, long pulseTick, int particleCount, Material dataMat, byte dataID, float speed, double visibleRange, boolean rainbowMode, Vector offset) {
 		init(idName, particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, rainbowMode, offset);
 	}
 	
 	public ParticleEffect(String idName, Object center, List<Player> players) {
-		init(idName, ParticleEffectUtils.limeglassparticle.getName(), center, players, 0, 20, 1, Material.DIRT, (byte) 0, 0F, 32D, false, new Vector3(0,0,0));
+		init(idName, ParticleEffectUtils.limeglassparticle.getName(), center, players, 0, 20, 1, Material.DIRT, (byte) 0, 0F, 32D, false, new Vector(0,0,0));
 	}
 	
 	public ParticleEffect(String idName, String particle, Object center, List<Player> players) {
-		init(idName, particle, center, players, 0, 20, 1, Material.DIRT, (byte) 0, 0F, 32D, false, new Vector3(0,0,0));
+		init(idName, particle, center, players, 0, 20, 1, Material.DIRT, (byte) 0, 0F, 32D, false, new Vector(0,0,0));
 	}
 	
 	private void init (
@@ -66,7 +67,7 @@ public class ParticleEffect extends BukkitRunnable {
 			float speed,
 			double visibleRange,
 			boolean rainbowMode,
-			Vector3 offset) 
+			Vector offset) 
 	{
 
 		this.idName = idName;
@@ -85,7 +86,10 @@ public class ParticleEffect extends BukkitRunnable {
 	}
 		
 	public void setOffset(float x, float y, float z) {
-		offset.setXYZ(x, y, z);
+		//offset.setXYZ(x, y, z);
+		offset.setX(x);
+		offset.setY(y);
+		offset.setZ(z);
 	}
 
 	public void setParticle(String particle, Material dataMat, byte dataID) {
