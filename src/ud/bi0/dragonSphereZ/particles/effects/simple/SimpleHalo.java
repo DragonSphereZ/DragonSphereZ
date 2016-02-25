@@ -7,8 +7,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import ud.bi0.dragonSphereZ.maths.vector.Rotator3;
-import ud.bi0.dragonSphereZ.maths.vector.Vector3;
+import ud.bi0.dragonSphereZ.oldmath.vector.Rotator3;
+import ud.bi0.dragonSphereZ.oldmath.vector.Vector3;
 import ud.bi0.dragonSphereZ.particles.ParticleEffect;
 import ud.bi0.dragonSphereZ.utils.DynamicLocation;
 

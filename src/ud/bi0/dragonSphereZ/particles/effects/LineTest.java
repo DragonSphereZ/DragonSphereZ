@@ -7,8 +7,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import ud.bi0.dragonSphereZ.maths.shape.Line;
-import ud.bi0.dragonSphereZ.maths.vector.Vector3;
+import ud.bi0.dragonSphereZ.oldmath.shape.Line;
+import ud.bi0.dragonSphereZ.oldmath.vector.Vector3;
 import ud.bi0.dragonSphereZ.particles.ParticleEffect;
 import ud.bi0.dragonSphereZ.utils.ParticleEffectUtils;
 

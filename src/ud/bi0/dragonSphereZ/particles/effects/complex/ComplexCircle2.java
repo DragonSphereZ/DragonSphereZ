@@ -6,8 +6,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
-import ud.bi0.dragonSphereZ.maths.shape.Cylinder;
-import ud.bi0.dragonSphereZ.maths.vector.Vector3;
+import ud.bi0.dragonSphereZ.oldmath.shape.Cylinder;
+import ud.bi0.dragonSphereZ.oldmath.vector.Vector3;
 import ud.bi0.dragonSphereZ.particles.ParticleEffect;
 import ud.bi0.dragonSphereZ.utils.DynamicLocation;
 

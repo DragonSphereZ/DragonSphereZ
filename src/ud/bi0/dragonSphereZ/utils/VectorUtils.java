@@ -5,7 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 
-import ud.bi0.dragonSphereZ.maths.vector.Vector3;
+import ud.bi0.dragonSphereZ.oldmath.vector.Vector3;
 
 public final class VectorUtils {
     private VectorUtils() {

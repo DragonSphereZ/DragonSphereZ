@@ -1,4 +1,4 @@
-package ud.bi0.dragonSphereZ.maths.vector;
+package ud.bi0.dragonSphereZ.oldmath.vector;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,7 +14,7 @@ import org.bukkit.util.BlockVector;
 import org.bukkit.util.NumberConversions;
 import org.bukkit.util.Vector;
 
-import ud.bi0.dragonSphereZ.maths.shape.Plane;
+import ud.bi0.dragonSphereZ.oldmath.shape.Plane;
 
 @SerializableAs("Vector3")
 public class Vector3

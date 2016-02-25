@@ -13,7 +13,7 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
-import ud.bi0.dragonSphereZ.maths.vector.Vector3;
+import ud.bi0.dragonSphereZ.oldmath.vector.Vector3;
 import ud.bi0.dragonSphereZ.particles.effects.complex.ComplexCircle2;
 import ud.bi0.dragonSphereZ.skriptAPI.SkriptHandler;
 

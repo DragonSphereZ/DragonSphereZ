@@ -1,11 +1,11 @@
-package ud.bi0.dragonSphereZ.maths.shape;
+package ud.bi0.dragonSphereZ.oldmath.shape;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import ud.bi0.dragonSphereZ.maths.vector.Base2;
-import ud.bi0.dragonSphereZ.maths.vector.Vector2;
-import ud.bi0.dragonSphereZ.maths.vector.Vector3;
+import ud.bi0.dragonSphereZ.oldmath.vector.Base2;
+import ud.bi0.dragonSphereZ.oldmath.vector.Vector2;
+import ud.bi0.dragonSphereZ.oldmath.vector.Vector3;
 
 public class Plane extends Shape {
 	

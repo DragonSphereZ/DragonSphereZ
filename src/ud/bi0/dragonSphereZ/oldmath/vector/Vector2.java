@@ -1,4 +1,4 @@
-package ud.bi0.dragonSphereZ.maths.vector;
+package ud.bi0.dragonSphereZ.oldmath.vector;
 
 import java.io.Serializable;
 import java.util.LinkedHashMap;

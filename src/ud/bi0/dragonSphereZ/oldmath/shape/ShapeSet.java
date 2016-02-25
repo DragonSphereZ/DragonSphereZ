@@ -1,10 +1,10 @@
-package ud.bi0.dragonSphereZ.maths.shape;
+package ud.bi0.dragonSphereZ.oldmath.shape;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import ud.bi0.dragonSphereZ.maths.vector.Base3;
-import ud.bi0.dragonSphereZ.maths.vector.Vector3;
+import ud.bi0.dragonSphereZ.oldmath.vector.Base3;
+import ud.bi0.dragonSphereZ.oldmath.vector.Vector3;
 
 public class ShapeSet {
 	

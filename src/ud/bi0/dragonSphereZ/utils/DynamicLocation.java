@@ -3,7 +3,7 @@ package ud.bi0.dragonSphereZ.utils;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 
-import ud.bi0.dragonSphereZ.maths.vector.Vector3;
+import ud.bi0.dragonSphereZ.oldmath.vector.Vector3;
 import ud.bi0.dragonSphereZ.particles.ParticleEffect;
 
 public class DynamicLocation extends Location {

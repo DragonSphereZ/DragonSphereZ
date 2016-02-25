@@ -1,4 +1,4 @@
-package ud.bi0.dragonSphereZ.maths.shape;
+package ud.bi0.dragonSphereZ.oldmath.shape;
 
 public class Shape {
 	

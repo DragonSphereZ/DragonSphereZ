@@ -9,8 +9,8 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
-import ud.bi0.dragonSphereZ.maths.shape.Box;
-import ud.bi0.dragonSphereZ.maths.vector.Vector3;
+import ud.bi0.dragonSphereZ.oldmath.shape.Box;
+import ud.bi0.dragonSphereZ.oldmath.vector.Vector3;
 
 public class ExprBox extends SimpleExpression<Location>{
 	private Expression<Location> loc1;
