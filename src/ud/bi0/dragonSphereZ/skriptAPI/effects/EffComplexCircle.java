@@ -4,6 +4,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.Vector;
 
 import java.util.List;
 
@@ -13,7 +14,7 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
-import ud.bi0.dragonSphereZ.maths.vector.Vector3;
+//import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 import ud.bi0.dragonSphereZ.particles.effects.complex.ComplexCircle;
 import ud.bi0.dragonSphereZ.skriptAPI.SkriptHandler;
 
@@ -97,9 +98,6 @@ public class EffComplexCircle extends Effect {
 
 	@Override
 	protected void execute(@Nullable Event e) {
-
-		
-
 		Long finalTickDelay = (long) 0;
 		
 		String particle = SkriptHandler.inputParticleString(e, inputParticleString);
@@ -107,18 +105,20 @@ public class EffComplexCircle extends Effect {
 		float offsetX = SkriptHandler.inputParticleOffset(e, offX);
 		float offsetY = SkriptHandler.inputParticleOffset(e, offY);
 		float offsetZ = SkriptHandler.inputParticleOffset(e, offZ);
-		Vector3 offset = new Vector3(offsetX, offsetY, offsetZ);
-		List<Player> players = SkriptHandler.inputPlayers(e, inputPlayers);
+		Vector offset = new Vector(offsetX, offsetY, offsetZ);
 		
+		List<Player> players = SkriptHandler.inputPlayers(e, inputPlayers);
 		boolean rainbowMode = SkriptHandler.inputRainbowMode(e, isRainbowTrue);
 		double disX = SkriptHandler.inputLocDisplacement(e, displaceX);
 		double disY = SkriptHandler.inputLocDisplacement(e, displaceY);
 		double disZ = SkriptHandler.inputLocDisplacement(e, displaceZ);
-		Vector3 displacement = new Vector3(disZ, disX, disY);
+		Vector displacement = new Vector(disX, disY, disZ);
+		
 		double xRotation = SkriptHandler.inputEffectRotation(e, xRot);
 		double yRotation = SkriptHandler.inputEffectRotation(e, yRot);
 		double zRotation = SkriptHandler.inputEffectRotation(e, zRot);
-		Vector3 axis = new Vector3(zRotation, xRotation, yRotation);
+		Vector axis = new Vector(xRotation, yRotation, zRotation);
+		
 		int finalParticleDensity = SkriptHandler.inputParticleDensity(e, inputParticleDensity);
 		
 		Object center = entLoc.getSingle(e);

@@ -16,7 +16,7 @@ public class RegisterEffects {
 	}
 	public static void BetaTests() {
 		Skript.registerEffect(EffLineTest.class, new String[] {"linetest with id %string% from %location% to %players%"});
-		Skript.registerEffect(EffComplexCircle2.class, new String[] { "drawComplexCircle2 particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %locations/entitys%, id %string%[, onlyFor %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, radius %number%, density %number%, start %number%, visibleRange %number%[, Rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, [pulse]Delay %-number%]" } );
+		//Skript.registerEffect(EffComplexCircle2.class, new String[] { "drawComplexCircle2 particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %locations/entitys%, id %string%[, onlyFor %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, radius %number%, density %number%, start %number%, visibleRange %number%[, Rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, [pulse]Delay %-number%]" } );
 
 	}
 }

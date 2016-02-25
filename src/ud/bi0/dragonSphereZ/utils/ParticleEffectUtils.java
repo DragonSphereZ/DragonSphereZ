@@ -17,7 +17,6 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 import ud.bi0.dragonSphereZ.utils.ParticleEffectUtils;
 import ud.bi0.dragonSphereZ.utils.ReflectionUtils;
 import ud.bi0.dragonSphereZ.utils.ReflectionUtils.PackageType;
@@ -1352,6 +1351,7 @@ public enum ParticleEffectUtils {
 			if (rainbowMode == true){
 				//float test = offsetX / 100;
 				OrdinaryColor color = new OrdinaryColor(Color.getHSBColor((float)(offsetX / 100), offsetY, offsetZ));
+				//OrdinaryColor color = new OrdinaryColor(Color.getHSBColor((float)(offsetX), offsetY, offsetZ));
 				if (players != null){
 					//display(color, center, players);
 					display(color, center, players);
@@ -1368,12 +1368,8 @@ public enum ParticleEffectUtils {
 				}
 			}
 		} else if (this == ParticleEffectUtils.note){
-			int test = (int) offsetX;
 			if (rainbowMode == true){
-				NoteColor color = new NoteColor(test);
-				test++;
-				if (test >= 24)
-					test = 0;
+				NoteColor color = new NoteColor((int) offsetX);
 				if (players != null){
 					display(color, center, players);
 				} else {
@@ -1439,15 +1435,15 @@ public enum ParticleEffectUtils {
      * Sashies ColorImage helper :3
 	 */
 	public void display(Location center, double visibleRange, List<Player> players, int r, int g, int b) {
-			if (this == ParticleEffectUtils.redstone || this == ParticleEffectUtils.mobspell || this == ParticleEffectUtils.mobspellambient) {
-				OrdinaryColor color = new OrdinaryColor(r,g,b);
-				if (players != null){
-					//display(color, center, player);
-					display(color, center, players);
-				} else {
-					display(color, center, visibleRange);
-				}
+		if (this == ParticleEffectUtils.redstone || this == ParticleEffectUtils.mobspell || this == ParticleEffectUtils.mobspellambient) {
+			OrdinaryColor color = new OrdinaryColor(r,g,b);
+			if (players != null){
+				//display(color, center, player);
+				display(color, center, players);
+			} else {
+				display(color, center, visibleRange);
 			}
+		}
 	}
 	
 	public static float simpleRainbowHelper(float offsetX, String particle) {
@@ -1460,14 +1456,17 @@ public enum ParticleEffectUtils {
 		}
 		return offsetX;
     }
-	public static Vector3 simpleRainbowHelper(Vector3 offset, String particle) {
-		if (particle == "note"){
-			//offset.setX(offset.getX() + 1);
+	public static Vector simpleRainbowHelper(Vector offset, String particle) {
+		if (particle == note.getName()){
 			if (offset.getX() >= 24)
 				offset.setX(0);
-			return offset.setX(offset.getX() + 1);
-		}else if (particle == "redstone" || particle == "mobspell" || particle == "mobspellambient"){
-			return offset.setX(offset.getX() + 0.01);
+			offset.setX(offset.getX() + 1);
+			return offset;
+		}else if (particle == redstone.getName() || particle == mobspell.getName() || particle == mobspellambient.getName()){
+			if (offset.getX() >= 1)
+				offset.setX(0);
+			offset.setX(offset.getX() + 0.01);
+			return offset;
 		}
 		return offset;
     }
@@ -1551,7 +1550,7 @@ public enum ParticleEffectUtils {
 	 * bi0's display helper method using vectors.
 	 * 
 	 */
-	public void display(Material dataMat, byte dataID, List<Player> players, Location center, double visibleRange, boolean rainbowMode, Vector3 offset, float speed, int particleCount) {
+	public void display(Material dataMat, byte dataID, List<Player> players, Location center, double visibleRange, boolean rainbowMode, Vector offset, float speed, int particleCount) {
 		display(dataMat, dataID, players, center, visibleRange, rainbowMode, (float) offset.getX(), (float) offset.getY(), (float) offset.getZ(), speed, particleCount);
 	}
 	
