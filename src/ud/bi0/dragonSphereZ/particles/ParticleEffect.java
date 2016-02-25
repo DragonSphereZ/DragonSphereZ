@@ -80,6 +80,7 @@ public class ParticleEffect extends BukkitRunnable {
 		this.dataID = dataID;
 		this.speed = speed;
 		this.visibleRange = visibleRange;
+		this.rainbowMode = rainbowMode;
 		this.offset = offset;
 	}
 		
