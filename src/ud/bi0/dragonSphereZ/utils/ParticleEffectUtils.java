@@ -1350,8 +1350,8 @@ public enum ParticleEffectUtils {
 			//TODO Add message about limiting offset to 0-255 for color...(or at input if < 0 = 0 if > 255 = 255 also could do if > 255 = 0 for a loop.
 			if (rainbowMode == true){
 				//float test = offsetX / 100;
-				OrdinaryColor color = new OrdinaryColor(Color.getHSBColor((float)(offsetX / 100), offsetY, offsetZ));
-				//OrdinaryColor color = new OrdinaryColor(Color.getHSBColor((float)(offsetX), offsetY, offsetZ));
+				//OrdinaryColor color = new OrdinaryColor(Color.getHSBColor((float)(offsetX / 100), offsetY, offsetZ));
+				OrdinaryColor color = new OrdinaryColor(Color.getHSBColor((float)(offsetX), offsetY, offsetZ));
 				if (players != null){
 					//display(color, center, players);
 					display(color, center, players);
@@ -1447,22 +1447,22 @@ public enum ParticleEffectUtils {
 	}
 	
 	public static float simpleRainbowHelper(float offsetX, String particle) {
-		if (particle == "note"){
+		if (particle.equals(ParticleEffectUtils.note.getName())){
 			if (offsetX >= 24)
 				offsetX = 0;
 			return (float) (offsetX + 1);
-		}else if (particle == "redstone" || particle == "mobspell" || particle == "mobspellambient"){
+		}else if (particle.equals(ParticleEffectUtils.redstone.getName()) || particle.equals(ParticleEffectUtils.mobspell.getName()) || particle.equals(ParticleEffectUtils.mobspellambient.getName())){
 			return (float) (offsetX + 0.01);
 		}
 		return offsetX;
     }
 	public static Vector simpleRainbowHelper(Vector offset, String particle) {
-		if (particle == note.getName()){
+		if (particle.equals(ParticleEffectUtils.note.getName())){
 			if (offset.getX() >= 24)
 				offset.setX(0);
 			offset.setX(offset.getX() + 1);
 			return offset;
-		}else if (particle == redstone.getName() || particle == mobspell.getName() || particle == mobspellambient.getName()){
+		}else if (particle.equals(ParticleEffectUtils.redstone.getName()) || particle.equals(ParticleEffectUtils.mobspell.getName()) || particle.equals(ParticleEffectUtils.mobspellambient.getName())){
 			if (offset.getX() >= 1)
 				offset.setX(0);
 			offset.setX(offset.getX() + 0.01);

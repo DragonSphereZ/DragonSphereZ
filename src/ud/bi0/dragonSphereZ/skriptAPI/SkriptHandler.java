@@ -103,9 +103,9 @@ public class SkriptHandler {
 	/**
 	 * This method checks if rainbow mode is enabled
 	 */
-	public static boolean inputRainbowMode(@Nullable Event e, @Nullable Expression<Boolean> isRainbowTrue) {
-		if (isRainbowTrue != null && isRainbowTrue.getSingle(e) != null){
-			return isRainbowTrue.getSingle(e).booleanValue();
+	public static boolean inputRainbowMode(@Nullable Event e, @Nullable Expression<Boolean> inputRainbowMode) {
+		if (inputRainbowMode != null && inputRainbowMode.getSingle(e) != null){
+			return inputRainbowMode.getSingle(e).booleanValue();
 		}
 		return false;
     }
@@ -131,11 +131,31 @@ public class SkriptHandler {
     }
 	
 	/**
+	 * This method checks if random rotation mode is enabled for certain effects.
+	 */
+	public static boolean inputRotationMode(@Nullable Event e, @Nullable Expression<Boolean> inputRotationMode) {
+		if (inputRotationMode != null && inputRotationMode.getSingle(e) != null){
+			return inputRotationMode.getSingle(e).booleanValue();
+		}
+		return false;
+    }
+	
+	/**
 	 * For manually rotating the whole effect around its axis prior to any other math.
 	 */
 	public static double inputEffectRotation(@Nullable Event e, @Nullable Expression<Number> inputEffectRotation) {
 		if(inputEffectRotation != null){
 			return inputEffectRotation.getSingle(e).doubleValue();
+		}
+		return 0;
+    }
+	
+	/**
+	 * Changes the length of time between 'loops' for each effect
+	 */
+	public static long inputPulseTick(@Nullable Event e, @Nullable Expression<Number> inputPulseTick) {
+		if(inputPulseTick != null){
+			return inputPulseTick.getSingle(e).longValue();
 		}
 		return 0;
     }
