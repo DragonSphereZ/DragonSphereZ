@@ -7,6 +7,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import com.flowpowered.math.GenericMath;
 import com.flowpowered.math.TrigMath;
 
 import ud.bi0.dragonSphereZ.particles.ParticleEffect;
@@ -79,8 +80,9 @@ public class ComplexCircle extends ParticleEffect {
 					if (!location.hasMoved(pulseTick)) {
 						location.update();
 						location.add(displacement.getX(), 1 + displacement.getY(), displacement.getZ());
-						double inc = (TrigMath.TWO_PI) / particleDensity;
-						double angle = step * inc;
+						//double inc = ((TrigMath.TWO_PI) / particleDensity);
+						double angle = step * (TrigMath.TWO_PI / particleDensity);
+						angle = GenericMath.wrapAngleRad(angle);
 						Vector v = new Vector(TrigMath.cos(angle) * radius, 0, TrigMath.sin(angle) * radius);
 						VectorUtils.rotateVector(v, axis.getX(), axis.getY(), axis.getZ());
 						if (enableRotation)
