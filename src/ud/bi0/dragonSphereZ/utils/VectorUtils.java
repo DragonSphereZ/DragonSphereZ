@@ -5,6 +5,8 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 
+import com.flowpowered.math.TrigMath;
+
 import ud.bi0.dragonSphereZ.oldmath.vector.Vector3;
 
 public final class VectorUtils {
@@ -13,8 +15,8 @@ public final class VectorUtils {
 
     public static final Vector rotateAroundAxisX(Vector v, double angle) {
         double y, z, cos, sin;
-        cos = Math.cos(angle);
-        sin = Math.sin(angle);
+        cos = TrigMath.cos(angle);
+        sin = TrigMath.sin(angle);
         y = v.getY() * cos - v.getZ() * sin;
         z = v.getY() * sin + v.getZ() * cos;
         return v.setY(y).setZ(z);
@@ -22,8 +24,8 @@ public final class VectorUtils {
 
     public static final Vector rotateAroundAxisY(Vector v, double angle) {
         double x, z, cos, sin;
-        cos = Math.cos(angle);
-        sin = Math.sin(angle);
+        cos = TrigMath.cos(angle);
+        sin = TrigMath.sin(angle);
         x = v.getX() * cos + v.getZ() * sin;
         z = v.getX() * -sin + v.getZ() * cos;
         return v.setX(x).setZ(z);
@@ -31,8 +33,8 @@ public final class VectorUtils {
 
     public static final Vector rotateAroundAxisZ(Vector v, double angle) {
         double x, y, cos, sin;
-        cos = Math.cos(angle);
-        sin = Math.sin(angle);
+        cos = TrigMath.cos(angle);
+        sin = TrigMath.sin(angle);
         x = v.getX() * cos - v.getY() * sin;
         y = v.getX() * sin + v.getY() * cos;
         return v.setX(x).setY(y);
@@ -57,24 +59,24 @@ public final class VectorUtils {
     
     public static final Vector3 rotateAroundAxisZ(Vector3 v, double angle) {
         double y, z, cos, sin;
-        cos = Math.cos(angle);
-        sin = Math.sin(angle);
+        cos = TrigMath.cos(angle);
+        sin = TrigMath.sin(angle);
         y = v.getY() * cos - v.getZ() * sin;
         z = v.getY() * sin + v.getZ() * cos;
         return v.setY(y).setZ(z);
     }
     public static final Vector3 rotateAroundAxisX(Vector3 v, double angle) {
         double x, z, cos, sin;
-        cos = Math.cos(angle);
-        sin = Math.sin(angle);
+        cos = TrigMath.cos(angle);
+        sin = TrigMath.sin(angle);
         x = v.getX() * cos + v.getZ() * sin;
         z = v.getX() * -sin + v.getZ() * cos;
         return v.setX(x).setZ(z);
     }
     public static final Vector3 rotateAroundAxisY(Vector3 v, double angle) {
         double x, y, cos, sin;
-        cos = Math.cos(angle);
-        sin = Math.sin(angle);
+        cos = TrigMath.cos(angle);
+        sin = TrigMath.sin(angle);
         x = v.getX() * cos - v.getY() * sin;
         y = v.getX() * sin + v.getY() * cos;
         return v.setX(x).setY(y);
@@ -110,10 +112,10 @@ public final class VectorUtils {
         double yaw = Math.toRadians(-1 * (yawDegrees + 90));
         double pitch = Math.toRadians(-pitchDegrees);
 
-        double cosYaw = Math.cos(yaw);
-        double cosPitch = Math.cos(pitch);
-        double sinYaw = Math.sin(yaw);
-        double sinPitch = Math.sin(pitch);
+        double cosYaw = TrigMath.cos(yaw);
+        double cosPitch = TrigMath.cos(pitch);
+        double sinYaw = TrigMath.sin(yaw);
+        double sinPitch = TrigMath.sin(pitch);
 
         double initialX, initialY, initialZ;
         double x, y, z;
@@ -134,12 +136,12 @@ public final class VectorUtils {
     }
 
     public static final double angleToXAxis(Vector vector) {
-        return Math.atan2(vector.getX(), vector.getY());
+        return TrigMath.atan2(vector.getX(), vector.getY());
     }
     
     public static Vector getBackVector(final Location location) {
-        final float newZ = (float)(location.getZ() + 1.0 * Math.sin(Math.toRadians(location.getYaw() + 90.0f)));
-        final float newX = (float)(location.getX() + 1.0 * Math.cos(Math.toRadians(location.getYaw() + 90.0f)));
+        final float newZ = (float)(location.getZ() + 1.0 * TrigMath.sin(Math.toRadians(location.getYaw() + 90.0f)));
+        final float newX = (float)(location.getX() + 1.0 * TrigMath.cos(Math.toRadians(location.getYaw() + 90.0f)));
         return new Vector(newX - location.getX(), 0.0, newZ - location.getZ());
     }
    

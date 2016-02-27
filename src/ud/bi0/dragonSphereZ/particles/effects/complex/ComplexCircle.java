@@ -7,6 +7,8 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import com.flowpowered.math.TrigMath;
+
 import ud.bi0.dragonSphereZ.particles.ParticleEffect;
 import ud.bi0.dragonSphereZ.utils.DynamicLocation;
 import ud.bi0.dragonSphereZ.utils.VectorUtils;
@@ -67,9 +69,9 @@ public class ComplexCircle extends ParticleEffect {
 	public void start() {
 		if (!effectManager.isActive(idName))  {
 			idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
-				double angularVelocityX = Math.PI / 200;
-				double angularVelocityY = Math.PI / 170;
-				double angularVelocityZ = Math.PI / 155;
+				double angularVelocityX = TrigMath.PI / 200;
+				double angularVelocityY = TrigMath.PI / 170;
+				double angularVelocityZ = TrigMath.PI / 155;
 				int step = 0;
 				DynamicLocation location = DynamicLocation.init(center);
 				@Override
@@ -77,27 +79,23 @@ public class ComplexCircle extends ParticleEffect {
 					if (location.needsUpdate(pulseTick)) {
 						location.update();
 						location.add(displacement.getX(), 1 + displacement.getY(), displacement.getZ());
-						double inc = (Math.PI * 2) / particleDensity;
+						double inc = (TrigMath.TWO_PI) / particleDensity;
 						double angle = step * inc;
-						Vector v = new Vector(Math.cos(angle) * radius, 0, Math.sin(angle) * radius);
+						Vector v = new Vector(TrigMath.cos(angle) * radius, 0, TrigMath.sin(angle) * radius);
 						VectorUtils.rotateVector(v, axis.getX(), axis.getY(), axis.getZ());
 						if (enableRotation)
 							VectorUtils.rotateVector(v, angularVelocityX * step, angularVelocityY * step, angularVelocityZ * step);
 						if (rainbowMode)
 							ParticleEffectUtils.simpleRainbowHelper(offset, particle);
-						//Bukkit.getServer().broadcastMessage("[offset x] " + offset.getX());
-						//location.add(v.getZ(), v.getX(), v.getY());
-						//location.add(v);
-						//location.display(ComplexCircle.this);
-						ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, players, location.add(v), visibleRange, rainbowMode, offset, speed, 1);
+						location.add(v);
+						location.display(ComplexCircle.this);
+						//ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, players, location.add(v), visibleRange, rainbowMode, offset, speed, 1);
 						location.subtract(v);
-						//}
 						step++;
 					} else location.update();
 				}
 			}, delayTick, pulseTick).getTaskId();
 			effectManager.startEffect(this);
 		}
-		
 	}
 }
