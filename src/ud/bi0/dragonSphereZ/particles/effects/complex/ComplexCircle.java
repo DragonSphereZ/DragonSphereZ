@@ -76,7 +76,7 @@ public class ComplexCircle extends ParticleEffect {
 				DynamicLocation location = DynamicLocation.init(center);
 				@Override
 				public void run() {
-					if (location.needsUpdate(pulseTick)) {
+					if (!location.hasMoved(pulseTick)) {
 						location.update();
 						location.add(displacement.getX(), 1 + displacement.getY(), displacement.getZ());
 						double inc = (TrigMath.TWO_PI) / particleDensity;
