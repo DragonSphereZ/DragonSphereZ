@@ -467,7 +467,8 @@ public class VectorNf implements Vectorf, Comparable<VectorNf>, Serializable, Cl
         return Arrays.toString(vec).replace('[', '(').replace(']', ')');
     }
 
-    private static class ImmutableZeroVectorN extends VectorNf {
+    @SuppressWarnings("serial")
+	private static class ImmutableZeroVectorN extends VectorNf {
         public ImmutableZeroVectorN(float... v) {
             super(v);
         }

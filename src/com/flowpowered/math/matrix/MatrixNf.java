@@ -687,7 +687,8 @@ public class MatrixNf implements Matrixf, Serializable, Cloneable {
         return clone;
     }
 
-    private static class ImmutableIdentityMatrixN extends MatrixNf {
+    @SuppressWarnings("serial")
+	private static class ImmutableIdentityMatrixN extends MatrixNf {
         public ImmutableIdentityMatrixN(int size) {
             super(size);
         }

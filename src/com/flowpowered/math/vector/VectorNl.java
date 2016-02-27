@@ -415,7 +415,8 @@ public class VectorNl implements Vectorl, Comparable<VectorNl>, Serializable, Cl
         return Arrays.toString(vec).replace('[', '(').replace(']', ')');
     }
 
-    private static class ImmutableZeroVectorN extends VectorNl {
+    @SuppressWarnings("serial")
+	private static class ImmutableZeroVectorN extends VectorNl {
         public ImmutableZeroVectorN(long... v) {
             super(v);
         }

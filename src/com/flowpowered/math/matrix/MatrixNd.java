@@ -687,7 +687,8 @@ public class MatrixNd implements Matrixd, Serializable, Cloneable {
         return clone;
     }
 
-    private static class ImmutableIdentityMatrixN extends MatrixNd {
+    @SuppressWarnings("serial")
+	private static class ImmutableIdentityMatrixN extends MatrixNd {
         public ImmutableIdentityMatrixN(int size) {
             super(size);
         }

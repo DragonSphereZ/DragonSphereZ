@@ -467,7 +467,8 @@ public class VectorNd implements Vectord, Comparable<VectorNd>, Serializable, Cl
         return Arrays.toString(vec).replace('[', '(').replace(']', ')');
     }
 
-    private static class ImmutableZeroVectorN extends VectorNd {
+    @SuppressWarnings("serial")
+	private static class ImmutableZeroVectorN extends VectorNd {
         public ImmutableZeroVectorN(double... v) {
             super(v);
         }
