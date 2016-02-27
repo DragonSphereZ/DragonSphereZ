@@ -58,10 +58,10 @@ public class ComplexSpiral extends ParticleEffect {
 	}
 	public ComplexSpiral(String idName, Object center, List<Player> players) {
 		super(idName, center, players);
-		init(1, 1, 6, 0.5, false, false, new Vector(0,0,1), new Vector(0,0,0), new Vector(0,0,0));
+		init(1, 1, (float) 6, (float) 0.5, false, false, new Vector(0,0,1), new Vector(0,0,0), new Vector(0,0,0));
 	}
 	
-	public void init(double radius, double circleDensity, boolean scan, boolean clockwise, Vector axis, Vector offset, Vector displacement) {
+	public void init(double radius, double circleDensity, float height, float effectMod, boolean scan, boolean clockwise, Vector axis, Vector offset, Vector displacement) {
 		this.radius = radius;
 		this.circleDensity = circleDensity;
 		this.height = height;
