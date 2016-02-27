@@ -13,5 +13,10 @@ public class Shape {
 	public Vector3d getOrigin() {
 		return origin;
 	}
-		
+	
+	public Shape setOrigin(Vector3d origin) {
+		this.origin = origin;
+		return this;
+	}
+	
 }

@@ -41,7 +41,13 @@ public class DynamicLocation extends Location {
 		return false;
 	}
 	
+	public boolean hasMoved() {
+		return needsUpdate();
+	}
 	
+	public boolean hasMoved(long ticks) {
+		return needsUpdate(ticks);
+	}
 	
 	public boolean isDynamic() {
 		return dynamic;
