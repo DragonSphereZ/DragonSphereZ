@@ -1554,6 +1554,5 @@ public enum ParticleEffectUtils {
 		display(dataMat, dataID, players, center, visibleRange, rainbowMode, (float) offset.getX(), (float) offset.getY(), (float) offset.getZ(), speed, particleCount);
 	}
 	
-	public static void display()
 
 }
