@@ -5,7 +5,8 @@ import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 
-import ud.bi0.dragonSphereZ.oldmath.vector.Vector3;
+import com.flowpowered.math.vector.Vector3d;
+
 import ud.bi0.dragonSphereZ.particles.ParticleEffect;
 
 public class DynamicLocation extends Location {
@@ -67,16 +68,20 @@ public class DynamicLocation extends Location {
 		return entity;
 	}
 	
+	public Vector3d getVector3d() {
+		return new Vector3d(this.getX(), this.getY(), this.getZ());
+	}
+	
 	/**
 	 * Gets the displacement vector between the location and the
 	 * entity's location divided by the time interval.
 	 */
-	public Vector3 displacement(Vector3 direction, long pulseTick) {
+	public Vector3d getDisplacement(long pulseTick) {
 		if (dynamic) {
-			direction.copy(this.getEntity().getLocation());
-			direction.add(-this.getZ(), -this.getX(), -this.getY());
-			return direction.multiply(1D / pulseTick);
-		} else return null;
+			Vector3d displacement = FlowPoweredHook.Vector3d(this.getEntity().getLocation());
+			displacement = displacement.sub(this.getVector3d()).mul(1D / (pulseTick > 0 ? pulseTick : 1));
+			return displacement;
+		} else return new Vector3d(0,0,0);
 	}
 	
 	public static DynamicLocation init(Object center) {

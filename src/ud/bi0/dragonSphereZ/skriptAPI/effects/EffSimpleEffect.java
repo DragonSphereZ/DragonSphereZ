@@ -12,8 +12,8 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
-import ud.bi0.dragonSphereZ.particles.ParticleEffect;
-import ud.bi0.dragonSphereZ.particles.SimpleEffectHelper;
+import ud.bi0.dragonSphereZ.effect.ParticleEffect;
+import ud.bi0.dragonSphereZ.effect.SimpleEffectHelper;
 import ud.bi0.dragonSphereZ.skriptAPI.SkriptHandler;
 
 public class EffSimpleEffect extends Effect {
