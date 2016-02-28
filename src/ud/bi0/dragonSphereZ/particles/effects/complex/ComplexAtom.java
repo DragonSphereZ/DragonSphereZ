@@ -13,21 +13,21 @@ import com.flowpowered.math.TrigMath;
 import ud.bi0.dragonSphereZ.particles.ParticleEffect;
 import ud.bi0.dragonSphereZ.utils.DynamicLocation;
 import ud.bi0.dragonSphereZ.utils.VectorUtils;
+import ud.bi0.dragonSphereZ.utils.RandomUtils;
 import ud.bi0.dragonSphereZ.utils.ParticleEffectUtils;
 
-public class ComplexSpiral extends ParticleEffect {
+public class ComplexAtom extends ParticleEffect {
 	protected double radius;
 	protected double circleDensity;
 	protected float height; 
 	protected float effectMod;	
-//	protected boolean rainbowMode;
 	protected boolean clockwise;
 	protected boolean scan;
 	protected Vector axis;
 	Vector offset;
-	//String particle;
+	String particle2;
 	
-	public ComplexSpiral(
+	public ComplexAtom(
 		//super
 		String idName,
 		String particle,
@@ -56,7 +56,7 @@ public class ComplexSpiral extends ParticleEffect {
 		init(radius, circleDensity, height, effectMod, scan, clockwise, axis, offset, displacement);
 
 	}
-	public ComplexSpiral(String idName, Object center, List<Player> players) {
+	public ComplexAtom(String idName, Object center, List<Player> players) {
 		super(idName, center, players);
 		init(1, 1, (float) 6, (float) 0.5, false, false, new Vector(0,0,1), new Vector(0,0,0), new Vector(0,0,0));
 	}
@@ -77,54 +77,43 @@ public class ComplexSpiral extends ParticleEffect {
 	public void start() {
 		if (!effectManager.isActive(idName))  {
 			idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
-				float i;
-				boolean up = true;
-				Vector v;
+				public double angularVelocity = TrigMath.PI / 40d;
+				public double autoYRotationDensity = TrigMath.PI / 200d;
 				int step = 0;
 				DynamicLocation location = DynamicLocation.init(center);
 				@Override
 				public void run() {
 					if (!location.hasMoved(pulseTick)) {
 						location.update();
-						location.add(displacement.getX(), displacement.getY(), displacement.getZ());
-						
-
-						double angle = ( TrigMath.TWO_PI / circleDensity ) * step;
-						angle = GenericMath.wrapAngleRad(angle);
-						double y = i;
-			            if (clockwise == false)
-				            v = new Vector(TrigMath.sin(angle) * radius, y, TrigMath.cos(angle) * radius);
-			            if (clockwise == true)
-			                v = new Vector(TrigMath.cos(angle) * radius, y, TrigMath.sin(angle) * radius);
-
-						
-						VectorUtils.rotateVector(v, axis.getX(), axis.getY(), axis.getZ());
+						location.add(displacement.getX(), 3 + displacement.getY(), displacement.getZ());
 						if (rainbowMode)
 							ParticleEffectUtils.simpleRainbowHelper(offset, particle);
-						location.add(v);
-						location.display(ComplexSpiral.this);
-						//ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, players, location.add(v), visibleRange, rainbowMode, offset, speed, 1);
-						location.subtract(v);
-						step++;
-						if (scan == true){
-							if (i > height) {
-								up = false;
+						//TODO NOT DONE YET xD
+						for (int i = 0; i < innerParticles; i++) {
+							Vector v = RandomUtils.getRandomVector().multiply(0.5 * innerRadius);
+							ParticleEffectUtils.valueOf(particle2).display(dataMat, dataID, players, location.add(v), visibleRange, rainbowMode, offset, speed, 1);							location.subtract(v);
+						}
+						for (int i = 0; i < orbitParticles; i++) {
+							//double angle = step * angularVelocity;
+							double angle = GenericMath.wrapAngleRad(step * angularVelocity);
+							for (int j = 0; j < orbitalCount; j++) {
+								
+								double xRotation = (TrigMath.PI / orbitalCount) * j;
+								
+								Vector v = new Vector(TrigMath.sin(angle) * ( 0.5 + innerRadius ), 0, TrigMath.cos(angle) * ( 0.5 + innerRadius ));
+
+								VectorUtils.rotateAroundAxisX(v, xRotation);
+								VectorUtils.rotateAroundAxisY(v, manualYRotation);
+								if (autoYRotation)
+									VectorUtils.rotateAroundAxisY(v, autoYRotationDensity);
+								
+								//location.add(v);
+								//location.display(ComplexAtom.this);
+								ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, players, location.add(v), visibleRange, rainbowMode, offset, speed, 1);
+								location.subtract(v);
 							}
-							else if (i < 0) {
-								up = true;
-							}
-						}else{
-							if (i > height) {
-								i = 0;
-							}
-							if (i < 0) {
-								i = height;
-							}
-						}	
-						if (up == true)
-							i += effectMod * .3;
-						if (up == false)
-							i -= effectMod * .3;
+							step++;
+						}
 					} else location.update();
 				}
 			}, delayTick, pulseTick).getTaskId();

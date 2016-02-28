@@ -147,9 +147,10 @@ public class EffComplexSpiral extends Effect {
 		Object test7 = (Object)ExprEntity.class;
 		Object test8 = (Object)ExprLocationOf.class;
 		Object test9 = (Object)ExprLocation.class;
-		Bukkit.getServer().broadcastMessage("[skDragon] --->" + test7);
-		Bukkit.getServer().broadcastMessage("[skDragon] --->" + test8);
-		Bukkit.getServer().broadcastMessage("[skDragon] --->" + test9);
+		Bukkit.getServer().broadcastMessage("[skDragon] --->" + test7.toString());
+		Bukkit.getServer().broadcastMessage("[skDragon] --->" + test8.toString());
+		Bukkit.getServer().broadcastMessage("[skDragon] --->" + test9.toString());
+		
 		String particle = SkriptHandler.inputParticleString(e, inputParticleString);
 		float finalSpeed = SkriptHandler.inputParticleSpeed(e, inputParticleSpeed);
 		float offsetX = SkriptHandler.inputParticleOffset(e, offX);
