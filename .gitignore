@@ -1,2 +1,5 @@
 /target/
 /bin/
+*.classpath
+*.DS_Store
+*.settings
