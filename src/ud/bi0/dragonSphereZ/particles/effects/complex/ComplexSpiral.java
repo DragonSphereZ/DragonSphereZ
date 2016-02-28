@@ -20,7 +20,7 @@ public class ComplexSpiral extends ParticleEffect {
 	protected double circleDensity;
 	protected float height; 
 	protected float effectMod;	
-	protected boolean rainbowMode;
+//	protected boolean rainbowMode;
 	protected boolean clockwise;
 	protected boolean scan;
 	protected Vector axis;
