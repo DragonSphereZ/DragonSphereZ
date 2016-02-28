@@ -3,48 +3,47 @@ package ud.bi0.dragonSphereZ.utils;
 
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
-import org.bukkit.util.Vector;
 
 import com.flowpowered.math.GenericMath;
 import com.flowpowered.math.TrigMath;
+import com.flowpowered.math.vector.Vector3d;
 
-import ud.bi0.dragonSphereZ.oldmath.vector.Vector3;
 
 public final class VectorUtils {
     private VectorUtils() {
     }
 
-    public static final Vector rotateAroundAxisX(Vector v, double angle) {
+    public static final Vector3d rotateAroundAxisX(Vector3d v, double angle) {
         double y, z, cos, sin;
         angle = GenericMath.wrapAngleRad(angle);
         cos = TrigMath.cos(angle);
         sin = TrigMath.sin(angle);
         y = v.getY() * cos - v.getZ() * sin;
         z = v.getY() * sin + v.getZ() * cos;
-        return v.setY(y).setZ(z);
+        return new Vector3d(v.getX(), y, z);
     }
 
-    public static final Vector rotateAroundAxisY(Vector v, double angle) {
+    public static final Vector3d rotateAroundAxisY(Vector3d v, double angle) {
         double x, z, cos, sin;
         angle = GenericMath.wrapAngleRad(angle);
         cos = TrigMath.cos(angle);
         sin = TrigMath.sin(angle);
         x = v.getX() * cos + v.getZ() * sin;
         z = v.getX() * -sin + v.getZ() * cos;
-        return v.setX(x).setZ(z);
+        return new Vector3d(x, v.getY(), z);
     }
 
-    public static final Vector rotateAroundAxisZ(Vector v, double angle) {
+    public static final Vector3d rotateAroundAxisZ(Vector3d v, double angle) {
         double x, y, cos, sin;
         angle = GenericMath.wrapAngleRad(angle);
         cos = TrigMath.cos(angle);
         sin = TrigMath.sin(angle);
         x = v.getX() * cos - v.getY() * sin;
         y = v.getX() * sin + v.getY() * cos;
-        return v.setX(x).setY(y);
+        return new Vector3d(x, y, v.getZ());
     }
 
-    public static final Vector rotateVector(Vector v, double angleX, double angleY, double angleZ) {
+    public static final Vector3d rotateVector(Vector3d v, double angleX, double angleY, double angleZ) {
         // double x = v.getX(), y = v.getY(), z = v.getZ();
         // double cosX = Math.cos(angleX), sinX = Math.sin(angleX), cosY =
         // Math.cos(angleY), sinY = Math.sin(angleY), cosZ = Math.cos(angleZ),
@@ -61,39 +60,6 @@ public final class VectorUtils {
         return v;
     }
     
-    public static final Vector3 rotateAroundAxisZ(Vector3 v, double angle) {
-        double y, z, cos, sin;
-        angle = GenericMath.wrapAngleRad(angle);
-        cos = TrigMath.cos(angle);
-        sin = TrigMath.sin(angle);
-        y = v.getY() * cos - v.getZ() * sin;
-        z = v.getY() * sin + v.getZ() * cos;
-        return v.setY(y).setZ(z);
-    }
-    public static final Vector3 rotateAroundAxisX(Vector3 v, double angle) {
-        double x, z, cos, sin;
-        angle = GenericMath.wrapAngleRad(angle);
-        cos = TrigMath.cos(angle);
-        sin = TrigMath.sin(angle);
-        x = v.getX() * cos + v.getZ() * sin;
-        z = v.getX() * -sin + v.getZ() * cos;
-        return v.setX(x).setZ(z);
-    }
-    public static final Vector3 rotateAroundAxisY(Vector3 v, double angle) {
-        double x, y, cos, sin;
-        angle = GenericMath.wrapAngleRad(angle);
-        cos = TrigMath.cos(angle);
-        sin = TrigMath.sin(angle);
-        x = v.getX() * cos - v.getY() * sin;
-        y = v.getX() * sin + v.getY() * cos;
-        return v.setX(x).setY(y);
-    }
-    public static final Vector3 rotateVector(Vector3 v, double angleX, double angleY, double angleZ) {
-    	rotateAroundAxisX(v, angleX);
-    	rotateAroundAxisY(v, angleY);
-    	rotateAroundAxisZ(v, angleZ);
-        return v;
-    }
     /**
      * Rotate a vector about a location using that location's direction
      *
@@ -101,7 +67,7 @@ public final class VectorUtils {
      * @param location
      * @return
      */
-    public static final Vector rotateVector(Vector v, Location location) {
+    public static final Vector3d rotateVector(Vector3d v, Location location) {
         return rotateVector(v, location.getYaw(), location.getPitch());
     }
 
@@ -115,8 +81,9 @@ public final class VectorUtils {
      * @param pitchDegrees
      * @return
      */
-    public static final Vector rotateVector(Vector v, float yawDegrees, float pitchDegrees) {
-        double yaw = Math.toRadians(-1 * (yawDegrees + 90));
+    public static final Vector3d rotateVector(Vector3d v, float yawDegrees, float pitchDegrees) {
+
+    	double yaw = Math.toRadians(-1 * (yawDegrees + 90));
         double pitch = Math.toRadians(-pitchDegrees);
 
         double cosYaw = TrigMath.cos(yaw);
@@ -139,30 +106,30 @@ public final class VectorUtils {
         z = initialZ * cosYaw - initialX * sinYaw;
         x = initialZ * sinYaw + initialX * cosYaw;
 
-        return new Vector(x, y, z);
+        return new Vector3d(x, y, z);
     }
 
-    public static final double angleToXAxis(Vector vector) {
+    public static final double angleToXAxis(Vector3d vector) {
         return TrigMath.atan2(vector.getX(), vector.getY());
     }
     
-    public static Vector getBackVector(final Location location) {
+    public static Vector3d getBackVector(final Location location) {
         final float newZ = (float)(location.getZ() + 1.0 * TrigMath.sin(Math.toRadians(location.getYaw() + 90.0f)));
         final float newX = (float)(location.getX() + 1.0 * TrigMath.cos(Math.toRadians(location.getYaw() + 90.0f)));
-        return new Vector(newX - location.getX(), 0.0, newZ - location.getZ());
+        return new Vector3d(newX - location.getX(), 0.0, newZ - location.getZ());
     }
    
     
     public static double offset(final Entity a, final Entity b) {
-        return offset(a.getLocation().toVector(), b.getLocation().toVector());
+        return offset(FlowPoweredHook.Vector3d(a.getLocation()), FlowPoweredHook.Vector3d(b.getLocation().toVector()));
     }
     
     public static double offset(final Location a, final Location b) {
-        return offset(a.toVector(), b.toVector());
+        return offset(FlowPoweredHook.Vector3d(a), FlowPoweredHook.Vector3d(b));
     }
     
-    public static double offset(final Vector a, final Vector b) {
-        return a.subtract(b).length();
+    public static double offset(final Vector3d a, final Vector3d b) {
+        return a.distance(b);
     }
     
 }

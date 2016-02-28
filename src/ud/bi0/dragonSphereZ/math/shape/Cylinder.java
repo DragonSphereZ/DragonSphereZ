@@ -79,6 +79,10 @@ public class Cylinder extends Shape {
 		return new Cylinder(base, matrix.transform(radius), height);
 	}
 	
+	public Ellipse getEllipse() {
+		return new Ellipse(base, radius);
+	}
+	
 	public Vector3d getPoint(double angle, double height) {
 		return getPoint(this.radius, angle, height);
 	}

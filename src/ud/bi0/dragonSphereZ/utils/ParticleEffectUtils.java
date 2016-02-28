@@ -14,13 +14,9 @@ import java.util.Map.Entry;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
-import com.flowpowered.math.vector.Vector3d;
-
-import ud.bi0.dragonSphereZ.effect.ParticleEffect;
 import ud.bi0.dragonSphereZ.utils.ParticleEffectUtils;
 import ud.bi0.dragonSphereZ.utils.ReflectionUtils;
 import ud.bi0.dragonSphereZ.utils.ReflectionUtils.PackageType;
@@ -1558,12 +1554,5 @@ public enum ParticleEffectUtils {
 		display(dataMat, dataID, players, center, visibleRange, rainbowMode, (float) offset.getX(), (float) offset.getY(), (float) offset.getZ(), speed, particleCount);
 	}
 	
-	/**
-	 * bi0's display helper method for ParticleEffects.
-	 */
-	public void display(ParticleEffect effect, World world, Vector3d vector) {
-		Location center = new Location(world, vector.getX(), vector.getY(), vector.getZ());
-		display(effect.getDataMat(), effect.getDataID(), effect.getPlayers(), center, effect.getVisibleRange(), effect.getRainbowMode(), (float) effect.getOffset().getX(), (float) effect.getOffset().getY(), (float) effect.getOffset().getZ(), effect.getSpeed(), effect.getParticleCount());
-	}
-	
+
 }

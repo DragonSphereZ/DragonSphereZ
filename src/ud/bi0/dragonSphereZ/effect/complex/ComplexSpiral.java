@@ -1,4 +1,4 @@
-package ud.bi0.dragonSphereZ.particles.effects.complex;
+package ud.bi0.dragonSphereZ.effect.complex;
 
 import java.util.List;
 
@@ -20,12 +20,10 @@ public class ComplexSpiral extends ParticleEffect {
 	protected double circleDensity;
 	protected float height; 
 	protected float effectMod;	
-//	protected boolean rainbowMode;
 	protected boolean clockwise;
 	protected boolean scan;
 	protected Vector axis;
 	Vector offset;
-	//String particle;
 	
 	public ComplexSpiral(
 		//super
@@ -122,9 +120,9 @@ public class ComplexSpiral extends ParticleEffect {
 							}
 						}	
 						if (up == true)
-							i += effectMod * .3;
+							i += effectMod / 2;
 						if (up == false)
-							i -= effectMod * .3;
+							i -= effectMod / 2;
 					} else location.update();
 				}
 			}, delayTick, pulseTick).getTaskId();

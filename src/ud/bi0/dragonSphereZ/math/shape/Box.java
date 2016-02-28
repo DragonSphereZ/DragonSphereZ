@@ -66,6 +66,41 @@ public class Box extends Shape {
 		return new Box(base, matrix.transform(radius));
 	}
 	
+	public ArrayList<Vector3d> getVertices() {
+		return getVertices(radius.getX(), radius.getY(), radius.getZ());
+	}
+	
+	public ArrayList<Vector3d> getVertices(double radiusU, double radiusV, double radiusW) {
+		ArrayList<Vector3d> points = new ArrayList<Vector3d>(8);
+		points.add(getPoint(radiusU, radiusV, radiusW, 0, 0, 0));
+		points.add(getPoint(radiusU, radiusV, radiusW, 1, 0, 0));
+		points.add(getPoint(radiusU, radiusV, radiusW, 0, 1, 0));
+		points.add(getPoint(radiusU, radiusV, radiusW, 0, 0, 1));
+		points.add(getPoint(radiusU, radiusV, radiusW, 1, 1, 0));
+		points.add(getPoint(radiusU, radiusV, radiusW, 1, 0, 1));
+		points.add(getPoint(radiusU, radiusV, radiusW, 0, 1, 1));
+		points.add(getPoint(radiusU, radiusV, radiusW, 1, 1, 1));
+		return points;
+	}
+	
+	public ArrayList<Line> getEdges(double radiusU, double radiusV, double radiusW) {
+		ArrayList<Line> lines = new ArrayList<Line>(12);
+		ArrayList<Vector3d> vertices = getVertices(radiusU, radiusV, radiusW);
+		lines.add(new Line(vertices.get(0), vertices.get(1)));
+		lines.add(new Line(vertices.get(0), vertices.get(2)));
+		lines.add(new Line(vertices.get(0), vertices.get(3)));
+		lines.add(new Line(vertices.get(1), vertices.get(4)));
+		lines.add(new Line(vertices.get(1), vertices.get(5)));
+		lines.add(new Line(vertices.get(2), vertices.get(4)));
+		lines.add(new Line(vertices.get(2), vertices.get(6)));
+		lines.add(new Line(vertices.get(3), vertices.get(5)));
+		lines.add(new Line(vertices.get(3), vertices.get(6)));
+		lines.add(new Line(vertices.get(5), vertices.get(7)));
+		lines.add(new Line(vertices.get(6), vertices.get(7)));
+		lines.add(new Line(vertices.get(7), vertices.get(7)));
+		return lines;
+	}
+	
 	public Vector3d getPoint(double percentU, double percentV, double percentW) {
 		return getPoint(this.getRadius(), new Vector3d(percentU, percentV, percentW));
 	}

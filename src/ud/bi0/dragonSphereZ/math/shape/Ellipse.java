@@ -65,6 +65,10 @@ public class Ellipse extends Shape {
 	public Ellipse setRadius(double radiusU, double radiusV) {
 		return new Ellipse(this.base, radiusU, radiusV);
 	}
+	
+	public Cylinder getCylinder(double height) {
+		return new Cylinder(base, radius, height);
+	}
 
 	public Vector3d getPoint(double angle) {
 		return getPoint(getRadiusU(), getRadiusV(), angle);
