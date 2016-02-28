@@ -82,8 +82,6 @@ public class ComplexSpiral extends ParticleEffect {
 					if (!location.hasMoved(pulseTick)) {
 						location.update();
 						location.add(displacement.getX(), displacement.getY(), displacement.getZ());
-						
-
 						double angle = ( TrigMath.TWO_PI / circleDensity ) * step;
 						angle = GenericMath.wrapAngleRad(angle);
 						double y = i;
@@ -91,8 +89,6 @@ public class ComplexSpiral extends ParticleEffect {
 				            v = new Vector3d(TrigMath.sin(angle) * radius, y, TrigMath.cos(angle) * radius);
 			            if (clockwise == true)
 			                v = new Vector3d(TrigMath.cos(angle) * radius, y, TrigMath.sin(angle) * radius);
-
-						
 						VectorUtils.rotateVector(v, axis.getX(), axis.getY(), axis.getZ());
 						if (rainbowMode)
 							ParticleEffectUtils.simpleRainbowHelper(offset, particle);
@@ -118,9 +114,9 @@ public class ComplexSpiral extends ParticleEffect {
 							}
 						}	
 						if (up == true)
-							i += effectMod / 2;
+							i += effectMod * .3;
 						if (up == false)
-							i -= effectMod / 2;
+							i -= effectMod * .3;
 					} else location.update();
 				}
 			}, delayTick, pulseTick).getTaskId();
