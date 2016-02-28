@@ -63,10 +63,11 @@ public class Ellipsoid extends Shape {
 		return new Ellipse(this.base, sin * radiusU, sin * radiusV);
 	}
 	
+	//TODO:
 	public Ellipse getEllipse(double radiusU, double radiusV, double thetha, double phi) {
 		Ellipse ellipse = new Ellipse();
 		Vector3d dir = getPoint(radiusU, radiusV, radius.getZ(), thetha, phi).sub(getOrigin());
-		
+		return ellipse;
 		
 	}
 	

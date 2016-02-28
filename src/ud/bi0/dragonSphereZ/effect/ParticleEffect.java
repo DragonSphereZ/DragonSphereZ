@@ -41,7 +41,6 @@ public class ParticleEffect extends BukkitRunnable {
 	protected int idTask = 0;
 	
 	
-	@SuppressWarnings("unused")
 	protected final Plugin plugin = DragonSphereCore.dragonSphereCore;
 	protected final NewParticleEffectManager effectManager = DragonSphereCore.newEffectManager;
 	

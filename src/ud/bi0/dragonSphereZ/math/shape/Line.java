@@ -74,9 +74,4 @@ public class Line extends Shape	{
 		return points;
 	}
 	
-	private void updateDirection() {
-		direction = end.sub(start).normalize();
-	}
-	
-	
 }

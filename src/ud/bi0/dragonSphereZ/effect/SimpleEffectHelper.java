@@ -5,11 +5,7 @@ import java.util.List;
 import org.bukkit.entity.Player;
 
 import ud.bi0.dragonSphereZ.effect.simple.*;
-import ud.bi0.dragonSphereZ.particles.effects.simple.SimpleAura;
-import ud.bi0.dragonSphereZ.particles.effects.simple.SimpleHalo;
-import ud.bi0.dragonSphereZ.particles.effects.simple.SimpleTrail;
-import ud.bi0.dragonSphereZ.particles.effects.simple.SimpleYinYang;
-
+import ud.bi0.dragonSphereZ.utils.DynamicLocation;
 
 public class SimpleEffectHelper {
 	
@@ -18,7 +14,7 @@ public class SimpleEffectHelper {
 	public SimpleEffectHelper() {
 	}
 	
-	public ParticleEffect getEffect(String name, String id, String particle, Object target, List<Player> players) {
+	public ParticleEffect getEffect(String name, String id, String particle, DynamicLocation target, List<Player> players) {
 		
 		this.parse(name);
 		// initializes all effects
