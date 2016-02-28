@@ -1,7 +1,6 @@
 package com.flowpowered.math.vector;
 
 import java.io.Serializable;
-import java.lang.Override;
 import java.util.Random;
 
 import com.flowpowered.math.GenericMath;
