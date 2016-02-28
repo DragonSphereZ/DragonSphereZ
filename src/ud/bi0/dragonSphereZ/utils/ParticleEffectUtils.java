@@ -14,9 +14,13 @@ import java.util.Map.Entry;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
+import com.flowpowered.math.vector.Vector3d;
+
+import ud.bi0.dragonSphereZ.effect.ParticleEffect;
 import ud.bi0.dragonSphereZ.utils.ParticleEffectUtils;
 import ud.bi0.dragonSphereZ.utils.ReflectionUtils;
 import ud.bi0.dragonSphereZ.utils.ReflectionUtils.PackageType;
@@ -1456,16 +1460,16 @@ public enum ParticleEffectUtils {
 		}
 		return offsetX;
     }
-	public static Vector simpleRainbowHelper(Vector offset, String particle) {
+	public static Vector3d simpleRainbowHelper(Vector3d offset, String particle) {
 		if (particle.equals(ParticleEffectUtils.note.getName())){
 			if (offset.getX() >= 24)
-				offset.setX(0);
-			offset.setX(offset.getX() + 1);
+				offset = offset.mul(0, 1, 1);
+			offset = offset.add(1, 0, 0);
 			return offset;
 		}else if (particle.equals(ParticleEffectUtils.redstone.getName()) || particle.equals(ParticleEffectUtils.mobspell.getName()) || particle.equals(ParticleEffectUtils.mobspellambient.getName())){
 			if (offset.getX() >= 1)
-				offset.setX(0);
-			offset.setX(offset.getX() + 0.01);
+				offset = offset.mul(0, 1, 1);
+			offset = offset.add(0.01, 0, 0);
 			return offset;
 		}
 		return offset;
@@ -1554,5 +1558,12 @@ public enum ParticleEffectUtils {
 		display(dataMat, dataID, players, center, visibleRange, rainbowMode, (float) offset.getX(), (float) offset.getY(), (float) offset.getZ(), speed, particleCount);
 	}
 	
+	/**
+	 * bi0's display helper method for ParticleEffects.
+	 */
+	public void display(ParticleEffect effect, World world, Vector3d vector) {
+		Location center = new Location(world, vector.getX(), vector.getY(), vector.getZ());
+		display(effect.getDataMat(), effect.getDataID(), effect.getPlayers(), center, effect.getVisibleRange(), effect.getRainbowMode(), (float) effect.getOffset().getX(), (float) effect.getOffset().getY(), (float) effect.getOffset().getZ(), effect.getSpeed(), effect.getParticleCount());
+	}
 
 }
