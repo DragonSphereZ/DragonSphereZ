@@ -3,7 +3,8 @@ package ud.bi0.dragonSphereZ.utils;
 import java.util.Random;
 
 import org.bukkit.Material;
-import org.bukkit.util.Vector;
+
+import com.flowpowered.math.vector.Vector3d;
 
 public final class RandomUtils {
 
@@ -13,22 +14,17 @@ public final class RandomUtils {
 		// No instance allowed
 	}
 	
-	public static Vector getRandomVector() {
-		double x, y, z;
-		x = random.nextDouble() * 2 - 1;
-		y = random.nextDouble() * 2 - 1;
-		z = random.nextDouble() * 2 - 1;
-
-		return new Vector(x, y, z).normalize();
+	public static Vector3d getRandomVector() {
+		return new Vector3d(Vector3d.createRandomDirection(random));
 	}
 	
-	public static Vector getRandomCircleVector() {
+	public static Vector3d getRandomCircleVector() {
 		double rnd, x, z;
 		rnd = random.nextDouble() * 2 * Math.PI;
 		x = Math.cos(rnd);
 		z = Math.sin(rnd);
 		
-		return new Vector(x, 0, z);
+		return new Vector3d(x, 0, z);
 	}
 
 	public static Material getRandomMaterial(Material[] materials) {
