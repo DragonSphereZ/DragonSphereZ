@@ -1,4 +1,4 @@
-package ud.bi0.dragonSphereZ.particles.effects.simple;
+package ud.bi0.dragonSphereZ.effect.simple;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,10 +12,10 @@ import org.bukkit.util.Vector;
 import com.flowpowered.math.GenericMath;
 import com.flowpowered.math.vector.Vector3d;
 
+import ud.bi0.dragonSphereZ.effect.ParticleEffect;
 import ud.bi0.dragonSphereZ.math.Base3d;
 import ud.bi0.dragonSphereZ.math.DoubleFunction;
 import ud.bi0.dragonSphereZ.math.shape.Ellipse;
-import ud.bi0.dragonSphereZ.particles.ParticleEffect;
 import ud.bi0.dragonSphereZ.utils.DynamicLocation;
 import ud.bi0.dragonSphereZ.utils.FlowPoweredHook;
 

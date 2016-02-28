@@ -21,7 +21,6 @@ public class ComplexCircle extends ParticleEffect {
 	protected double particleDensity;
 	protected boolean enableRotation;
 	protected Vector3d axis;
-	//String particle;
 	
 	public ComplexCircle(
 		//super
