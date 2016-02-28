@@ -99,7 +99,7 @@ public class ComplexSpiral extends ParticleEffect {
 						v = v.add(location.getVector3d());
 						ComplexSpiral.this.display(v);
 						//location.display(ComplexSpiral.this);
-						//ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, players, location.add(v), visibleRange, rainbowMode, offset, speed, 1);
+						//ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, players, location, visibleRange, rainbowMode, offset, speed, 1);
 						//location.subtract(v);
 						step++;
 						if (scan == true){

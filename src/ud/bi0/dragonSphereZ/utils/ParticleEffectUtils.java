@@ -1554,7 +1554,7 @@ public enum ParticleEffectUtils {
 	 * bi0's display helper method using vectors.
 	 * 
 	 */
-	public void display(Material dataMat, byte dataID, List<Player> players, Location center, double visibleRange, boolean rainbowMode, Vector offset, float speed, int particleCount) {
+	public void display(Material dataMat, byte dataID, List<Player> players, Location center, double visibleRange, boolean rainbowMode, Vector3d offset, float speed, int particleCount) {
 		display(dataMat, dataID, players, center, visibleRange, rainbowMode, (float) offset.getX(), (float) offset.getY(), (float) offset.getZ(), speed, particleCount);
 	}
 	

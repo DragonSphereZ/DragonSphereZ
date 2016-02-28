@@ -78,7 +78,6 @@ public class ComplexCircle extends ParticleEffect {
 					if (!location.hasMoved(pulseTick)) {
 						location.update();
 						location.add(displacement.getX(), 1 + displacement.getY(), displacement.getZ());
-						//double inc = ((TrigMath.TWO_PI) / particleDensity);
 						double angle = step * (TrigMath.TWO_PI / particleDensity);
 						angle = GenericMath.wrapAngleRad(angle);
 						Vector3d v = new Vector3d(TrigMath.cos(angle) * radius, 0, TrigMath.sin(angle) * radius);
