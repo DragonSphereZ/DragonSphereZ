@@ -17,8 +17,10 @@ public class SimpleEffectHelper {
 	public ParticleEffect getEffect(String name, String id, String particle, Object target, List<Player> players) {
 		
 		this.parse(name);
-		// initializes the effect
+		// initializes all effects
 		switch(name) { 
+		case "newhalo":
+			return new NewSimpleHalo(id, particle, target, players, clockwise);
 		case "halo":
 			return new SimpleHalo(id, particle, target, players, clockwise);
 		case "yinyang":

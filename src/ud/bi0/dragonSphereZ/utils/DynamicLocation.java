@@ -1,5 +1,7 @@
 package ud.bi0.dragonSphereZ.utils;
 
+import java.util.List;
+
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 
@@ -37,7 +39,7 @@ public class DynamicLocation extends Location {
 	}
 	
 	public boolean needsUpdate(long ticks) {
-		if (dynamic && this.distanceSquared(entity.getLocation()) > epsilon * epsilon / ticks) return true;
+		if (dynamic && this.distanceSquared(entity.getLocation()) > epsilon * epsilon / (ticks > 0 ? ticks : 1)) return true;
 		return false;
 	}
 	
@@ -84,6 +86,12 @@ public class DynamicLocation extends Location {
 	
 	public void display(ParticleEffect effect) {
 		ParticleEffectUtils.valueOf(effect.particle).display(effect.dataMat, effect.dataID, effect.players, this, effect.visibleRange, effect.rainbowMode, effect.offset, effect.speed, effect.particleCount);
+	}
+	
+	public static void displayList(ParticleEffect effect, List<DynamicLocation> locs) {
+		for (DynamicLocation loc : locs) {
+			loc.display(effect);
+		}
 	}
 	
 }

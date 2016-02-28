@@ -8,11 +8,13 @@ import com.flowpowered.math.vector.Vector3d;;
 
 public class FlowPoweredHook {
 	
+	
+	
 	/**
 	 * Returns a new Vector3d from a Location.
 	 * 
 	 */
-	public Vector3d Vector3d(Location loc) {
+	public static Vector3d Vector3d(Location loc) {
 		return new Vector3d(loc.getX(), loc.getY(), loc.getZ());
 	}
 	
@@ -20,7 +22,7 @@ public class FlowPoweredHook {
 	 * Returns a new Vector3d from a Vector.
 	 * 
 	 */
-	public Vector3d Vector3d(Vector vec) {
+	public static Vector3d Vector3d(Vector vec) {
 		return new Vector3d(vec.getX(), vec.getY(), vec.getZ());
 	}
 	
@@ -28,7 +30,7 @@ public class FlowPoweredHook {
 	 * Returns a new Location from a Vectro3d and a world.
 	 * 
 	 */
-	public Location Location(Vector3d vec, World world) {
+	public static Location Location(Vector3d vec, World world) {
 		return new Location(world, vec.getX(), vec.getY(), vec.getZ());
 	}
 	
@@ -36,11 +38,10 @@ public class FlowPoweredHook {
 	 * Copies the contents of a Vector3d to a Location.
 	 * 
 	 */
-	public Location vectorToLocation(Location loc, Vector3d vec) {
+	public static void vectorToLocation(Location loc, Vector3d vec) {
 		loc.setX(vec.getX());
 		loc.setY(vec.getY());
 		loc.setZ(vec.getZ());
-		return loc;
 	}
-	
+		
 }

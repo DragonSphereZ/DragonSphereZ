@@ -15,7 +15,6 @@ public class RegisterEffects {
 	
 	}
 	public static void BetaTests() {
-		Skript.registerEffect(EffLineTest.class, new String[] {"linetest with id %string% from %location% to %players%"});
 		
 	}
 }
