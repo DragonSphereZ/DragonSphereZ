@@ -88,6 +88,7 @@ public class EffSimpleDot extends Effect {
 			if (rainbowMode == true)
 				offsetX = (float) (offsetX + 0.01);
 			ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, players, location, visibleRange, rainbowMode, offsetX, offsetY, offsetZ, finalSpeed, count);
+			//ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, players, location, visibleRange, rainbowMode, offsetX, offsetY, offsetZ, finalSpeed, count);
         }
 
 	}
