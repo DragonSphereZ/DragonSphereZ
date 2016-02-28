@@ -5,12 +5,16 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 
+import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
+import ch.njol.skript.log.ErrorQuality;
 import ud.bi0.dragonSphereZ.utils.ParticleEffectUtils;
 
 /**
@@ -30,6 +34,17 @@ public class SkriptHandler {
 		}
 		return false;
 	}
+	
+	/**
+	 * Checks if an object is an entity or location. TODO TEST THIS IF THE OTHER ONE WORKS
+	 */
+	public static boolean isEntityOrLocation(@Nullable Expression<Boolean> entLoc) {
+		Class<?> type = entLoc.getReturnType();
+        if (type != Entity.class || type != Location.class)
+            Skript.error(entLoc.toString() + " is neither an entity nor a location.", ErrorQuality.SEMANTIC_ERROR);
+            return false;
+	}
+	
 	/**
 	 * This is the amount of particles that are played at once in a single location or if offset is used they randomize.
 	 */
@@ -150,6 +165,26 @@ public class SkriptHandler {
 		return 0;
     }
 	
+	/**
+	 * The spiral effect has a height variable
+	 */
+	public static float inputHeight(@Nullable Event e, @Nullable Expression<Number> inputHeight) {
+		if(inputHeight != null){
+			return inputHeight.getSingle(e).floatValue();
+		}
+		return 2;
+    }
+	
+	/**
+	 * This changes the 'angle' of the spiral effect(increases its height at a certain speed)
+	 */
+	public static float inputEffectMod(@Nullable Event e, @Nullable Expression<Number> inputEffectMod) {
+		if(inputEffectMod != null){
+			return inputEffectMod.getSingle(e).floatValue();
+		}
+		return (float) 0.5;
+    }
+
 	/**
 	 * Changes the length of time between 'loops' for each effect
 	 */
