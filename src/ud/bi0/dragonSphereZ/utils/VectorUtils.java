@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 
+import com.flowpowered.math.GenericMath;
 import com.flowpowered.math.TrigMath;
 
 import ud.bi0.dragonSphereZ.oldmath.vector.Vector3;
@@ -15,6 +16,7 @@ public final class VectorUtils {
 
     public static final Vector rotateAroundAxisX(Vector v, double angle) {
         double y, z, cos, sin;
+        angle = GenericMath.wrapAngleRad(angle);
         cos = TrigMath.cos(angle);
         sin = TrigMath.sin(angle);
         y = v.getY() * cos - v.getZ() * sin;
@@ -24,6 +26,7 @@ public final class VectorUtils {
 
     public static final Vector rotateAroundAxisY(Vector v, double angle) {
         double x, z, cos, sin;
+        angle = GenericMath.wrapAngleRad(angle);
         cos = TrigMath.cos(angle);
         sin = TrigMath.sin(angle);
         x = v.getX() * cos + v.getZ() * sin;
@@ -33,6 +36,7 @@ public final class VectorUtils {
 
     public static final Vector rotateAroundAxisZ(Vector v, double angle) {
         double x, y, cos, sin;
+        angle = GenericMath.wrapAngleRad(angle);
         cos = TrigMath.cos(angle);
         sin = TrigMath.sin(angle);
         x = v.getX() * cos - v.getY() * sin;
@@ -59,6 +63,7 @@ public final class VectorUtils {
     
     public static final Vector3 rotateAroundAxisZ(Vector3 v, double angle) {
         double y, z, cos, sin;
+        angle = GenericMath.wrapAngleRad(angle);
         cos = TrigMath.cos(angle);
         sin = TrigMath.sin(angle);
         y = v.getY() * cos - v.getZ() * sin;
@@ -67,6 +72,7 @@ public final class VectorUtils {
     }
     public static final Vector3 rotateAroundAxisX(Vector3 v, double angle) {
         double x, z, cos, sin;
+        angle = GenericMath.wrapAngleRad(angle);
         cos = TrigMath.cos(angle);
         sin = TrigMath.sin(angle);
         x = v.getX() * cos + v.getZ() * sin;
@@ -75,6 +81,7 @@ public final class VectorUtils {
     }
     public static final Vector3 rotateAroundAxisY(Vector3 v, double angle) {
         double x, y, cos, sin;
+        angle = GenericMath.wrapAngleRad(angle);
         cos = TrigMath.cos(angle);
         sin = TrigMath.sin(angle);
         x = v.getX() * cos - v.getY() * sin;

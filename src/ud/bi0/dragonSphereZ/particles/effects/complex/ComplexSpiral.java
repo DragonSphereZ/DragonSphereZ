@@ -77,7 +77,6 @@ public class ComplexSpiral extends ParticleEffect {
 	public void start() {
 		if (!effectManager.isActive(idName))  {
 			idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
-
 				float i;
 				boolean up = true;
 				Vector v;
@@ -87,16 +86,16 @@ public class ComplexSpiral extends ParticleEffect {
 				public void run() {
 					if (!location.hasMoved(pulseTick)) {
 						location.update();
-						location.add(displacement.getX(), 1 + displacement.getY(), displacement.getZ());
+						location.add(displacement.getX(), displacement.getY(), displacement.getZ());
 						
 
 						double angle = ( TrigMath.TWO_PI / circleDensity ) * step;
 						angle = GenericMath.wrapAngleRad(angle);
-						double y = 0.3 * i;	
+						double y = i;
 			            if (clockwise == false)
-				            v = new Vector(Math.sin(angle) * radius, y, Math.cos(angle) * radius);
+				            v = new Vector(TrigMath.sin(angle) * radius, y, TrigMath.cos(angle) * radius);
 			            if (clockwise == true)
-			                v = new Vector(Math.cos(angle) * radius, y, Math.sin(angle) * radius);
+			                v = new Vector(TrigMath.cos(angle) * radius, y, TrigMath.sin(angle) * radius);
 
 						
 						VectorUtils.rotateVector(v, axis.getX(), axis.getY(), axis.getZ());
@@ -123,9 +122,9 @@ public class ComplexSpiral extends ParticleEffect {
 							}
 						}	
 						if (up == true)
-							i += effectMod;
+							i += effectMod / 2;
 						if (up == false)
-							i -= effectMod;
+							i -= effectMod / 2;
 					} else location.update();
 				}
 			}, delayTick, pulseTick).getTaskId();
