@@ -15,7 +15,6 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
-//import ud.bi0.dragonSphereZ.maths.vector.Vector3;
 import ud.bi0.dragonSphereZ.effect.complex.ComplexCircle;
 import ud.bi0.dragonSphereZ.skriptAPI.SkriptHandler;
 import ud.bi0.dragonSphereZ.utils.DynamicLocation;
