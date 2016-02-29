@@ -11,9 +11,9 @@ import com.flowpowered.math.TrigMath;
 import com.flowpowered.math.vector.Vector3d;
 
 import ud.bi0.dragonSphereZ.effect.ParticleEffect;
-import ud.bi0.dragonSphereZ.utils.DynamicLocation;
-import ud.bi0.dragonSphereZ.utils.VectorUtils;
-import ud.bi0.dragonSphereZ.utils.ParticleEffectUtils;
+import ud.bi0.dragonSphereZ.util.DynamicLocation;
+import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
+import ud.bi0.dragonSphereZ.util.VectorUtils;
 
 public class ComplexSpiral extends ParticleEffect {
 	protected double radius;

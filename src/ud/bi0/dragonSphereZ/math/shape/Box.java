@@ -2,6 +2,7 @@ package ud.bi0.dragonSphereZ.math.shape;
 
 import java.util.ArrayList;
 
+import com.flowpowered.math.imaginary.Quaterniond;
 import com.flowpowered.math.matrix.Matrix3d;
 import com.flowpowered.math.vector.Vector3d;
 
@@ -58,8 +59,16 @@ public class Box extends Shape {
 		return new Box(this.base, radius);
 	}
 	
+	public Box adjust(Vector3d from, Vector3d to) {
+		return setBase(base.adjust(from, to));
+	}
+	
+	public Box rotate(Quaterniond rotation) {
+		return setBase(base.rotate(rotation));
+	}
+	
 	public Box transform(Matrix3d matrix) {
-		return new Box(base.transform(matrix), radius);
+		return setBase(base.transform(matrix));
 	}
 	
 	public Box transformRadius(Matrix3d matrix) {

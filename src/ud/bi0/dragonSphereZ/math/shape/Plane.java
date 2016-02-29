@@ -2,6 +2,8 @@ package ud.bi0.dragonSphereZ.math.shape;
 
 import java.util.ArrayList;
 
+import com.flowpowered.math.imaginary.Quaterniond;
+import com.flowpowered.math.matrix.Matrix3d;
 import com.flowpowered.math.vector.Vector2d;
 import com.flowpowered.math.vector.Vector3d;
 
@@ -60,6 +62,18 @@ public class Plane extends Shape {
 	
 	public Plane setRadius(double radiusU, double radiusV) {
 		return new Plane(this.base, radiusU, radiusV);
+	}
+	
+	public Plane adjust(Vector3d from, Vector3d to) {
+		return setBase(base.adjust(from, to));
+	}
+	
+	public Plane rotate(Quaterniond rotation) {
+		return setBase(base.rotate(rotation));
+	}
+	
+	public Plane transform(Matrix3d matrix) {
+		return setBase(base.transform(matrix));
 	}
 	
 	public Vector3d getPoint(double percentU, double percentV) {

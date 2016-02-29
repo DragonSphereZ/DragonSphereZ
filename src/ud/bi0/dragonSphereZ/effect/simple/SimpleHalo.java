@@ -11,7 +11,7 @@ import com.flowpowered.math.vector.Vector3d;
 import ud.bi0.dragonSphereZ.effect.ParticleEffect;
 import ud.bi0.dragonSphereZ.math.Base3d;
 import ud.bi0.dragonSphereZ.math.shape.Cylinder;
-import ud.bi0.dragonSphereZ.utils.DynamicLocation;
+import ud.bi0.dragonSphereZ.util.DynamicLocation;
 
 public class SimpleHalo extends ParticleEffect {
 	

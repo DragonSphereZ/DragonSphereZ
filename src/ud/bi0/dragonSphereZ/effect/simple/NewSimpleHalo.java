@@ -15,9 +15,9 @@ import ud.bi0.dragonSphereZ.effect.ParticleEffect;
 import ud.bi0.dragonSphereZ.math.Base3d;
 import ud.bi0.dragonSphereZ.math.DoubleFunction;
 import ud.bi0.dragonSphereZ.math.shape.Ellipse;
-import ud.bi0.dragonSphereZ.utils.DynamicLocation;
-import ud.bi0.dragonSphereZ.utils.FlowPoweredHook;
-import ud.bi0.dragonSphereZ.utils.ParticleEffectUtils;
+import ud.bi0.dragonSphereZ.util.DynamicLocation;
+import ud.bi0.dragonSphereZ.util.FlowPoweredHook;
+import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
 
 public class NewSimpleHalo extends ParticleEffect {
 	

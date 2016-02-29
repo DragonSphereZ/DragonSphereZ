@@ -2,6 +2,7 @@ package ud.bi0.dragonSphereZ.math.shape;
 
 import java.util.ArrayList;
 
+import com.flowpowered.math.imaginary.Quaterniond;
 import com.flowpowered.math.matrix.Matrix2d;
 import com.flowpowered.math.matrix.Matrix3d;
 import com.flowpowered.math.vector.Vector2d;
@@ -47,6 +48,10 @@ public class Cylinder extends Shape {
 		return new Vector2d(radius);
 	}
 	
+	public Vector3d getAxis() {
+		return base.getW();
+	}
+	
 	public double getHeight() {
 		return height;
 	}
@@ -71,8 +76,16 @@ public class Cylinder extends Shape {
 		return new Cylinder(this.base, this.radius, height);
 	}
 	
+	public Cylinder adjust(Vector3d from, Vector3d to) {
+		return setBase(base.adjust(from, to));
+	}
+	
+	public Cylinder rotate(Quaterniond rotation) {
+		return setBase(base.rotate(rotation));
+	}
+	
 	public Cylinder transform(Matrix3d matrix) {
-		return new Cylinder(base.transform(matrix), radius, height);
+		return setBase(base.transform(matrix));
 	}
 	
 	public Cylinder transformRadius(Matrix2d matrix) {

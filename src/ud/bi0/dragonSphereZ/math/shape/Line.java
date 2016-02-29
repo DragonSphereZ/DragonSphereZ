@@ -30,8 +30,7 @@ public class Line extends Shape	{
 		super();
 		this.start = new Vector3d(start);
 		this.end = new Vector3d(end);
-		this.direction = new Vector3d();
-		this.updateDirection();//TODO
+		this.direction = end.sub(start).normalize();
 	}
 	
 	public Line setStart(Vector3d start) {

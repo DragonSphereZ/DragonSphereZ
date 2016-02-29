@@ -11,10 +11,10 @@ import com.flowpowered.math.GenericMath;
 import com.flowpowered.math.TrigMath;
 
 import ud.bi0.dragonSphereZ.effect.ParticleEffect;
-import ud.bi0.dragonSphereZ.utils.DynamicLocation;
-import ud.bi0.dragonSphereZ.utils.VectorUtils;
-import ud.bi0.dragonSphereZ.utils.RandomUtils;
-import ud.bi0.dragonSphereZ.utils.ParticleEffectUtils;
+import ud.bi0.dragonSphereZ.util.DynamicLocation;
+import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
+import ud.bi0.dragonSphereZ.util.RandomUtils;
+import ud.bi0.dragonSphereZ.util.VectorUtils;
 
 public class ComplexAtom extends ParticleEffect {
 	protected double radius;

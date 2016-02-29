@@ -23,6 +23,12 @@ public class Base3d implements Cloneable {
 				0, 0, 1);
 	}
 	
+	public Base3d(Vector3d u, Vector3d v, Vector3d w) {
+		this(	u.getX(), v.getX(), w.getX(),
+				u.getY(), v.getY(), w.getY(),
+				u.getZ(), v.getZ(), w.getZ());
+	}
+	
 	public Base3d(Base3d base) {
 		this( 	base.getU().getX(), base.getV().getX(), base.getW().getX(),
 				base.getU().getY(), base.getV().getY(), base.getW().getY(),
@@ -53,9 +59,12 @@ public class Base3d implements Cloneable {
 		return base.getColumn(2);
 	}
 	
+	public Base3d rotate(Quaterniond rotation) {
+		return new Base3d(rotation.rotate(getU()), rotation.rotate(getV()), rotation.rotate(getW()));
+	}
+	
 	public Base3d adjust(Vector3d from, Vector3d to) {
-		Matrix3d rotation = Matrix3d.createRotation(Quaterniond.fromRotationTo(from, to));
-		return new Base3d(base.mul(rotation));
+		return rotate(Quaterniond.fromRotationTo(from, to));
 	}
 	
 	public Base3d transform(Matrix3d matrix) {

@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.log.ErrorQuality;
-import ud.bi0.dragonSphereZ.utils.ParticleEffectUtils;
+import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
 
 /**
  * SkriptHandler written by Sashie and bi0qaw.

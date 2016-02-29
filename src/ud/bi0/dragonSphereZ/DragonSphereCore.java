@@ -6,9 +6,9 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import ch.njol.skript.Skript;
-import ud.bi0.dragonSphereZ.effect.NewParticleEffectManager;
-import ud.bi0.dragonSphereZ.skriptAPI.registers.RegisterEffects;
-import ud.bi0.dragonSphereZ.skriptAPI.registers.RegisterExpressions;
+import ud.bi0.dragonSphereZ.effect.ParticleEffectManager;
+import ud.bi0.dragonSphereZ.skriptAPI.register.RegisterEffects;
+import ud.bi0.dragonSphereZ.skriptAPI.register.RegisterExpressions;
 
 
 
@@ -17,7 +17,7 @@ public class DragonSphereCore extends JavaPlugin {
 	
 	public static DragonSphereCore dragonSphereCore;
 	private static DragonSphereCore instance;
-	public static NewParticleEffectManager newEffectManager;
+	public static ParticleEffectManager effectManager;
 	
 	
     public DragonSphereCore() {
@@ -36,7 +36,7 @@ public class DragonSphereCore extends JavaPlugin {
 			RegisterEffects.DragonSphereZ();
 			RegisterEffects.BetaTests();//TODO remove this eventually
 			RegisterExpressions.DragonSphereZ();
-			newEffectManager = new NewParticleEffectManager();
+			effectManager = new ParticleEffectManager();
 			Plugin Biosphere = Bukkit.getServer().getPluginManager().getPlugin("Biosphere");
 			if (Biosphere == null) {
 				Bukkit.getServer().getLogger().info("[DragonSphereZ] Biosphere expressions registered!");

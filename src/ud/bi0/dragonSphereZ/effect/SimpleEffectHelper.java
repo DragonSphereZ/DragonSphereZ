@@ -5,7 +5,7 @@ import java.util.List;
 import org.bukkit.entity.Player;
 
 import ud.bi0.dragonSphereZ.effect.simple.*;
-import ud.bi0.dragonSphereZ.utils.DynamicLocation;
+import ud.bi0.dragonSphereZ.util.DynamicLocation;
 
 public class SimpleEffectHelper {
 	

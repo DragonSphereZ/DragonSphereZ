@@ -2,6 +2,7 @@ package ud.bi0.dragonSphereZ.math.shape;
 
 import java.util.ArrayList;
 
+import com.flowpowered.math.imaginary.Quaterniond;
 import com.flowpowered.math.matrix.Matrix3d;
 import com.flowpowered.math.vector.Vector2d;
 import com.flowpowered.math.vector.Vector3d;
@@ -71,8 +72,16 @@ public class Ellipse extends Shape {
 		return new Ellipse(this.base, radiusU, radiusV);
 	}
 	
+	public Ellipse adjust(Vector3d from, Vector3d to) {
+		return setBase(base.adjust(from, to));
+	}
+	
+	public Ellipse rotate(Quaterniond rotation) {
+		return setBase(base.rotate(rotation));
+	}
+	
 	public Ellipse transform(Matrix3d matrix) {
-		return new Ellipse(base.transform(matrix), radius);
+		return setBase(base.transform(matrix));
 	}
 	
 	public Cylinder getCylinder(double height) {

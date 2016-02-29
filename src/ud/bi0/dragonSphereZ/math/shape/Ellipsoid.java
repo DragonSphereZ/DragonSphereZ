@@ -3,6 +3,7 @@ package ud.bi0.dragonSphereZ.math.shape;
 import java.util.ArrayList;
 
 import com.flowpowered.math.TrigMath;
+import com.flowpowered.math.imaginary.Quaterniond;
 import com.flowpowered.math.matrix.Matrix3d;
 import com.flowpowered.math.vector.Vector3d;
 
@@ -59,8 +60,16 @@ public class Ellipsoid extends Shape {
 		return new Ellipsoid(this.base, radiusU, radiusV, radiusW);
 	}
 	
+	public Ellipsoid adjust(Vector3d from, Vector3d to) {
+		return setBase(base.adjust(from, to));
+	}
+	
+	public Ellipsoid rotate(Quaterniond rotation) {
+		return setBase(base.rotate(rotation));	
+	}
+	
 	public Ellipsoid transform(Matrix3d matrix) {
-		return new Ellipsoid(base.transform(matrix), radius);
+		return setBase(base.transform(matrix));
 	}
 	
 	public Ellipse getEllipse(double radiusU, double radiusV, double thetha) {

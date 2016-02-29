@@ -12,8 +12,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.flowpowered.math.vector.Vector3d;
 
 import ud.bi0.dragonSphereZ.DragonSphereCore;
-import ud.bi0.dragonSphereZ.utils.DynamicLocation;
-import ud.bi0.dragonSphereZ.utils.ParticleEffectUtils;
+import ud.bi0.dragonSphereZ.util.DynamicLocation;
+import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
 
 
 public class ParticleEffect extends BukkitRunnable {
@@ -42,7 +42,7 @@ public class ParticleEffect extends BukkitRunnable {
 	
 	
 	protected final Plugin plugin = DragonSphereCore.dragonSphereCore;
-	protected final NewParticleEffectManager effectManager = DragonSphereCore.newEffectManager;
+	protected final ParticleEffectManager effectManager = DragonSphereCore.effectManager;
 	
 	public ParticleEffect(String idName, String particle, DynamicLocation center, List<Player> players, long delayTick, long pulseTick, int particleCount, Material dataMat, byte dataID, float speed, double visibleRange, boolean rainbowMode, Vector3d offset, Vector3d displacement) {
 		this.idName = new String(idName);
