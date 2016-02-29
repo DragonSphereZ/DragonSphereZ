@@ -3,6 +3,7 @@ package ud.bi0.dragonSphereZ.math.shape;
 import java.util.ArrayList;
 
 import com.flowpowered.math.TrigMath;
+import com.flowpowered.math.matrix.Matrix3d;
 import com.flowpowered.math.vector.Vector3d;
 
 import ud.bi0.dragonSphereZ.math.Base3d;
@@ -58,18 +59,22 @@ public class Ellipsoid extends Shape {
 		return new Ellipsoid(this.base, radiusU, radiusV, radiusW);
 	}
 	
+	public Ellipsoid transform(Matrix3d matrix) {
+		return new Ellipsoid(base.transform(matrix), radius);
+	}
+	
 	public Ellipse getEllipse(double radiusU, double radiusV, double thetha) {
 		double sin = TrigMath.sin(thetha);
 		return new Ellipse(this.base, sin * radiusU, sin * radiusV);
 	}
 	
 	//TODO: this ;-p
-	public Ellipse getEllipse(double radiusU, double radiusV, double thetha, double phi) {
-		Ellipse ellipse = new Ellipse();
-		Vector3d dir = getPoint(radiusU, radiusV, radius.getZ(), thetha, phi).sub(getOrigin());
-		return ellipse;
-		
-	}
+	//public Ellipse getEllipse(double radiusU, double radiusV, double thetha, double phi) {
+	//	Ellipse ellipse = new Ellipse();
+	//	Vector3d dir = getPoint(radiusU, radiusV, radius.getZ(), thetha, phi).sub(getOrigin());
+	//	return ellipse;
+	//	
+	//}
 	
 	public Vector3d getPoint(double thetha, double phi) {
 		return getPoint(getRadius(), thetha, phi);

@@ -1,5 +1,6 @@
 package ud.bi0.dragonSphereZ.math;
 
+import com.flowpowered.math.imaginary.Quaterniond;
 import com.flowpowered.math.matrix.Matrix3d;
 import com.flowpowered.math.vector.Vector3d;
 
@@ -50,6 +51,11 @@ public class Base3d implements Cloneable {
 	
 	public Vector3d getW() {
 		return base.getColumn(2);
+	}
+	
+	public Base3d adjust(Vector3d from, Vector3d to) {
+		Matrix3d rotation = Matrix3d.createRotation(Quaterniond.fromRotationTo(from, to));
+		return new Base3d(base.mul(rotation));
 	}
 	
 	public Base3d transform(Matrix3d matrix) {

@@ -8,11 +8,13 @@ import org.bukkit.entity.Player;
 
 import com.flowpowered.math.GenericMath;
 import com.flowpowered.math.TrigMath;
+import com.flowpowered.math.imaginary.Quaterniond;
 import com.flowpowered.math.vector.Vector3d;
 
 import ud.bi0.dragonSphereZ.effect.ParticleEffect;
+import ud.bi0.dragonSphereZ.math.Base3d;
+import ud.bi0.dragonSphereZ.math.shape.Ellipse;
 import ud.bi0.dragonSphereZ.utils.DynamicLocation;
-import ud.bi0.dragonSphereZ.utils.VectorUtils;
 import ud.bi0.dragonSphereZ.utils.ParticleEffectUtils;
 
 public class ComplexCircle extends ParticleEffect {
@@ -59,38 +61,38 @@ public class ComplexCircle extends ParticleEffect {
 	public void init(double radius, double particleDensity, boolean enableRotation, Vector3d axis) {
 		this.radius = radius;
 		this.particleDensity = particleDensity;
-		//this.rainbowMode = rainbowMode;
 		this.enableRotation = enableRotation;
-		this.axis = axis;
+		this.axis = axis.normalize();
 	}
 	
 	@Override
 	public void start() {
 		if (!effectManager.isActive(idName))  {
 			idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
-				double angularVelocityX = TrigMath.PI / 200;
-				double angularVelocityY = TrigMath.PI / 170;
-				double angularVelocityZ = TrigMath.PI / 155;
-				int step = 0;
-				Vector3d v;
-				DynamicLocation location = DynamicLocation.init(center);
+				
+				Quaterniond rotation = new Quaterniond(TrigMath.PI / 200, 2, 1.7, 1.55);
+				Ellipse circle = new Ellipse()
+										.setBase(Base3d.MINECRAFT.adjust(new Vector3d(0,1,0), axis)) //Makes sure that the orientation is right and changes the axis of the circle if necessasry.
+										.setRadius(radius); //Sets the radius of the circle.
+				double angle = 0;
+				double stepAngle = TrigMath.TWO_PI / particleDensity;
+				Vector3d v = new Vector3d();
+				
 				@Override
 				public void run() {
-					if (!location.hasMoved(pulseTick)) {
-						location.update();
-						location.add(displacement.getX(), 1 + displacement.getY(), displacement.getZ());
-						double angle = step * (TrigMath.TWO_PI / particleDensity);
-						angle = GenericMath.wrapAngleRad(angle);
-						v = new Vector3d(TrigMath.cos(angle) * radius, 0, TrigMath.sin(angle) * radius);//TODO this circle is derped ingame
-						VectorUtils.rotateVector(v, axis.getX(), axis.getY(), axis.getZ());//this is for manual rotation b4 the automatic one kicks in
+					if (!center.hasMoved(pulseTick)) {
+						center.update();
+						v = new Vector3d().add(circle.getPoint(angle)); //Gets the next point on the circle.
 						if (enableRotation)
-							VectorUtils.rotateVector(v, angularVelocityX * step, angularVelocityY * step, angularVelocityZ * step);
+							v = rotation.rotate(v); //Rotates the point.
+							rotation = rotation.mul(rotation); //Prepares the next rotation (same as angle += angleStep).
+						v = v.add(center.getVector3d()); //Translates the vector to the center position.
+						v = v.add(displacement).add(0,1,0);	//Adds final translation to vector.
 						if (rainbowMode)
-							ParticleEffectUtils.simpleRainbowHelper(offset, particle);
-						v = v.add(location.getVector3d());
+							offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
 						ComplexCircle.this.display(v);
-						step++;
-					} else location.update();
+						angle = GenericMath.wrapAngleRad(angle + stepAngle);
+					} else center.update();
 				}
 			}, delayTick, pulseTick).getTaskId();
 			effectManager.startEffect(this);

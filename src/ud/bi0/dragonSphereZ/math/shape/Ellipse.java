@@ -2,6 +2,7 @@ package ud.bi0.dragonSphereZ.math.shape;
 
 import java.util.ArrayList;
 
+import com.flowpowered.math.matrix.Matrix3d;
 import com.flowpowered.math.vector.Vector2d;
 import com.flowpowered.math.vector.Vector3d;
 
@@ -50,6 +51,10 @@ public class Ellipse extends Shape {
 		return radius.getY();
 	}
 	
+	public Vector3d getAxis() {
+		return new Vector3d(base.getW());
+	}
+	
 	public Ellipse setBase(Base3d base) {
 		return new Ellipse(base, this.radius);
 	}
@@ -64,6 +69,10 @@ public class Ellipse extends Shape {
 	
 	public Ellipse setRadius(double radiusU, double radiusV) {
 		return new Ellipse(this.base, radiusU, radiusV);
+	}
+	
+	public Ellipse transform(Matrix3d matrix) {
+		return new Ellipse(base.transform(matrix), radius);
 	}
 	
 	public Cylinder getCylinder(double height) {
