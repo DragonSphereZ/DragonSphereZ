@@ -69,12 +69,10 @@ public class Ellipsoid extends Shape {
 	}
 	
 	//TODO: this ;-p
-	//public Ellipse getEllipse(double radiusU, double radiusV, double thetha, double phi) {
-	//	Ellipse ellipse = new Ellipse();
-	//	Vector3d dir = getPoint(radiusU, radiusV, radius.getZ(), thetha, phi).sub(getOrigin());
-	//	return ellipse;
-	//	
-	//}
+	public Ellipse getEllipse(double radiusU, double radiusV, double thetha, double phi) {
+		Vector3d dir = getPoint(thetha, phi).sub(getOrigin());
+		return new Ellipse(this.getBase().adjust(this.getBase().getW(), dir), radiusU, radiusV);
+	}
 	
 	public Vector3d getPoint(double thetha, double phi) {
 		return getPoint(getRadius(), thetha, phi);

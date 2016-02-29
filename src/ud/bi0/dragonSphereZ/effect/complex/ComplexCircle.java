@@ -72,7 +72,7 @@ public class ComplexCircle extends ParticleEffect {
 				
 				Quaterniond rotation = new Quaterniond(TrigMath.PI / 200, 2, 1.7, 1.55);
 				Ellipse circle = new Ellipse()
-										.setBase(Base3d.MINECRAFT.adjust(new Vector3d(0,1,0), axis)) //Makes sure that the orientation is right and changes the axis of the circle if necessasry.
+										.setBase(Base3d.MINECRAFT.adjust(new Vector3d(0,1,0), axis)) //Makes sure that the orientation is right and changes the axis of the circle if necessary.
 										.setRadius(radius); //Sets the radius of the circle.
 				double angle = 0;
 				double stepAngle = TrigMath.TWO_PI / particleDensity;
@@ -82,7 +82,7 @@ public class ComplexCircle extends ParticleEffect {
 				public void run() {
 					if (!center.hasMoved(pulseTick)) {
 						center.update();
-						v = new Vector3d().add(circle.getPoint(angle)); //Gets the next point on the circle.
+						v = circle.getPoint(angle); //Gets the next point on the circle.
 						if (enableRotation)
 							v = rotation.rotate(v); //Rotates the point.
 							rotation = rotation.mul(rotation); //Prepares the next rotation (same as angle += angleStep).

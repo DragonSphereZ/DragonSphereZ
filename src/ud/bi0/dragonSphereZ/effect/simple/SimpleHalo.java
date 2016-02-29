@@ -8,10 +8,10 @@ import org.bukkit.entity.Player;
 import com.flowpowered.math.GenericMath;
 import com.flowpowered.math.vector.Vector3d;
 
+import ud.bi0.dragonSphereZ.effect.ParticleEffect;
 import ud.bi0.dragonSphereZ.math.Base3d;
 import ud.bi0.dragonSphereZ.math.shape.Cylinder;
 import ud.bi0.dragonSphereZ.utils.DynamicLocation;
-import ud.bi0.dragonSphereZ.effect.ParticleEffect;
 
 public class SimpleHalo extends ParticleEffect {
 	

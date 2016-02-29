@@ -1453,27 +1453,27 @@ public enum ParticleEffectUtils {
 	public static float simpleRainbowHelper(float offsetX, String particle) {
 		if (particle.equals(ParticleEffectUtils.note.getName())){
 			if (offsetX >= 24)
-				offsetX = 0;
-			return (float) (offsetX + 1);
-		}else if (particle.equals(ParticleEffectUtils.redstone.getName()) || particle.equals(ParticleEffectUtils.mobspell.getName()) || particle.equals(ParticleEffectUtils.mobspellambient.getName())){
-			return (float) (offsetX + 0.01);
+				offsetX = 1;
+		} else if (particle.equals(ParticleEffectUtils.redstone.getName()) || particle.equals(ParticleEffectUtils.mobspell.getName()) || particle.equals(ParticleEffectUtils.mobspellambient.getName())){
+			offsetX += 0.01;
 		}
 		return offsetX;
     }
+	
 	public static Vector3d simpleRainbowHelper(Vector3d offset, String particle) {
+		Vector3d newOffset = new Vector3d(offset);
 		if (particle.equals(ParticleEffectUtils.note.getName())){
 			if (offset.getX() >= 24)
-				offset = offset.mul(0, 1, 1);
-			offset = offset.add(1, 0, 0);
-			return offset;
-		}else if (particle.equals(ParticleEffectUtils.redstone.getName()) || particle.equals(ParticleEffectUtils.mobspell.getName()) || particle.equals(ParticleEffectUtils.mobspellambient.getName())){
+				newOffset = offset.mul(0, 1, 1);
+			newOffset = offset.add(1, 0, 0);
+		} else if (particle.equals(ParticleEffectUtils.redstone.getName()) || particle.equals(ParticleEffectUtils.mobspell.getName()) || particle.equals(ParticleEffectUtils.mobspellambient.getName())){
 			if (offset.getX() >= 1)
-				offset = offset.mul(0, 1, 1);
-			offset = offset.add(0.01, 0, 0);
-			return offset;
+				newOffset = offset.mul(0, 1, 1);
+			newOffset = offset.add(0.01, 0, 0);
 		}
-		return offset;
+		return newOffset;
     }
+	
 	/**
 	 * bi0's rainbow method.
 	 * 
