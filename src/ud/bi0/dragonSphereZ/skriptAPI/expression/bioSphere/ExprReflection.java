@@ -47,8 +47,8 @@ public class ExprReflection extends SimpleExpression<Location>{
 	@Override
 	@Nullable
 	protected Location[] get(Event e) {
-		if(x.getSingle(e) == null) return new TrigLib().ptrefl(loc.getArray(e), point.getSingle(e));
-		else return new TrigLib().refl(loc.getArray(e), point.getSingle(e), new Location(point.getSingle(e).getWorld(),x.getSingle(e).doubleValue(),y.getSingle(e).doubleValue(),z.getSingle(e).doubleValue()));
+		if(x.getSingle(e) == null) return new BiosphereTrigLib().ptrefl(loc.getArray(e), point.getSingle(e));
+		else return new BiosphereTrigLib().refl(loc.getArray(e), point.getSingle(e), new Location(point.getSingle(e).getWorld(),x.getSingle(e).doubleValue(),y.getSingle(e).doubleValue(),z.getSingle(e).doubleValue()));
 	}
 
 }

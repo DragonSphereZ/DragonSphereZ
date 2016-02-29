@@ -43,7 +43,7 @@ public class ExprPolygonOutline extends SimpleExpression<Location>{
 	@Override
 	@Nullable
 	protected Location[] get(Event e) {
-		return new TrigLib().getPolyOutline(loc.getArray(e), n.getSingle(e), r.getSingle(e).doubleValue(), d.getSingle(e).doubleValue());
+		return new BiosphereTrigLib().getPolyOutline(loc.getArray(e), n.getSingle(e), r.getSingle(e).doubleValue(), d.getSingle(e).doubleValue());
 	}
 
 }

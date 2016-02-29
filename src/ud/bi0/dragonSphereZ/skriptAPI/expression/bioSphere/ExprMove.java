@@ -41,7 +41,7 @@ public class ExprMove extends SimpleExpression<Location>{
 	@Override
 	@Nullable
 	protected Location[] get(Event e) {
-		return new TrigLib().offset(loc.getArray(e), point.getSingle(e).clone().subtract(center.getSingle(e)));
+		return new BiosphereTrigLib().offset(loc.getArray(e), point.getSingle(e).clone().subtract(center.getSingle(e)));
 	}
 
 }

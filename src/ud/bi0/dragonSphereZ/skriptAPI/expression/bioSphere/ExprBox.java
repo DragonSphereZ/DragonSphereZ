@@ -9,8 +9,6 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
-import ud.bi0.dragonSphereZ.oldmath.shape.Box;
-import ud.bi0.dragonSphereZ.oldmath.vector.Vector3;
 
 public class ExprBox extends SimpleExpression<Location>{
 	private Expression<Location> loc1;
@@ -35,17 +33,13 @@ public class ExprBox extends SimpleExpression<Location>{
 
 	@Override
 	public String toString(@Nullable Event arg0, boolean arg1) {
-		return "box from %location% to %location%";
+		return null;
 	}
 
 	@Override
 	@Nullable
 	protected Location[] get(Event e) {
-		Vector3 vec1 = new Vector3(loc1.getSingle(e));
-		Vector3 vec2 = new Vector3(loc2.getSingle(e));
-		Box box = new Box(vec1, vec2.getX()-vec1.getX(), vec2.getY()-vec1.getY(), vec2.getZ()-vec1.getZ());
-		Location[] locs = new Vector3().locationArray(loc1.getSingle(e).getWorld(), box.getVertices(0,1,0,1,0,1));
-		return locs;
+		return new BiosphereTrigLib().getBox(loc1.getSingle(e), loc2.getSingle(e));
 	}
 
 }

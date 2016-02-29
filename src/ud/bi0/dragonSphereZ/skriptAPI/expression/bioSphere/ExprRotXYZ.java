@@ -43,9 +43,9 @@ public class ExprRotXYZ extends SimpleExpression<Location>{
 	@Override
 	@Nullable
 	protected Location[] get(Event e) {
-		if (axis == 1) return new TrigLib().xrot(loc.getArray(e), center.getSingle(e), phi.getSingle(e).doubleValue());
-		else if(axis == 2) return new TrigLib().yrot(loc.getArray(e), center.getSingle(e), phi.getSingle(e).doubleValue());
-		else return new TrigLib().zrot(loc.getArray(e), center.getSingle(e), phi.getSingle(e).doubleValue());
+		if (axis == 1) return new BiosphereTrigLib().xrot(loc.getArray(e), center.getSingle(e), phi.getSingle(e).doubleValue());
+		else if(axis == 2) return new BiosphereTrigLib().yrot(loc.getArray(e), center.getSingle(e), phi.getSingle(e).doubleValue());
+		else return new BiosphereTrigLib().zrot(loc.getArray(e), center.getSingle(e), phi.getSingle(e).doubleValue());
 	}
 
 }

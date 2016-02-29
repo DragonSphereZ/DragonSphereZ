@@ -43,7 +43,7 @@ public class ExprSphereLoc extends SimpleExpression<Location>{
 	@Override
 	@Nullable
 	protected Location[] get(Event e) {
-		return new TrigLib().sphloc(loc.getArray(e), phi.getSingle(e).doubleValue(), the.getSingle(e).doubleValue(), r.getSingle(e).doubleValue());
+		return new BiosphereTrigLib().sphloc(loc.getArray(e), phi.getSingle(e).doubleValue(), the.getSingle(e).doubleValue(), r.getSingle(e).doubleValue());
 	}
 
 }

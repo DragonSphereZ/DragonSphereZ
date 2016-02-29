@@ -41,7 +41,7 @@ public class ExprPolygon extends SimpleExpression<Location>{
 	@Override
 	@Nullable
 	protected Location[] get(Event e) {
-		return new TrigLib().getPoly(loc.getArray(e), n.getSingle(e), r.getSingle(e).doubleValue());
+		return new BiosphereTrigLib().getPoly(loc.getArray(e), n.getSingle(e), r.getSingle(e).doubleValue());
 	}
 
 }

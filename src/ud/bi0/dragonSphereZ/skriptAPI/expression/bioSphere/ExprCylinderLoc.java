@@ -9,8 +9,6 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.skript.lang.util.SimpleExpression;
 import ch.njol.util.Kleenean;
-import ud.bi0.dragonSphereZ.oldmath.shape.Cylinder;
-import ud.bi0.dragonSphereZ.oldmath.vector.Vector3;
 
 public class ExprCylinderLoc extends SimpleExpression<Location>{
 	private Expression<Location> loc;
@@ -39,19 +37,13 @@ public class ExprCylinderLoc extends SimpleExpression<Location>{
 
 	@Override
 	public String toString(@Nullable Event arg0, boolean arg1) {
-		return "cylinder coord[inate][s][ at] %locations%[ with] coordinates %number%(,| and) %number%(,| and) %number%";
+		return null;
 	}
 
 	@Override
 	@Nullable
 	protected Location[] get(Event e) {
-		Vector3 vec = new Vector3(loc.getSingle(e));
-		double radius = r.getSingle(e).doubleValue();
-		double angle = phi.getSingle(e).doubleValue();
-		double height = h.getSingle(e).doubleValue();
-		Cylinder cyl = new Cylinder(vec, 1, 1);
-		Location[] location = new Vector3().locationArray(loc.getSingle(e).getWorld(), cyl.getPoint(radius, angle, height));
-		return location;
+		return new BiosphereTrigLib().cylloc(loc.getArray(e), phi.getSingle(e).doubleValue(), r.getSingle(e).doubleValue(), h.getSingle(e).doubleValue());
 	}
 
 }

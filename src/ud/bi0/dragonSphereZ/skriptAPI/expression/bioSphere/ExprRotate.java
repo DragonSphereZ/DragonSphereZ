@@ -47,7 +47,7 @@ public class ExprRotate extends SimpleExpression<Location>{
 	@Override
 	@Nullable
 	protected Location[] get(Event e) {
-		return new TrigLib().rot(loc.getArray(e), center.getSingle(e), new Location(center.getSingle(e).getWorld(),y.getSingle(e).doubleValue(),z.getSingle(e).doubleValue(),x.getSingle(e).doubleValue()), phi.getSingle(e).doubleValue()); 
+		return new BiosphereTrigLib().rot(loc.getArray(e), center.getSingle(e), new Location(center.getSingle(e).getWorld(),y.getSingle(e).doubleValue(),z.getSingle(e).doubleValue(),x.getSingle(e).doubleValue()), phi.getSingle(e).doubleValue()); 
 	}
 
 }

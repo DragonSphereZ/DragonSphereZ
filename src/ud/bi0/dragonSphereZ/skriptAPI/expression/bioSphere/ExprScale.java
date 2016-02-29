@@ -48,8 +48,8 @@ public class ExprScale extends SimpleExpression<Location>{
 	@Nullable
 	protected Location[] get(Event e) {
 		double pp = p.getSingle(e).doubleValue();
-		if(x.getSingle(e) == null) return new TrigLib().scale(loc.getArray(e), center.getSingle(e), p.getSingle(e).doubleValue());
-		else return new TrigLib().cdirscale(loc.getArray(e), center.getSingle(e), x.getSingle(e).doubleValue() * pp, y.getSingle(e).doubleValue() * pp, z.getSingle(e).doubleValue() * pp);
+		if(x.getSingle(e) == null) return new BiosphereTrigLib().scale(loc.getArray(e), center.getSingle(e), p.getSingle(e).doubleValue());
+		else return new BiosphereTrigLib().cdirscale(loc.getArray(e), center.getSingle(e), x.getSingle(e).doubleValue() * pp, y.getSingle(e).doubleValue() * pp, z.getSingle(e).doubleValue() * pp);
 	}	
 
 }

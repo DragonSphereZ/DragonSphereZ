@@ -39,7 +39,7 @@ public class ExprLinkAll extends SimpleExpression<Location>{
 	@Override
 	@Nullable
 	protected Location[] get(Event e) {
-		return new TrigLib().linkAll(loc.getArray(e), d.getSingle(e).doubleValue());
+		return new BiosphereTrigLib().linkAll(loc.getArray(e), d.getSingle(e).doubleValue());
 	}
 
 }

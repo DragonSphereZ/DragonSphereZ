@@ -42,7 +42,7 @@ public class ExprLineLoc extends SimpleExpression<Location>	{
 	@Override
 	@Nullable
 	protected Location[] get(Event e) {
-		return new TrigLib().lineloc(l1.getArray(e), l2.getSingle(e), p.getSingle(e).doubleValue());
+		return new BiosphereTrigLib().lineloc(l1.getArray(e), l2.getSingle(e), p.getSingle(e).doubleValue());
 	}
 
 }

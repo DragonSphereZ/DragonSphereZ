@@ -41,7 +41,7 @@ public class ExprSphere extends SimpleExpression<Location>{
 	@Override
 	@Nullable
 	protected Location[] get(Event e) {
-		return new TrigLib().getSphere(loc.getArray(e), r.getSingle(e).doubleValue(), d.getSingle(e).doubleValue());
+		return new BiosphereTrigLib().getSphere(loc.getArray(e), r.getSingle(e).doubleValue(), d.getSingle(e).doubleValue());
 	}
 
 }

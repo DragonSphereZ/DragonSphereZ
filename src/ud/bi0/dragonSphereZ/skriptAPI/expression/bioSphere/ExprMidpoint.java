@@ -37,7 +37,7 @@ public class ExprMidpoint extends SimpleExpression<Location>{
 	@Override
 	@Nullable
 	protected Location[] get(Event e) {
-		return new TrigLib().midpt(l.getArray(e));
+		return new BiosphereTrigLib().midpt(l.getArray(e));
 	}
 
 }
