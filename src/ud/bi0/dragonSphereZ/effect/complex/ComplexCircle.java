@@ -46,20 +46,20 @@ public class ComplexCircle extends ParticleEffect {
 		Vector3d axis)
 	{
 		super(idName, particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, rainbowMode, offset, displacement);
-		init(radius, particleDensity, rainbowMode, enableRotation, axis);
+		init(radius, particleDensity, enableRotation, axis);
 
 	}
 	public ComplexCircle(String idName, DynamicLocation center, List<Player> players) {
 		super(idName, center, players);
 		//this.offset = new Vector3d(0,1,1);
 		//this.displacement = new Vector3d();
-		init(1 ,1 ,false ,false, new Vector3d(0,0,1));
+		init(1, 1, false, new Vector3d(0,0,1));
 	}
 	
-	public void init(double radius, double particleDensity, boolean rainbowMode, boolean enableRotation, Vector3d axis) {
+	public void init(double radius, double particleDensity, boolean enableRotation, Vector3d axis) {
 		this.radius = radius;
 		this.particleDensity = particleDensity;
-		this.rainbowMode = rainbowMode;
+		//this.rainbowMode = rainbowMode;
 		this.enableRotation = enableRotation;
 		this.axis = axis;
 	}
