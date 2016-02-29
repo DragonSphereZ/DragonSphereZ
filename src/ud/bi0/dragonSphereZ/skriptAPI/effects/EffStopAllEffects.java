@@ -35,9 +35,9 @@ public class EffStopAllEffects extends Effect {
 			Entity[] entityArray = ent.getArray(e);
 			if (entityArray != null) 
 				for (Entity entity : entityArray) {
-					DragonSphereCore.effectManager.stopEffect(entity);
+					DragonSphereCore.newEffectManager.stopEffect(entity);
 				}
 		}
-		else DragonSphereCore.effectManager.stopAll();
+		else DragonSphereCore.newEffectManager.stopAll();
 	}
 }

@@ -39,7 +39,7 @@ public class ExprActiveEffect extends SimpleExpression<Boolean>{
 	@Override
 	@Nullable
 	protected Boolean[] get(Event e) {
-		return new Boolean[]{DragonSphereCore.effectManager.isActive(idName.getSingle(e))};
+		return new Boolean[]{DragonSphereCore.newEffectManager.isActive(idName.getSingle(e))};
 	}
 
 }

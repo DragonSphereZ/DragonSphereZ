@@ -1,13 +1,9 @@
 package ud.bi0.dragonSphereZ.utils;
 
-import java.util.List;
-
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 
 import com.flowpowered.math.vector.Vector3d;
-
-import ud.bi0.dragonSphereZ.particles.ParticleEffect;
 
 public class DynamicLocation extends Location {
 
@@ -89,14 +85,14 @@ public class DynamicLocation extends Location {
 		return new DynamicLocation(new Location(((Location) center).getWorld(), ((Location) center).getX(), ((Location) center).getY(), ((Location) center).getZ()));
 	}
 	
-	public void display(ParticleEffect effect) {
-		ParticleEffectUtils.valueOf(effect.particle).display(effect.dataMat, effect.dataID, effect.players, this, effect.visibleRange, effect.rainbowMode, effect.offset, effect.speed, effect.particleCount);
-	}
+	//public void display(ParticleEffect effect) {
+	//	ParticleEffectUtils.valueOf(effect.particle).display(effect.dataMat, effect.dataID, effect.players, this, effect.visibleRange, effect.rainbowMode, effect.offset, effect.speed, effect.particleCount);
+	//}
 	
-	public static void displayList(ParticleEffect effect, List<DynamicLocation> locs) {
-		for (DynamicLocation loc : locs) {
-			loc.display(effect);
-		}
-	}
+	//public static void displayList(ParticleEffect effect, List<DynamicLocation> locs) {
+	//	for (DynamicLocation loc : locs) {
+	//		loc.display(effect);
+	//	}
+	//}
 	
 }

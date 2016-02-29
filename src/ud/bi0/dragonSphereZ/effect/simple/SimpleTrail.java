@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 
 import com.flowpowered.math.vector.Vector3d;
 
-import ud.bi0.dragonSphereZ.oldmath.vector.Vector3;
 import ud.bi0.dragonSphereZ.effect.ParticleEffect;
 import ud.bi0.dragonSphereZ.utils.DynamicLocation;
 

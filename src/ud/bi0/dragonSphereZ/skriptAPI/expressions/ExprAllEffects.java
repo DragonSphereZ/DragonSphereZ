@@ -38,7 +38,7 @@ public class ExprAllEffects extends SimpleExpression<String> {
 	@Override
 	@Nullable
 	protected String[] get(Event arg0) {
-		Set<String> keySet = DragonSphereCore.effectManager.getKeys();
+		Set<String> keySet = DragonSphereCore.newEffectManager.getKeys();
 		String[] keys = new String[keySet.size()];
 		keySet.toArray(keys);
 		return keys;

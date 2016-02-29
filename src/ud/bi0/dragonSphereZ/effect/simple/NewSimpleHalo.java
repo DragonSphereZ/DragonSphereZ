@@ -7,7 +7,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
 
 import com.flowpowered.math.GenericMath;
 import com.flowpowered.math.vector.Vector3d;
@@ -18,13 +17,14 @@ import ud.bi0.dragonSphereZ.math.DoubleFunction;
 import ud.bi0.dragonSphereZ.math.shape.Ellipse;
 import ud.bi0.dragonSphereZ.utils.DynamicLocation;
 import ud.bi0.dragonSphereZ.utils.FlowPoweredHook;
+import ud.bi0.dragonSphereZ.utils.ParticleEffectUtils;
 
 public class NewSimpleHalo extends ParticleEffect {
 	
 	boolean clockwise;
 	
-	public NewSimpleHalo(String idName, String particle, Object center, List<Player> players, boolean clockwise) {
-		super(idName, particle, center, players, 0, 2, 1, Material.DIRT,(byte) 0, 0, 32, false, new Vector(0,0,0));
+	public NewSimpleHalo(String idName, String particle, DynamicLocation center, List<Player> players, boolean clockwise) {
+		super(idName, particle, center, players, 0, 2, 1, Material.DIRT,(byte) 0, 0, 32, false, new Vector3d(0,0,0), new Vector3d(0,0,0));
 		this.clockwise = clockwise;
 	}
 	
@@ -33,9 +33,7 @@ public class NewSimpleHalo extends ParticleEffect {
 		if (!effectManager.isActive(idName))  {
 			idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
 				
-				Ellipse ell = new Ellipse()
-									.setBase(Base3d.MINECRAFT)
-									.setRadius(0.5, 0.5);
+				Ellipse ell = new Ellipse().setBase(Base3d.MINECRAFT).setRadius(0.5, 0.5);
 				double phi = 0;
 				double stepPhi = clockwise ? -0.3 : 0.3;
 				int n = 5;
@@ -53,7 +51,8 @@ public class NewSimpleHalo extends ParticleEffect {
 							loc = FlowPoweredHook.Location(vec, location.getWorld());
 							loc.add(0, 2, 0);
 							location.add(loc);
-							location.display(NewSimpleHalo.this);
+							//location.display(NewSimpleHalo.this);
+							ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, players, location, visibleRange, rainbowMode, offset, speed, 1);
 							location.subtract(loc);
 						}
 						phi += 5 * stepPhi;

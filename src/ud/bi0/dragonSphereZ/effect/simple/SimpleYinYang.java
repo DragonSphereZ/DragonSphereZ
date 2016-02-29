@@ -6,7 +6,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.util.Vector;
 
 import com.flowpowered.math.GenericMath;
 import com.flowpowered.math.vector.Vector3d;
@@ -104,8 +103,8 @@ public class SimpleYinYang extends ParticleEffect {
 				final double height = 2;
 				final double stepPhi = clockwise ? -angle : angle;
 				double phi = 0;
-				final Vector black = new Vector(0, 0, 0);
-				final Vector white = color ? new Vector(254, 254, 254) : new Vector(0,0,0);
+				final Vector3d black = new Vector3d(0, 0, 0);
+				final Vector3d white = color ? new Vector3d(254, 254, 254) : new Vector3d(0,0,0);
 				
 				@Override
 				public void run() {

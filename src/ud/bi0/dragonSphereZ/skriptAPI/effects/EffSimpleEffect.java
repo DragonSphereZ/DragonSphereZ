@@ -15,6 +15,7 @@ import ch.njol.util.Kleenean;
 import ud.bi0.dragonSphereZ.effect.ParticleEffect;
 import ud.bi0.dragonSphereZ.effect.SimpleEffectHelper;
 import ud.bi0.dragonSphereZ.skriptAPI.SkriptHandler;
+import ud.bi0.dragonSphereZ.utils.DynamicLocation;
 
 public class EffSimpleEffect extends Effect {
 	
@@ -46,7 +47,7 @@ public class EffSimpleEffect extends Effect {
 		String name = effectName.getSingle(e);
 		String id = effectID.getSingle(e);
 		String particle = effectParticle.getSingle(e);
-		Object target = effectTarget.getSingle(e);
+		DynamicLocation target = DynamicLocation.init(effectTarget.getSingle(e));
 		List<Player> players = Arrays.asList(effectPlayers.getAll(e));
 		ParticleEffect effect = new SimpleEffectHelper().getEffect(name, id, particle, target, players);
 		if (effect == null) return;

@@ -29,7 +29,7 @@ public class EffStopEffect extends Effect {
 
 	@Override
 	protected void execute(Event e) {
-		DragonSphereCore.effectManager.stopEffect(effectID.getSingle(e));
+		DragonSphereCore.newEffectManager.stopEffect(effectID.getSingle(e));
 	}
 
 }
