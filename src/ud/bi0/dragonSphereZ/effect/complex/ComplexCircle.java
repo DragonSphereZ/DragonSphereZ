@@ -51,8 +51,8 @@ public class ComplexCircle extends ParticleEffect {
 	}
 	public ComplexCircle(String idName, DynamicLocation center, List<Player> players) {
 		super(idName, center, players);
-		this.offset = new Vector3d(0,1,1);
-		this.displacement = new Vector3d();
+		//this.offset = new Vector3d(0,1,1);
+		//this.displacement = new Vector3d();
 		init(1 ,1 ,false ,false, new Vector3d(0,0,1));
 	}
 	
@@ -72,6 +72,7 @@ public class ComplexCircle extends ParticleEffect {
 				double angularVelocityY = TrigMath.PI / 170;
 				double angularVelocityZ = TrigMath.PI / 155;
 				int step = 0;
+				Vector3d v;
 				DynamicLocation location = DynamicLocation.init(center);
 				@Override
 				public void run() {
@@ -80,8 +81,8 @@ public class ComplexCircle extends ParticleEffect {
 						location.add(displacement.getX(), 1 + displacement.getY(), displacement.getZ());
 						double angle = step * (TrigMath.TWO_PI / particleDensity);
 						angle = GenericMath.wrapAngleRad(angle);
-						Vector3d v = new Vector3d(TrigMath.cos(angle) * radius, 0, TrigMath.sin(angle) * radius);
-						VectorUtils.rotateVector(v, axis.getX(), axis.getY(), axis.getZ());
+						v = new Vector3d(TrigMath.cos(angle) * radius, 0, TrigMath.sin(angle) * radius);//TODO this circle is derped ingame
+						VectorUtils.rotateVector(v, axis.getX(), axis.getY(), axis.getZ());//this is for manual rotation b4 the automatic one kicks in
 						if (enableRotation)
 							VectorUtils.rotateVector(v, angularVelocityX * step, angularVelocityY * step, angularVelocityZ * step);
 						if (rainbowMode)
