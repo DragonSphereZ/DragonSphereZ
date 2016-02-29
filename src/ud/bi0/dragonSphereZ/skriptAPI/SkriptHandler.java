@@ -12,6 +12,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 
+import com.flowpowered.math.vector.Vector3d;
+
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.log.ErrorQuality;
@@ -103,6 +105,12 @@ public class SkriptHandler {
 		}
 		return 0;
     }
+	public static Vector3d inputParticleOffset(@Nullable Event e, @Nullable Expression<Number> inputParticleOffsetX, @Nullable Expression<Number> inputParticleOffsetY, @Nullable Expression<Number> inputParticleOffsetZ) {
+		if(inputParticleOffsetX != null && inputParticleOffsetY != null && inputParticleOffsetZ != null){
+			return new Vector3d(inputParticleOffsetZ.getSingle(e).floatValue(),inputParticleOffsetY.getSingle(e).floatValue(),inputParticleOffsetZ.getSingle(e).floatValue());
+		}
+		return new Vector3d(0,0,0);
+    }
 	
 	/**
 	 * This method can return null because the final result relies on isSinglePlayer being true and are required together.
@@ -144,6 +152,12 @@ public class SkriptHandler {
 		}
 		return 0;
     }
+	public static Vector3d inputLocDisplacement(@Nullable Event e, @Nullable Expression<Number> inputLocDisplacementX, @Nullable Expression<Number> inputLocDisplacementY, @Nullable Expression<Number> inputLocDisplacementZ) {
+		if(inputLocDisplacementX != null && inputLocDisplacementY != null && inputLocDisplacementZ != null){
+			return new Vector3d(inputLocDisplacementZ.getSingle(e).floatValue(),inputLocDisplacementY.getSingle(e).floatValue(),inputLocDisplacementZ.getSingle(e).floatValue());
+		}
+		return new Vector3d(0,0,0);
+    }
 	
 	/**
 	 * This method checks if random rotation mode is enabled for certain effects.
@@ -163,6 +177,12 @@ public class SkriptHandler {
 			return inputEffectRotation.getSingle(e).doubleValue();
 		}
 		return 0;
+    }
+	public static Vector3d inputEffectRotation(@Nullable Event e, @Nullable Expression<Number> inputEffectRotationX, @Nullable Expression<Number> inputEffectRotationY, @Nullable Expression<Number> inputEffectRotationZ) {
+		if(inputEffectRotationX != null && inputEffectRotationY != null && inputEffectRotationZ != null){
+			return new Vector3d(inputEffectRotationZ.getSingle(e).floatValue(),inputEffectRotationY.getSingle(e).floatValue(),inputEffectRotationZ.getSingle(e).floatValue());
+		}
+		return new Vector3d(0,1,0);
     }
 	
 	/**
