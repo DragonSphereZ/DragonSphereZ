@@ -81,19 +81,26 @@ public class ComplexCircle extends ParticleEffect {
 				@Override
 				public void run() {
 					if (!center.hasMoved(pulseTick)) {
+						Bukkit.getServer().broadcastMessage("[test] rotation " + rotation);
+						Bukkit.getServer().broadcastMessage("[test] vector0 " + v);
 						center.update();
+						Bukkit.getServer().broadcastMessage("[test] angle1" + angle);
 						v = circle.getPoint(angle); //Gets the next point on the circle.
+						Bukkit.getServer().broadcastMessage("[test] vector1 " + v);
 						if (enableRotation)
 							v = rotation.rotate(v); //Rotates the point.
 							rotation = rotation.mul(rotation); //Prepares the next rotation (same as angle += angleStep).
+							Bukkit.getServer().broadcastMessage("[test] vector2" + v);
 						v = v.add(center.getVector3d()); //Translates the vector to the center position.
+						Bukkit.getServer().broadcastMessage("[test] vector3" + v);
 						v = v.add(displacement).add(0,1,0);	//Adds final translation to vector.
+						Bukkit.getServer().broadcastMessage("[test] vector4" + v);
 						if (rainbowMode)
 							offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
 						ComplexCircle.this.display(v);
 						angle = GenericMath.wrapAngleRad(angle + stepAngle);
-						
-						Bukkit.getServer().broadcastMessage("[test] axis" + axis);
+						Bukkit.getServer().broadcastMessage("[test] angle2" + angle);
+						Bukkit.getServer().broadcastMessage("[test] vector5" + v);
 						
 					} else center.update();
 				}
