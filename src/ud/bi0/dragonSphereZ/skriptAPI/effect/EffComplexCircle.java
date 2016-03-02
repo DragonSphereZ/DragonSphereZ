@@ -115,7 +115,11 @@ public class EffComplexCircle extends Effect {
 		//double yRotation = SkriptHandler.inputEffectRotation(e, yRot);
 		//double zRotation = SkriptHandler.inputEffectRotation(e, zRot);
 		//Vector3d axis = new Vector3d(xRotation, yRotation, zRotation);
-		Vector3d axis = SkriptHandler.inputEffectRotation(e, xRot, yRot, zRot);
+		
+		//Vector3d axis = SkriptHandler.inputEffectRotation(e, xRot, yRot, zRot);
+		
+		
+		Vector3d axis = new Vector3d(0,1,0);
 		int finalParticleDensity = SkriptHandler.inputParticleDensity(e, inputParticleDensity);
 		DynamicLocation center = DynamicLocation.init(entLoc.getSingle(e));
 		String idName = inputIdName.getSingle(e);

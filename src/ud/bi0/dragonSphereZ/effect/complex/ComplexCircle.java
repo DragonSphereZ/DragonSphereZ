@@ -92,6 +92,9 @@ public class ComplexCircle extends ParticleEffect {
 							offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
 						ComplexCircle.this.display(v);
 						angle = GenericMath.wrapAngleRad(angle + stepAngle);
+						
+						Bukkit.getServer().broadcastMessage("[test] axis" + axis);
+						
 					} else center.update();
 				}
 			}, delayTick, pulseTick).getTaskId();
