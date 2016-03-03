@@ -195,7 +195,7 @@ public class SkriptHandler {
 	
 	public static Vector3d inputEffectRotation(@Nullable Event e, @Nullable Expression<Number> inputEffectRotationX, @Nullable Expression<Number> inputEffectRotationY, @Nullable Expression<Number> inputEffectRotationZ) {
 		if (!hasNull(e, inputEffectRotationX, inputEffectRotationY, inputEffectRotationZ)) {
-			return new Vector3d(inputEffectRotationZ.getSingle(e).floatValue(),inputEffectRotationY.getSingle(e).floatValue(),inputEffectRotationZ.getSingle(e).floatValue());
+			return new Vector3d(inputEffectRotationX.getSingle(e).floatValue(), inputEffectRotationY.getSingle(e).floatValue(), inputEffectRotationZ.getSingle(e).floatValue());
 		}
 		return new Vector3d(0,1,0);
     }

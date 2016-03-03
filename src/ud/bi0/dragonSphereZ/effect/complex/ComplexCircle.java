@@ -73,7 +73,7 @@ public class ComplexCircle extends ParticleEffect {
 				Vector3d v = new Vector3d();
 				Ellipse circle = new Ellipse()
 										.setBase(Base3d.MINECRAFT) 			//Changes from default cartesian to Minecraft's coordinate system.
-										.adjust(new Vector3d(0,1,0), axis) 	//Changes the direction of the circle.
+										.adjust(Vector3d.UNIT_Y, axis) 		//Adjusts the circle axis.
 										.setRadius(radius); 				//Sets the radius of the circle.
 				double angle = 0;
 				double stepAngle = TrigMath.TWO_PI / particleDensity;

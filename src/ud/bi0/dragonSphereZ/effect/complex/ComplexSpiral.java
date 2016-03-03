@@ -11,11 +11,12 @@ import com.flowpowered.math.TrigMath;
 import com.flowpowered.math.vector.Vector3d;
 
 import ud.bi0.dragonSphereZ.effect.ParticleEffect;
+import ud.bi0.dragonSphereZ.math.Base3d;
+import ud.bi0.dragonSphereZ.math.shape.Cylinder;
 import ud.bi0.dragonSphereZ.util.DynamicLocation;
-import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
-import ud.bi0.dragonSphereZ.util.VectorUtils;
 
 public class ComplexSpiral extends ParticleEffect {
+	
 	protected double radius;
 	protected double circleDensity;
 	protected float height; 
@@ -59,6 +60,7 @@ public class ComplexSpiral extends ParticleEffect {
 	}
 	
 	public void init(double radius, double circleDensity, float height, float effectMod, boolean scan, boolean clockwise, Vector3d axis) {
+	
 		this.radius = radius;
 		this.circleDensity = circleDensity;
 		this.height = height;
@@ -72,52 +74,34 @@ public class ComplexSpiral extends ParticleEffect {
 	public void start() {
 		if (!effectManager.isActive(idName))  {
 			idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
-				float i;
-				boolean up = true;
-				Vector3d v;
-				int step = 0;
-				DynamicLocation location = DynamicLocation.init(center);
+				
+				Cylinder spiral = new Cylinder()
+										.setBase(Base3d.MINECRAFT)
+										.adjust(Vector3d.UNIT_Y, axis)
+										.setRadius(radius);
+				Vector3d v = new Vector3d();
+				double angle = 0;
+				double stepAngle = clockwise ? TrigMath.TWO_PI / circleDensity : -TrigMath.TWO_PI / circleDensity;
+				double height = 0;
+				double stepHeight = Math.signum(this.height) / circleDensity;
+				
 				@Override
 				public void run() {
-					if (!location.hasMoved(pulseTick)) {
-						location.update();
-						location.add(displacement.getX(), displacement.getY(), displacement.getZ());
-						double angle = ( TrigMath.TWO_PI / circleDensity ) * step;
-						angle = GenericMath.wrapAngleRad(angle);
-						double y = i;
-			            if (clockwise == false)
-				            v = new Vector3d(TrigMath.sin(angle) * radius, y, TrigMath.cos(angle) * radius);
-			            if (clockwise == true)
-			                v = new Vector3d(TrigMath.cos(angle) * radius, y, TrigMath.sin(angle) * radius);
-						VectorUtils.rotateVector(v, axis.getX(), axis.getY(), axis.getZ());
-						if (rainbowMode)
-							ParticleEffectUtils.simpleRainbowHelper(offset, particle);
-						v = v.add(location.getVector3d());
+					if (!center.hasMoved(pulseTick)) {
+						center.update();
+						v = spiral.getPoint(angle, height);
+						v = v.add(center.getVector3d()).add(displacement);
 						ComplexSpiral.this.display(v);
-						//location.display(ComplexSpiral.this);
-						//ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, players, location, visibleRange, rainbowMode, offset, speed, 1);
-						//location.subtract(v);
-						step++;
-						if (scan == true){
-							if (i > height) {
-								up = false;
-							}
-							else if (i < 0) {
-								up = true;
-							}
-						}else{
-							if (i > height) {
-								i = 0;
-							}
-							if (i < 0) {
-								i = height;
-							}
-						}	
-						if (up == true)
-							i += effectMod * .3;
-						if (up == false)
-							i -= effectMod * .3;
-					} else location.update();
+						angle = GenericMath.wrapAngleRad(angle + stepAngle);
+						height += stepHeight;
+						if (Math.abs(height) > Math.abs(this.height)) { //Triggers when it reaches the top of the spiral.
+							if (scan) stepHeight = -stepHeight;
+							else height = 0;
+						}
+						if (scan) {
+							if ((this.height > 0 && height < 0) || (this.height < 0 && height > 0)) stepHeight = -stepHeight; //Triggers when it reaches the start of the spiral.
+						}
+					} else center.update();
 				}
 			}, delayTick, pulseTick).getTaskId();
 			effectManager.startEffect(this);

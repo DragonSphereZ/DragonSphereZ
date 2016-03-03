@@ -67,6 +67,8 @@ public class SimpleYinYang extends ParticleEffect {
 		}
 	}
 	
+	
+	
 	@SuppressWarnings("unused")
 	private void init(String yin) {
 		init(yin, 1);
