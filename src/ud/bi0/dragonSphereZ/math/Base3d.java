@@ -64,7 +64,8 @@ public class Base3d implements Cloneable {
 	}
 	
 	public Base3d adjust(Vector3d from, Vector3d to) {
-		return rotate(Quaterniond.fromRotationTo(from, to));
+		if (!from.equals(to)) return rotate(Quaterniond.fromRotationTo(from, to));
+		return new Base3d(base);
 	}
 	
 	public Base3d transform(Matrix3d matrix) {

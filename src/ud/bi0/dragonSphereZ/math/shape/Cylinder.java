@@ -1,6 +1,7 @@
 package ud.bi0.dragonSphereZ.math.shape;
 
 import java.util.ArrayList;
+import java.util.function.IntToDoubleFunction;
 
 import com.flowpowered.math.imaginary.Quaterniond;
 import com.flowpowered.math.matrix.Matrix2d;
@@ -10,7 +11,6 @@ import com.flowpowered.math.vector.Vector3d;
 
 import ud.bi0.dragonSphereZ.math.Base3d;
 import ud.bi0.dragonSphereZ.math.Coordinate;
-import ud.bi0.dragonSphereZ.math.DoubleFunction;
 
 public class Cylinder extends Shape {
 	
@@ -108,18 +108,18 @@ public class Cylinder extends Shape {
 		return Coordinate.Cylindrical3d.getPoint(base, radiusU, radiusV, angle, height).add(getOrigin());
 	}
 	
-	public ArrayList<Vector3d> getPointN(int n, DoubleFunction angle, DoubleFunction height) {
+	public ArrayList<Vector3d> getPointN(int n, IntToDoubleFunction angle, IntToDoubleFunction height) {
 		double u = this.radius.getX();
 		double v = this.radius.getY();
-		DoubleFunction radiusU = (i) -> u;
-		DoubleFunction radiusV = (i) -> v;
+		IntToDoubleFunction radiusU = (i) -> u;
+		IntToDoubleFunction radiusV = (i) -> v;
 		return getPointN(n, radiusU, radiusV, angle, height);
 	}
 	
-	public ArrayList<Vector3d> getPointN(int n, DoubleFunction radiusU, DoubleFunction radiusV, DoubleFunction angle, DoubleFunction height) {
+	public ArrayList<Vector3d> getPointN(int n, IntToDoubleFunction radiusU, IntToDoubleFunction radiusV, IntToDoubleFunction angle, IntToDoubleFunction height) {
 		ArrayList<Vector3d> points = new ArrayList<Vector3d>(n);
 		for (int i = 0; i < n; i++) {
-			points.add(getPoint(radiusU.apply(i), radiusV.apply(i), angle.apply(i), height.apply(i)));
+			points.add(getPoint(radiusU.applyAsDouble(i), radiusV.applyAsDouble(i), angle.applyAsDouble(i), height.applyAsDouble(i)));
 		}
 		return points;
 	}

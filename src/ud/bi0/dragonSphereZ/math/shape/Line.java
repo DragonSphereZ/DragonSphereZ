@@ -1,12 +1,12 @@
 package ud.bi0.dragonSphereZ.math.shape;
 
 import java.util.ArrayList;
+import java.util.function.IntToDoubleFunction;
 
 import com.flowpowered.math.GenericMath;
 import com.flowpowered.math.matrix.Matrix3d;
 import com.flowpowered.math.vector.Vector3d;
 
-import ud.bi0.dragonSphereZ.math.DoubleFunction;
 
 public class Line extends Shape	{
 
@@ -65,10 +65,10 @@ public class Line extends Shape	{
 		return GenericMath.lerp(start, end, percent).add(getOrigin());
 	}
 	
-	public ArrayList<Vector3d> getPointN(int n, DoubleFunction percent) {
+	public ArrayList<Vector3d> getPointN(int n, IntToDoubleFunction percent) {
 		ArrayList<Vector3d> points = new ArrayList<Vector3d>(n);
 		for (int i = 0; i<n; i++) {
-			points.add(getPoint(percent.apply(i)));
+			points.add(getPoint(percent.applyAsDouble(i)));
 		}
 		return points;
 	}

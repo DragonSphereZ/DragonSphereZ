@@ -1,5 +1,6 @@
 package ud.bi0.dragonSphereZ.skriptAPI.effect;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -71,6 +72,25 @@ public class EffComplexCircle extends Effect {
 		inputPulseTick = (Expression<Number>) exprs[20];
 		return true;
 	}
+	
+	
+	/**
+	 * drawComplexCircle
+	 * particle %string%[, material %-itemstack%]
+	 * [, speed %-number%]
+	 * [, ([offset]XYZ|RGB) %-number%, %-number%, %-number%]
+	 * , center %object%
+	 * , id %string%[, onlyFor %-players%]
+	 * [, r[ainbow]M[ode] %-boolean%]
+	 * , randomRotation %boolean%
+	 * , radius %number%
+	 * , density %number%
+	 * , visibleRange %number%
+	 * [, Rot[ation]XYZ %-number%, %-number%, %-number%]
+	 * [, dis[placement]XYZ %-number%, %-number%, %-number%]
+	 * [, [pulse]Delay %-number%]
+	 */
+	
 
 	/**
 	 * drawComplexCircle 
@@ -92,36 +112,26 @@ public class EffComplexCircle extends Effect {
 	*/
 	@Override
 	public String toString(@Nullable Event e, boolean debug) {
-		return "drawComplexCircle particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, onlyFor %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, radius %number%, density %number%, visibleRange %number%[, Rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, [pulse]Delay %-number%]";
+		return "drawComplexCircle particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, onlyFor %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, radius %number%, density %number%, visibleRange %number%[, Rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, [pulse]Delay %-number%]" ;
 	}
 
 	@Override
 	protected void execute(@Nullable Event e) {
+		
+		DynamicLocation center = DynamicLocation.init(entLoc.getSingle(e));
+		if (center == null) return;
+		
 		String particle = SkriptHandler.inputParticleString(e, inputParticleString);
 		float finalSpeed = SkriptHandler.inputParticleSpeed(e, inputParticleSpeed);
-		//float offsetX = SkriptHandler.inputParticleOffset(e, offX);
-		//float offsetY = SkriptHandler.inputParticleOffset(e, offY);
-		//float offsetZ = SkriptHandler.inputParticleOffset(e, offZ);
-		//Vector3d offset = new Vector3d(offsetX, offsetY, offsetZ);
 		Vector3d offset = SkriptHandler.inputParticleOffset(e, offX, offY, offZ);
 		List<Player> players = SkriptHandler.inputPlayers(e, inputPlayers);
 		boolean rainbowMode = SkriptHandler.inputRainbowMode(e, inputRainbowMode);
-		//double disX = SkriptHandler.inputLocDisplacement(e, displaceX);
-		//double disY = SkriptHandler.inputLocDisplacement(e, displaceY);
-		//double disZ = SkriptHandler.inputLocDisplacement(e, displaceZ);
-		//Vector3d displacement = new Vector3d(disX, disY, disZ);
 		Vector3d displacement = SkriptHandler.inputLocDisplacement(e, displaceX, displaceY, displaceZ);
-		//double xRotation = SkriptHandler.inputEffectRotation(e, xRot);
-		//double yRotation = SkriptHandler.inputEffectRotation(e, yRot);
-		//double zRotation = SkriptHandler.inputEffectRotation(e, zRot);
-		//Vector3d axis = new Vector3d(xRotation, yRotation, zRotation);
-		
-		//Vector3d axis = SkriptHandler.inputEffectRotation(e, xRot, yRot, zRot);
-		
-		
-		Vector3d axis = new Vector3d(0,1,0);
+		Vector3d axis = SkriptHandler.inputEffectRotation(e, xRot, yRot, zRot);
+		if (axis.equals(Vector3d.ZERO)) {
+			axis = new Vector3d(0,1,0);
+		}
 		int finalParticleDensity = SkriptHandler.inputParticleDensity(e, inputParticleDensity);
-		DynamicLocation center = DynamicLocation.init(entLoc.getSingle(e));
 		String idName = inputIdName.getSingle(e);
 		double visibleRange = range.getSingle(e).doubleValue();
 		boolean enableRotation = SkriptHandler.inputRotationMode(e, inputRotationMode);
@@ -131,5 +141,6 @@ public class EffComplexCircle extends Effect {
 		byte dataID = SkriptHandler.inputParticleDataID(e, inputParticleData);
 
 		new ComplexCircle(idName, particle, center, players, 0L, finalPulseTick, 1, dataMat, dataID, finalSpeed, visibleRange, offset, displacement, finalRadius, finalParticleDensity, rainbowMode, enableRotation, axis).start();
+	
 	}
 }

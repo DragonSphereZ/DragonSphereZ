@@ -1,6 +1,7 @@
 package ud.bi0.dragonSphereZ.math.shape;
 
 import java.util.ArrayList;
+import java.util.function.IntToDoubleFunction;
 
 import com.flowpowered.math.imaginary.Quaterniond;
 import com.flowpowered.math.matrix.Matrix3d;
@@ -8,7 +9,6 @@ import com.flowpowered.math.vector.Vector3d;
 
 import ud.bi0.dragonSphereZ.math.Base3d;
 import ud.bi0.dragonSphereZ.math.Coordinate;
-import ud.bi0.dragonSphereZ.math.DoubleFunction;
 
 public class Box extends Shape {
 	
@@ -122,20 +122,20 @@ public class Box extends Shape {
 		return Coordinate.Cartesian3d.getPoint(this.base, radius.mul(-1).add(radius.mul(percent).mul(2))).add(getOrigin());
 	}
 	
-	public ArrayList<Vector3d> getPoint(int n, DoubleFunction percentU, DoubleFunction percentV, DoubleFunction percentW) {
+	public ArrayList<Vector3d> getPoint(int n, IntToDoubleFunction percentU, IntToDoubleFunction percentV, IntToDoubleFunction percentW) {
 		double u = getRadius().getX();
 		double v = getRadius().getY();
 		double w = getRadius().getZ();
-		DoubleFunction radiusU = (i) -> u;
-		DoubleFunction radiusV = (i) -> v;
-		DoubleFunction radiusW = (i) -> w;
+		IntToDoubleFunction radiusU = (i) -> u;
+		IntToDoubleFunction radiusV = (i) -> v;
+		IntToDoubleFunction radiusW = (i) -> w;
 		return getPointN(n, radiusU, radiusV, radiusW, percentU, percentV, percentW);
 	}
 	
-	public ArrayList<Vector3d> getPointN(int n, DoubleFunction radiusU, DoubleFunction radiusV, DoubleFunction radiusW, DoubleFunction percentU, DoubleFunction percentV, DoubleFunction percentW) {
+	public ArrayList<Vector3d> getPointN(int n, IntToDoubleFunction radiusU, IntToDoubleFunction radiusV, IntToDoubleFunction radiusW, IntToDoubleFunction percentU, IntToDoubleFunction percentV, IntToDoubleFunction percentW) {
 		ArrayList<Vector3d> points = new ArrayList<Vector3d>(n);
 		for (int i = 0; i < n; i++) {
-			points.add(getPoint(radiusU.apply(i), radiusV.apply(i), radiusU.apply(i), percentU.apply(i), percentV.apply(i), percentW.apply(i)));
+			points.add(getPoint(radiusU.applyAsDouble(i), radiusV.applyAsDouble(i), radiusU.applyAsDouble(i), percentU.applyAsDouble(i), percentV.applyAsDouble(i), percentW.applyAsDouble(i)));
 		}
 		return points;
 	}

@@ -17,6 +17,7 @@ import com.flowpowered.math.vector.Vector3d;
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.log.ErrorQuality;
+import ud.bi0.dragonSphereZ.util.DynamicLocation;
 import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
 
 /**
@@ -32,11 +33,11 @@ public class SkriptHandler {
 		for (Expression<?> arg : args) {
 			if (arg == null) return true;
 			if (arg.isSingle() && arg.getSingle(e) == null) return true;
-			if (arg.getAll(e).length == 0 || arg.getAll(e) == null) return true; 
+			if (!arg.isSingle() && (arg.getAll(e).length == 0 || arg.getAll(e) == null)) return true; 
 		}
 		return false;
 	}
-	
+		
 	/**
 	 * Checks if an object is an entity or location. TODO TEST THIS IF THE OTHER ONE WORKS
 	 */
@@ -45,6 +46,19 @@ public class SkriptHandler {
         if (type != Entity.class || type != Location.class)
             Skript.error(entLoc.toString() + " is neither an entity nor a location.", ErrorQuality.SEMANTIC_ERROR);
             return false;
+	}
+	
+	@Nullable
+	public static DynamicLocation inputCenter(@Nullable Event e, @Nullable Expression<Object> center) {
+		if (center != null && center.getSingle(e) != null) {
+			if (center instanceof Location) {
+				return new DynamicLocation((Location) center.getSingle(e));
+			}
+			if (center instanceof Entity) {
+				return new DynamicLocation((Entity) center.getSingle(e));
+			}
+		}
+		return null;
 	}
 	
 	/**
@@ -140,7 +154,7 @@ public class SkriptHandler {
 		if (inputParticleDensity != null && inputParticleDensity.getSingle(e) != null){
 			return inputParticleDensity.getSingle(e).intValue();
 		}
-		return 20;
+		return 1;
     }
 
 	/**
@@ -178,8 +192,9 @@ public class SkriptHandler {
 		}
 		return 0;
     }
+	
 	public static Vector3d inputEffectRotation(@Nullable Event e, @Nullable Expression<Number> inputEffectRotationX, @Nullable Expression<Number> inputEffectRotationY, @Nullable Expression<Number> inputEffectRotationZ) {
-		if(inputEffectRotationX != null && inputEffectRotationY != null && inputEffectRotationZ != null){
+		if (!hasNull(e, inputEffectRotationX, inputEffectRotationY, inputEffectRotationZ)) {
 			return new Vector3d(inputEffectRotationZ.getSingle(e).floatValue(),inputEffectRotationY.getSingle(e).floatValue(),inputEffectRotationZ.getSingle(e).floatValue());
 		}
 		return new Vector3d(0,1,0);

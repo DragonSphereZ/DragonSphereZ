@@ -1,6 +1,7 @@
 package ud.bi0.dragonSphereZ.math.shape;
 
 import java.util.ArrayList;
+import java.util.function.IntToDoubleFunction;
 
 import com.flowpowered.math.TrigMath;
 import com.flowpowered.math.imaginary.Quaterniond;
@@ -9,7 +10,6 @@ import com.flowpowered.math.vector.Vector3d;
 
 import ud.bi0.dragonSphereZ.math.Base3d;
 import ud.bi0.dragonSphereZ.math.Coordinate;
-import ud.bi0.dragonSphereZ.math.DoubleFunction;
 
 public class Ellipsoid extends Shape {
 	
@@ -95,24 +95,24 @@ public class Ellipsoid extends Shape {
 		return Coordinate.Spherical3d.getPoint(getBase(), radiusU, radiusV, radiusW, thetha, phi).add(getOrigin());
 	}
 	
-	public ArrayList<Vector3d> getPointN(int n, DoubleFunction thetha, DoubleFunction phi) {
+	public ArrayList<Vector3d> getPointN(int n, IntToDoubleFunction thetha, IntToDoubleFunction phi) {
 		double u = getRadius().getX();
 		double v = getRadius().getY();
 		double w = getRadius().getZ();
-		DoubleFunction radiusU = (i) -> u;
-		DoubleFunction radiusV = (i) -> v;
-		DoubleFunction radiusW = (i) -> w;
+		IntToDoubleFunction radiusU = (i) -> u;
+		IntToDoubleFunction radiusV = (i) -> v;
+		IntToDoubleFunction radiusW = (i) -> w;
 		return getPointN(n, radiusU, radiusV, radiusW, thetha, phi);	
 	}
 	
-	public ArrayList<Vector3d> getPointN(int n, DoubleFunction radius, DoubleFunction thetha, DoubleFunction phi) {
+	public ArrayList<Vector3d> getPointN(int n, IntToDoubleFunction radius, IntToDoubleFunction thetha, IntToDoubleFunction phi) {
 		return getPointN(n, radius, radius, radius, thetha, phi);
 	}
 	
-	public ArrayList<Vector3d> getPointN(int n, DoubleFunction radiusU, DoubleFunction radiusV, DoubleFunction radiusW, DoubleFunction thetha, DoubleFunction phi ) {
+	public ArrayList<Vector3d> getPointN(int n, IntToDoubleFunction radiusU, IntToDoubleFunction radiusV, IntToDoubleFunction radiusW, IntToDoubleFunction thetha, IntToDoubleFunction phi ) {
 		ArrayList<Vector3d> points = new ArrayList<Vector3d>(n);
 		for (int i = 0; i < n; i++) {
-			points.add(getPoint(radiusU.apply(i), radiusV.apply(i), radiusW.apply(i), thetha.apply(i), phi.apply(i)));
+			points.add(getPoint(radiusU.applyAsDouble(i), radiusV.applyAsDouble(i), radiusW.applyAsDouble(i), thetha.applyAsDouble(i), phi.applyAsDouble(i)));
 		}
 		return points;
 	}

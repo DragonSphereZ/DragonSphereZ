@@ -1,6 +1,7 @@
 package ud.bi0.dragonSphereZ.math.shape;
 
 import java.util.ArrayList;
+import java.util.function.IntToDoubleFunction;
 
 import com.flowpowered.math.imaginary.Quaterniond;
 import com.flowpowered.math.matrix.Matrix3d;
@@ -9,7 +10,6 @@ import com.flowpowered.math.vector.Vector3d;
 
 import ud.bi0.dragonSphereZ.math.Base3d;
 import ud.bi0.dragonSphereZ.math.Coordinate;
-import ud.bi0.dragonSphereZ.math.DoubleFunction;
 
 public class Plane extends Shape {
 	
@@ -87,18 +87,18 @@ public class Plane extends Shape {
 		return Coordinate.Cartesian3d.getPoint(base, radius.toVector3(0).mul(-1).add(radius.toVector3(0).mul(percent.toVector3(0).mul(2)))).add(getOrigin());
 	}
 	
-	public ArrayList<Vector3d> getPointN(int n, DoubleFunction percentU, DoubleFunction percentV) {
+	public ArrayList<Vector3d> getPointN(int n, IntToDoubleFunction percentU, IntToDoubleFunction percentV) {
 		double u = getRadius().getX();
 		double v = getRadius().getY();
-		DoubleFunction radiusU = (i) -> u;
-		DoubleFunction radiusV = (i) -> v;
+		IntToDoubleFunction radiusU = (i) -> u;
+		IntToDoubleFunction radiusV = (i) -> v;
 		return getPointN(n, radiusU, radiusV, percentU, percentV);
 	}
 	
-	public ArrayList<Vector3d> getPointN(int n, DoubleFunction radiusU, DoubleFunction radiusV, DoubleFunction percentU, DoubleFunction percentV) {
+	public ArrayList<Vector3d> getPointN(int n, IntToDoubleFunction radiusU, IntToDoubleFunction radiusV, IntToDoubleFunction percentU, IntToDoubleFunction percentV) {
 		ArrayList<Vector3d> points = new ArrayList<Vector3d>(n);
 		for (int i = 0; i < n; i++) {
-			points.add(getPoint(radiusU.apply(i), radiusV.apply(i), percentU.apply(i), percentV.apply(i)));
+			points.add(getPoint(radiusU.applyAsDouble(i), radiusV.applyAsDouble(i), percentU.applyAsDouble(i), percentV.applyAsDouble(i)));
 		}
 		return points;
 	}

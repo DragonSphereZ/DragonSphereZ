@@ -70,38 +70,36 @@ public class ComplexCircle extends ParticleEffect {
 		if (!effectManager.isActive(idName))  {
 			idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
 				
-				Quaterniond rotation = new Quaterniond(TrigMath.PI / 200, 2, 1.7, 1.55);
+				Vector3d v = new Vector3d();
 				Ellipse circle = new Ellipse()
-										.setBase(Base3d.MINECRAFT.adjust(new Vector3d(0,1,0), axis)) //Makes sure that the orientation is right and changes the axis of the circle if necessary.
-										.setRadius(radius); //Sets the radius of the circle.
+										.setBase(Base3d.MINECRAFT) 			//Changes from default cartesian to Minecraft's coordinate system.
+										.adjust(new Vector3d(0,1,0), axis) 	//Changes the direction of the circle.
+										.setRadius(radius); 				//Sets the radius of the circle.
 				double angle = 0;
 				double stepAngle = TrigMath.TWO_PI / particleDensity;
-				Vector3d v = new Vector3d();
+				float xRot = 0;			//Holds the current rotation angle for the random rotation.
+				float yRot = 0;
+				float zRot = 0;
+				float stepXRot = 1.5F; 	//Holds the step to the next rotation angle.
+				float stepYRot = 0.3F;	
+				float stepZRot = 0.9F;
 				
 				@Override
 				public void run() {
 					if (!center.hasMoved(pulseTick)) {
-						Bukkit.getServer().broadcastMessage("[test] rotation " + rotation);
-						Bukkit.getServer().broadcastMessage("[test] vector0 " + v);
 						center.update();
-						Bukkit.getServer().broadcastMessage("[test] angle1" + angle);
 						v = circle.getPoint(angle); //Gets the next point on the circle.
-						Bukkit.getServer().broadcastMessage("[test] vector1 " + v);
 						if (enableRotation)
-							v = rotation.rotate(v); //Rotates the point.
-							rotation = rotation.mul(rotation); //Prepares the next rotation (same as angle += angleStep).
-							Bukkit.getServer().broadcastMessage("[test] vector2" + v);
-						v = v.add(center.getVector3d()); //Translates the vector to the center position.
-						Bukkit.getServer().broadcastMessage("[test] vector3" + v);
-						v = v.add(displacement).add(0,1,0);	//Adds final translation to vector.
-						Bukkit.getServer().broadcastMessage("[test] vector4" + v);
+							v = Quaterniond.fromAxesAnglesDeg(xRot, yRot, zRot).rotate(v); //Rotates the vector.
+							xRot = 	GenericMath.wrapAngleDeg(xRot + stepXRot);	//Calculates the next rotation angle.
+							yRot = GenericMath.wrapAngleDeg(yRot + stepYRot);
+							zRot = GenericMath.wrapAngleDeg(zRot + stepZRot);
+						v = v.add(center.getVector3d()); 	//Translates the vector to the center position.
+						v = v.add(displacement).add(0,1,0);	//Adds final translation to the vector.
 						if (rainbowMode)
 							offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
 						ComplexCircle.this.display(v);
-						angle = GenericMath.wrapAngleRad(angle + stepAngle);
-						Bukkit.getServer().broadcastMessage("[test] angle2" + angle);
-						Bukkit.getServer().broadcastMessage("[test] vector5" + v);
-						
+						angle = GenericMath.wrapAngleRad(angle + stepAngle);						
 					} else center.update();
 				}
 			}, delayTick, pulseTick).getTaskId();
