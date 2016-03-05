@@ -17,6 +17,7 @@ import com.flowpowered.math.vector.Vector3d;
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.log.ErrorQuality;
+import ud.bi0.dragonSphereZ.DragonSphereCore;
 import ud.bi0.dragonSphereZ.util.DynamicLocation;
 import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
 
@@ -48,17 +49,39 @@ public class SkriptHandler {
             return false;
 	}
 	
+	/**
+	 * Initializes the effect ID.
+	 */
 	@Nullable
-	public static DynamicLocation inputCenter(@Nullable Event e, @Nullable Expression<Object> center) {
-		if (center != null && center.getSingle(e) != null) {
-			if (center instanceof Location) {
-				return new DynamicLocation((Location) center.getSingle(e));
-			}
-			if (center instanceof Entity) {
-				return new DynamicLocation((Entity) center.getSingle(e));
+	public static String inputID(@Nullable Event e, @Nullable Expression<String> effectID) {
+		String id = null;
+		if (effectID != null && effectID.getSingle(e) != null) {
+			if (!DragonSphereCore.effectManager.isActive(id)) {
+				id = effectID.getSingle(e);
 			}
 		}
-		return null;
+		if (id == null) {
+			throw new IllegalArgumentException("An effect with this ID is already active.");
+		}
+		return id;
+	}
+	
+	
+	/**
+	 * Initializes a DynamicLocation from an object.
+	 */
+	@Nullable
+	public static DynamicLocation inputCenter(@Nullable Event e, @Nullable Expression<Object> center) {
+		DynamicLocation dynLoc = null;
+		if (center != null && center.getSingle(e) != null) {
+			try {
+				dynLoc = DynamicLocation.init(center.getSingle(e));
+			} catch (IllegalArgumentException ex) {};
+		}
+		if (dynLoc == null) {
+			throw new IllegalArgumentException("The object is not of type Entity or Location");
+		}
+		return dynLoc;
 	}
 	
 	/**
@@ -123,7 +146,7 @@ public class SkriptHandler {
 		if(inputParticleOffsetX != null && inputParticleOffsetY != null && inputParticleOffsetZ != null){
 			return new Vector3d(inputParticleOffsetZ.getSingle(e).floatValue(),inputParticleOffsetY.getSingle(e).floatValue(),inputParticleOffsetZ.getSingle(e).floatValue());
 		}
-		return new Vector3d(0,0,0);
+		return new Vector3d();
     }
 	
 	/**
@@ -194,10 +217,16 @@ public class SkriptHandler {
     }
 	
 	public static Vector3d inputEffectRotation(@Nullable Event e, @Nullable Expression<Number> inputEffectRotationX, @Nullable Expression<Number> inputEffectRotationY, @Nullable Expression<Number> inputEffectRotationZ) {
+		Vector3d v = new Vector3d();
 		if (!hasNull(e, inputEffectRotationX, inputEffectRotationY, inputEffectRotationZ)) {
-			return new Vector3d(inputEffectRotationX.getSingle(e).floatValue(), inputEffectRotationY.getSingle(e).floatValue(), inputEffectRotationZ.getSingle(e).floatValue());
-		}
-		return new Vector3d(0,1,0);
+			v = v.add(inputEffectRotationX.getSingle(e).floatValue(), inputEffectRotationY.getSingle(e).floatValue(), inputEffectRotationZ.getSingle(e).floatValue());
+			try {
+				v = v.normalize();
+			} catch (ArithmeticException ex) {
+				v = Vector3d.UNIT_Y;
+			}
+		} else v = Vector3d.UNIT_Y;
+		return v;
     }
 	
 	/**

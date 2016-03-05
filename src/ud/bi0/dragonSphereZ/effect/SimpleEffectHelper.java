@@ -14,7 +14,7 @@ public class SimpleEffectHelper {
 	public SimpleEffectHelper() {
 	}
 	
-	public ParticleEffect getEffect(String name, String id, String particle, DynamicLocation target, List<Player> players) {
+	public ParticleEffect createEffect(String name, String id, String particle, DynamicLocation target, List<Player> players) {
 		
 		this.parse(name);
 		// initializes all effects
@@ -27,14 +27,16 @@ public class SimpleEffectHelper {
 			return new SimpleAura(id, particle, target, players);
 		case "trail":
 			return new SimpleTrail(id, particle, target, players);
+		case "1":
+			return new Simple1(id, particle, target, players);
 		}
-		return null;
+		throw new IllegalArgumentException("Invalid effect name.");
 	}
 	
 	public String parse(String name) {
 		name.toLowerCase();
-		if (name.contains("-")) clockwise = true; //changes the orientation of the effect
-		name.replaceAll("\\P{Alpha}",""); //removes all non-alphanumeric characters
+		if (name.contains("-")) clockwise = true; 	//changes the orientation of the effect
+		name.replaceAll("\\P{Alpha}",""); 			//removes all non-alphanumeric characters
 		return name;
 	}
 	

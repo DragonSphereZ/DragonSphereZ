@@ -1,6 +1,5 @@
 package ud.bi0.dragonSphereZ.skriptAPI.effect;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Nullable;
@@ -22,7 +21,7 @@ public class EffSimpleEffect extends Effect {
 	Expression<String> effectName;
 	Expression<String> effectParticle;
 	Expression<String> effectID;
-	Expression<?> effectTarget;
+	Expression<Object> effectTarget;
 	Expression<Player> effectPlayers;
 
 	@SuppressWarnings("unchecked")
@@ -31,7 +30,7 @@ public class EffSimpleEffect extends Effect {
 		effectName = (Expression<String>) expr[0];
 		effectParticle = (Expression<String>) expr[1];
 		effectID = (Expression<String>) expr[2];
-		effectTarget = expr[3];
+		effectTarget = (Expression<Object>) expr[3];
 		effectPlayers = (Expression<Player>) expr[4];
 		return true;
 	}
@@ -43,14 +42,21 @@ public class EffSimpleEffect extends Effect {
 
 	@Override
 	protected void execute(Event e) {
-		if (SkriptHandler.hasNull(e, effectName, effectID, effectTarget)) return;
 		String name = effectName.getSingle(e);
-		String id = effectID.getSingle(e);
-		String particle = effectParticle.getSingle(e);
-		DynamicLocation target = DynamicLocation.init(effectTarget.getSingle(e));
-		List<Player> players = Arrays.asList(effectPlayers.getAll(e));
-		ParticleEffect effect = new SimpleEffectHelper().getEffect(name, id, particle, target, players);
-		if (effect == null) return;
+		String particle;
+		String id; 
+		DynamicLocation target;
+		List<Player> players;
+		ParticleEffect effect;
+		try {
+			particle = SkriptHandler.inputParticleString(e, effectParticle);
+			id = SkriptHandler.inputID(e, effectID);
+			target = SkriptHandler.inputCenter(e, effectTarget);
+			players = SkriptHandler.inputPlayers(e, effectPlayers);
+			effect = new SimpleEffectHelper().createEffect(name, id, particle, target, players);
+		} catch (IllegalArgumentException ex) {
+			return;
+		}
 		effect.start();
 	}
 

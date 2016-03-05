@@ -83,7 +83,7 @@ public class ComplexCircle extends ParticleEffect {
 				float stepXRot = 1.5F; 	//Holds the step to the next rotation angle.
 				float stepYRot = 0.3F;	
 				float stepZRot = 0.9F;
-				
+							
 				@Override
 				public void run() {
 					if (!center.hasMoved(pulseTick)) {

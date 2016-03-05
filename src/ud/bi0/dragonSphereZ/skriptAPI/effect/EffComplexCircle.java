@@ -1,6 +1,5 @@
 package ud.bi0.dragonSphereZ.skriptAPI.effect;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -118,8 +117,12 @@ public class EffComplexCircle extends Effect {
 	@Override
 	protected void execute(@Nullable Event e) {
 		
-		DynamicLocation center = DynamicLocation.init(entLoc.getSingle(e));
-		if (center == null) return;
+		DynamicLocation center;
+		try {
+			center = DynamicLocation.init(entLoc.getSingle(e));
+		} catch (IllegalArgumentException ex) {
+			return;
+		}
 		
 		String particle = SkriptHandler.inputParticleString(e, inputParticleString);
 		float finalSpeed = SkriptHandler.inputParticleSpeed(e, inputParticleSpeed);
@@ -128,9 +131,6 @@ public class EffComplexCircle extends Effect {
 		boolean rainbowMode = SkriptHandler.inputRainbowMode(e, inputRainbowMode);
 		Vector3d displacement = SkriptHandler.inputLocDisplacement(e, displaceX, displaceY, displaceZ);
 		Vector3d axis = SkriptHandler.inputEffectRotation(e, xRot, yRot, zRot);
-		if (axis.equals(Vector3d.ZERO)) {
-			axis = new Vector3d(0,1,0);
-		}
 		int finalParticleDensity = SkriptHandler.inputParticleDensity(e, inputParticleDensity);
 		String idName = inputIdName.getSingle(e);
 		double visibleRange = range.getSingle(e).doubleValue();

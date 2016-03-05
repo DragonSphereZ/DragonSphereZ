@@ -82,7 +82,8 @@ public class DynamicLocation extends Location {
 	
 	public static DynamicLocation init(Object center) {
 		if (center instanceof Entity) return new DynamicLocation((Entity) center);
-		return new DynamicLocation(new Location(((Location) center).getWorld(), ((Location) center).getX(), ((Location) center).getY(), ((Location) center).getZ()));
+		else if (center instanceof Location) return new DynamicLocation((Location) center);
+		else throw new IllegalArgumentException("The object is not of type Entity or Location");
 	}
 	
 	//public void display(ParticleEffect effect) {

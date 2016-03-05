@@ -18,7 +18,7 @@ public class Box extends Shape {
 	public Box() {
 		super();
 		this.base = new Base3d();
-		this.radius = new Vector3d(1,1,1);
+		this.radius = new Vector3d(1, 1, 1);
 	}
 	
 	public Box(Box box) {

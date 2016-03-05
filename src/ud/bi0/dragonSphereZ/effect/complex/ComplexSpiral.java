@@ -64,7 +64,7 @@ public class ComplexSpiral extends ParticleEffect {
 		this.radius = radius;
 		this.circleDensity = circleDensity;
 		this.height = height;
-		this.effectMod = effectMod;
+		this.effectMod = effectMod > 0 ? effectMod : 1; //Makes effectMod default to 1 if a value <= 0 is entered.
 		this.scan = scan;
 		this.clockwise = clockwise;
 		this.axis = axis;
@@ -81,9 +81,9 @@ public class ComplexSpiral extends ParticleEffect {
 										.setRadius(radius);
 				Vector3d v = new Vector3d();
 				double angle = 0;
-				double stepAngle = clockwise ? TrigMath.TWO_PI / circleDensity : -TrigMath.TWO_PI / circleDensity;
+				double stepAngle = clockwise ? TrigMath.TWO_PI / circleDensity : -TrigMath.TWO_PI / circleDensity; //Sets the angle difference and rotation direction.
 				double height = 0;
-				double stepHeight = Math.signum(this.height) / circleDensity;
+				double stepHeight = Math.signum(this.height) * effectMod / circleDensity; //Sets the height difference and its direction.
 				
 				@Override
 				public void run() {

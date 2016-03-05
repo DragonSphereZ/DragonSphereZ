@@ -1,7 +1,6 @@
 package ud.bi0.dragonSphereZ.math.shape;
 
 import java.util.ArrayList;
-import java.util.function.DoubleFunction;
 import java.util.function.IntToDoubleFunction;
 
 import com.flowpowered.math.imaginary.Quaterniond;
