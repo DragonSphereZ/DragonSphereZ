@@ -1,6 +1,5 @@
 package ud.bi0.dragonSphereZ.skriptAPI.effect;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -12,9 +11,6 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
-import ch.njol.skript.expressions.ExprEntity;
-import ch.njol.skript.expressions.ExprLocation;
-import ch.njol.skript.expressions.ExprLocationOf;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
@@ -82,26 +78,6 @@ public class EffComplexSpiral extends Effect {
 		displaceY = (Expression<Number>) exprs[21];
 		displaceZ = (Expression<Number>) exprs[22];
 		inputPulseTick = (Expression<Number>) exprs[23];
-		//TODO Test if this actually prevents wrong locations or entities (it doesn't yet)
-		
-		//Class<?> type = entLoc.getClass();
-		//String type = entLoc.getClass().getName();
-		//public class MonsterTypeOne extends ExprEntity {  }
-		//public class MonsterTypeTwo extends  Monster { ... }
-		//String type = entLoc.getReturnType().getSimpleName();
-		//Class<? extends Expression> type = entLoc.getClass();
-		//Class<ExprEntity> test1 = ExprEntity.class;
-		//Class<?> test2 = ExprLocationOf.class;
-		//Class<?> test3 = ExprLocation.class;
-		//Bukkit.getServer().broadcastMessage("[skDragon] --->" + type);
-		//if (!type.getClass().equals(test1.getClass()) || !type.getClass().equals(test2.getClass()) || !type.getClass().equals(test3.getClass())){
-        //if (!(type instanceof ExprEntity) || !(type instanceof ExprLocation) || !(type instanceof ExprLocationOf)) {
-		//if (type != test1.getClass() || type != test2.getClass() || type != test3.getClass()) {
-		//if (type != test1.getSimpleName() || type != test2.getClass() || type != test3.getClass()) {
-		//Skript.error(entLoc.toString() + " is neither an entity nor a location.", ErrorQuality.SEMANTIC_ERROR);
-        //    return false;
-        //}
-		
 		return true;
 	}
 
@@ -119,7 +95,7 @@ public class EffComplexSpiral extends Effect {
 	 * radius %number%, 
 	 * density %number%, 
 	 * height %number%, 
-	 * effectMod %number%, 
+	 * heightMod %number%, 
 	 * visibleRange %number%
 	 * [, Rot[ation]XYZ %-number%, %-number%, %-number%]
 	 * [, dis[placement]XYZ %-number%, %-number%, %-number%]
@@ -127,32 +103,11 @@ public class EffComplexSpiral extends Effect {
 	*/
 	@Override
 	public String toString(@Nullable Event e, boolean debug) {
-		return "drawComplexSpiral particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, onlyFor %-player%][, r[ainbow]M[ode] %-boolean%][, clockwise %-boolean%][, scan %-boolean%], radius %number%, density %number%, height %number%, effectMod %number%, visibleRange %number%[, Rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]";
+		return "drawComplexSpiral particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, onlyFor %-player%][, r[ainbow]M[ode] %-boolean%][, clockwise %-boolean%][, scan %-boolean%], radius %number%, density %number%, height %number%, heightMod %number%, visibleRange %number%[, Rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]";
 	}
 
 	@Override
 	protected void execute(@Nullable Event e) {
-		//Class<?> type = entLoc.getReturnType();
-		//Bukkit.getServer().broadcastMessage("[skDragon] --->" + type);
-		Object test1 = entLoc.simplify();
-		Object test2 = entLoc.getAnd();
-		Object test3 = entLoc.getClass();
-		Object test4 = entLoc.getSource();
-		Object test5 = entLoc.getReturnType();
-		//Object test6 = (Object)ExprEntity.class;
-		Bukkit.getServer().broadcastMessage("[skDragon] --->" + test1);
-		Bukkit.getServer().broadcastMessage("[skDragon] --->" + test2);
-		Bukkit.getServer().broadcastMessage("[skDragon] --->" + test3);
-		Bukkit.getServer().broadcastMessage("[skDragon] --->" + test4);
-		Bukkit.getServer().broadcastMessage("[skDragon] --->" + test5);
-		Bukkit.getServer().broadcastMessage("[skDragon] <-------------->");
-		Object test7 = (Object)ExprEntity.class;
-		Object test8 = (Object)ExprLocationOf.class;
-		Object test9 = (Object)ExprLocation.class;
-		Bukkit.getServer().broadcastMessage("[skDragon] --->" + test7.toString());
-		Bukkit.getServer().broadcastMessage("[skDragon] --->" + test8.toString());
-		Bukkit.getServer().broadcastMessage("[skDragon] --->" + test9.toString());
-		
 		String particle = SkriptHandler.inputParticleString(e, inputParticleString);
 		float finalSpeed = SkriptHandler.inputParticleSpeed(e, inputParticleSpeed);
 		float offsetX = SkriptHandler.inputParticleOffset(e, offX);
