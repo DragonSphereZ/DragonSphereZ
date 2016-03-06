@@ -27,16 +27,16 @@ public class EffComplexSpiral extends Effect {
 	private Expression<Number> offX;
 	private Expression<Number> offY;
 	private Expression<Number> offZ;
-	private Expression<?> entLoc;
+	private Expression<Object> entLoc;
 	private Expression<String> inputIdName;
 	private Expression<Player> inputPlayers;
 	private Expression<Boolean> inputRainbowMode;
 	
 	private Expression<Boolean> clockwise;
 	private Expression<Boolean> scan;
-	private Expression<Number> radius;
+	private Expression<Number> inputRadius;
 	private Expression<Number> inputHeight;
-	private Expression<Number> inputEffectMod;
+	private Expression<Number> inputHeightMod;
 	private Expression<Number> inputParticleDensity;
 	
 	private Expression<Number> range;
@@ -58,17 +58,17 @@ public class EffComplexSpiral extends Effect {
 		offX = (Expression<Number>) exprs[3];
 		offY = (Expression<Number>) exprs[4];
 		offZ = (Expression<Number>) exprs[5];
-		entLoc = (Expression<?>) exprs[6];
+		entLoc = (Expression<Object>) exprs[6];
 		inputIdName = (Expression<String>) exprs[7];
 		inputPlayers = (Expression<Player>) exprs[8];
 		inputRainbowMode = (Expression<Boolean>) exprs[9];
 
 		clockwise = (Expression<Boolean>) exprs[10];
 		scan = (Expression<Boolean>) exprs[11];
-		radius = (Expression<Number>) exprs[12];
+		inputRadius = (Expression<Number>) exprs[12];
 		inputParticleDensity = (Expression<Number>) exprs[13];
 		inputHeight = (Expression<Number>) exprs[14];
-		inputEffectMod = (Expression<Number>) exprs[15];
+		inputHeightMod = (Expression<Number>) exprs[15];
 
 		range = (Expression<Number>) exprs[16];
 		xRot = (Expression<Number>) exprs[17];
@@ -108,37 +108,49 @@ public class EffComplexSpiral extends Effect {
 
 	@Override
 	protected void execute(@Nullable Event e) {
+		//DynamicLocation center = DynamicLocation.init(entLoc.getSingle(e));
+		DynamicLocation center;
+		try {
+			center = DynamicLocation.init(entLoc.getSingle(e));
+		} catch (IllegalArgumentException ex) {
+			return;
+		}
 		String particle = SkriptHandler.inputParticleString(e, inputParticleString);
 		float finalSpeed = SkriptHandler.inputParticleSpeed(e, inputParticleSpeed);
-		float offsetX = SkriptHandler.inputParticleOffset(e, offX);
-		float offsetY = SkriptHandler.inputParticleOffset(e, offY);
-		float offsetZ = SkriptHandler.inputParticleOffset(e, offZ);
-		Vector3d offset = new Vector3d(offsetX, offsetY, offsetZ);
+		//float offsetX = SkriptHandler.inputParticleOffset(e, offX);
+		//float offsetY = SkriptHandler.inputParticleOffset(e, offY);
+		//float offsetZ = SkriptHandler.inputParticleOffset(e, offZ);
+		//Vector3d offset = new Vector3d(offsetX, offsetY, offsetZ);
+		Vector3d offset = SkriptHandler.inputParticleOffset(e, offX, offY, offZ);
 		List<Player> players = SkriptHandler.inputPlayers(e, inputPlayers);
 		boolean rainbowMode = SkriptHandler.inputRainbowMode(e, inputRainbowMode);
-		double disX = SkriptHandler.inputLocDisplacement(e, displaceX);
-		double disY = SkriptHandler.inputLocDisplacement(e, displaceY);
-		double disZ = SkriptHandler.inputLocDisplacement(e, displaceZ);
-		Vector3d displacement = new Vector3d(disX, disY, disZ);	
-		double xRotation = SkriptHandler.inputEffectRotation(e, xRot);
-		double yRotation = SkriptHandler.inputEffectRotation(e, yRot);
-		double zRotation = SkriptHandler.inputEffectRotation(e, zRot);
-		Vector3d axis = new Vector3d(xRotation, yRotation, zRotation);
+		//double disX = SkriptHandler.inputLocDisplacement(e, displaceX);
+		//double disY = SkriptHandler.inputLocDisplacement(e, displaceY);
+		//double disZ = SkriptHandler.inputLocDisplacement(e, displaceZ);
+		//Vector3d displacement = new Vector3d(disX, disY, disZ);	
+		Vector3d displacement = SkriptHandler.inputLocDisplacement(e, displaceX, displaceY, displaceZ);
+		
+		//double xRotation = SkriptHandler.inputEffectRotation(e, xRot);
+		//double yRotation = SkriptHandler.inputEffectRotation(e, yRot);
+		//double zRotation = SkriptHandler.inputEffectRotation(e, zRot);
+		//Vector3d axis = new Vector3d(xRotation, yRotation, zRotation);
+		Vector3d axis = SkriptHandler.inputEffectRotation(e, xRot, yRot, zRot);
+		
 		int finalParticleDensity = SkriptHandler.inputParticleDensity(e, inputParticleDensity);
 		boolean finalClockwise = clockwise.getSingle(e).booleanValue();
 		boolean finalScan = scan.getSingle(e).booleanValue();
-		float finalEffectMod = SkriptHandler.inputEffectMod(e, inputEffectMod);
+		float finalHeightMod = SkriptHandler.inputHeightMod(e, inputHeightMod);
 		float finalHeight = SkriptHandler.inputHeight(e, inputHeight);
-		DynamicLocation center = DynamicLocation.init(entLoc.getSingle(e));
+		
 		String idName = inputIdName.getSingle(e);
 		double visibleRange = range.getSingle(e).doubleValue();
 		
-		float finalRadius = radius.getSingle(e).floatValue();
+		float finalRadius = SkriptHandler.inputRadius(e, inputRadius);
 		Long finalPulseTick = SkriptHandler.inputPulseTick(e, inputPulseTick);
 		Material dataMat = SkriptHandler.inputParticleDataMat(e, inputParticleData);
 		byte dataID = SkriptHandler.inputParticleDataID(e, inputParticleData);
 		//(idName, particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed,  visibleRange,  rainbowMode, scan, offset, displacement, radius, circleDensity, height, effectMod, clockwise, axis)
 					// idName,particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, rainbowMode, scan, offset, displacement, radius, circleDensity, height, effectMod, clockwise, axis)
-		new ComplexSpiral(idName, particle, center, players, 0L, finalPulseTick, 1, dataMat, dataID, finalSpeed, visibleRange, rainbowMode, finalScan, offset, displacement, finalRadius, finalParticleDensity, finalHeight, finalEffectMod, finalClockwise, axis).start();
+		new ComplexSpiral(idName, particle, center, players, 0L, finalPulseTick, 1, dataMat, dataID, finalSpeed, visibleRange, rainbowMode, finalScan, offset, displacement, finalRadius, finalParticleDensity, finalHeight, finalHeightMod, finalClockwise, axis).start();
 	}
 }

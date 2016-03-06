@@ -3,6 +3,7 @@ package ud.bi0.dragonSphereZ.skriptAPI.effect;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
@@ -16,7 +17,6 @@ import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
 import ud.bi0.dragonSphereZ.skriptAPI.SkriptHandler;
-import ud.bi0.dragonSphereZ.util.EffectUtils;
 import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
 
 public class EffSimpleDot extends Effect {
@@ -83,7 +83,7 @@ public class EffSimpleDot extends Effect {
 
 		Object[] center = (Object[])entLoc.getAll(e);
 		for (final Object loc : center) {
-			Location location = EffectUtils.getLocation(loc);
+			Location location = getLocation(loc);
 			//TODO Must add an on delay for rainbow mode to work and also just because :)
 			if (rainbowMode == true)
 				offsetX = (float) (offsetX + 0.01);
@@ -92,4 +92,14 @@ public class EffSimpleDot extends Effect {
         }
 
 	}
+	public static Location getLocation(Object location) {	//QuickFix
+    	
+		if (location instanceof Entity) {
+			return ((Entity) location).getLocation();
+		}
+		else if (location instanceof Location){
+			return (Location) location;
+		}
+		return null;
+    }
 }

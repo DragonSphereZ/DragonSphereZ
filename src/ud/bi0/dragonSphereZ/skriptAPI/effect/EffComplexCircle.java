@@ -25,9 +25,9 @@ public class EffComplexCircle extends Effect {
 	private Expression<String> inputParticleString;
 	private Expression<Number> inputParticleSpeed;
 	
-	private Expression<?> entLoc;
+	private Expression<Object> entLoc;
 	private Expression<String> inputIdName;
-	private Expression<Number> radius;
+	private Expression<Number> inputRadius;
 	private Expression<Player> inputPlayers;
 	private Expression<Number> xRot;
 	private Expression<Number> yRot;
@@ -54,12 +54,12 @@ public class EffComplexCircle extends Effect {
 		offX = (Expression<Number>) exprs[3];
 		offY = (Expression<Number>) exprs[4];
 		offZ = (Expression<Number>) exprs[5];
-		entLoc = (Expression<?>) exprs[6];
+		entLoc = (Expression<Object>) exprs[6];
 		inputIdName = (Expression<String>) exprs[7];
 		inputPlayers = (Expression<Player>) exprs[8];
 		inputRainbowMode = (Expression<Boolean>) exprs[9];
 		inputRotationMode = (Expression<Boolean>) exprs[10];
-		radius = (Expression<Number>) exprs[11];
+		inputRadius = (Expression<Number>) exprs[11];
 		inputParticleDensity = (Expression<Number>) exprs[12];
 		range = (Expression<Number>) exprs[13];
 		xRot = (Expression<Number>) exprs[14];
@@ -72,23 +72,7 @@ public class EffComplexCircle extends Effect {
 		return true;
 	}
 	
-	
-	/**
-	 * drawComplexCircle
-	 * particle %string%[, material %-itemstack%]
-	 * [, speed %-number%]
-	 * [, ([offset]XYZ|RGB) %-number%, %-number%, %-number%]
-	 * , center %object%
-	 * , id %string%[, onlyFor %-players%]
-	 * [, r[ainbow]M[ode] %-boolean%]
-	 * , randomRotation %boolean%
-	 * , radius %number%
-	 * , density %number%
-	 * , visibleRange %number%
-	 * [, Rot[ation]XYZ %-number%, %-number%, %-number%]
-	 * [, dis[placement]XYZ %-number%, %-number%, %-number%]
-	 * [, [pulse]Delay %-number%]
-	 */
+
 	
 
 	/**
@@ -135,7 +119,7 @@ public class EffComplexCircle extends Effect {
 		String idName = inputIdName.getSingle(e);
 		double visibleRange = range.getSingle(e).doubleValue();
 		boolean enableRotation = SkriptHandler.inputRotationMode(e, inputRotationMode);
-		float finalRadius = radius.getSingle(e).floatValue();
+		float finalRadius = SkriptHandler.inputRadius(e, inputRadius);
 		Long finalPulseTick = SkriptHandler.inputPulseTick(e, inputPulseTick);
 		Material dataMat = SkriptHandler.inputParticleDataMat(e, inputParticleData);
 		byte dataID = SkriptHandler.inputParticleDataID(e, inputParticleData);
