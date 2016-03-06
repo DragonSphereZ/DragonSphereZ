@@ -4,6 +4,7 @@ import java.util.Random;
 
 import org.bukkit.Material;
 
+import com.flowpowered.math.TrigMath;
 import com.flowpowered.math.vector.Vector3d;
 
 public final class RandomUtils {
@@ -20,7 +21,7 @@ public final class RandomUtils {
 	
 	public static Vector3d getRandomCircleVector() {
 		double rnd, x, z;
-		rnd = random.nextDouble() * 2 * Math.PI;
+		rnd = random.nextDouble() * 2 * TrigMath.PI;
 		x = Math.cos(rnd);
 		z = Math.sin(rnd);
 		

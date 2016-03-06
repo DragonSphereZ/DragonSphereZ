@@ -170,6 +170,13 @@ public class SkriptHandler {
 		return false;
     }
 	
+	public static float inputRadius(@Nullable Event e, @Nullable Expression<Number> inputRadius) {
+		if(inputRadius != null){
+			return inputRadius.getSingle(e).floatValue();
+		}
+		return 1;
+    }
+	
 	/**
 	 * The amount of points along the effects path.
 	 */
@@ -177,7 +184,19 @@ public class SkriptHandler {
 		if (inputParticleDensity != null && inputParticleDensity.getSingle(e) != null){
 			return inputParticleDensity.getSingle(e).intValue();
 		}
-		return 1;
+		return 20;
+    }
+	public static int inputNucleusDensity(@Nullable Event e, @Nullable Expression<Number> inputNucleusDensity) {
+		if (inputNucleusDensity != null && inputNucleusDensity.getSingle(e) != null){
+			return inputNucleusDensity.getSingle(e).intValue();
+		}
+		return 10;
+    }
+	public static int inputOrbitalCount(@Nullable Event e, @Nullable Expression<Number> inputOrbitalCount) {
+		if (inputOrbitalCount != null && inputOrbitalCount.getSingle(e) != null){
+			return inputOrbitalCount.getSingle(e).intValue();
+		}
+		return 3;
     }
 
 	/**
@@ -242,9 +261,9 @@ public class SkriptHandler {
 	/**
 	 * This changes the 'angle' of the spiral effect(increases its height at a certain speed)
 	 */
-	public static float inputEffectMod(@Nullable Event e, @Nullable Expression<Number> inputEffectMod) {
-		if(inputEffectMod != null){
-			return inputEffectMod.getSingle(e).floatValue();
+	public static float inputHeightMod(@Nullable Event e, @Nullable Expression<Number> inputHeightMod) {
+		if(inputHeightMod != null){
+			return inputHeightMod.getSingle(e).floatValue();
 		}
 		return (float) 0.5;
     }
