@@ -19,7 +19,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import com.flowpowered.math.vector.Vector3d;
-
 import ud.bi0.dragonSphereZ.effect.ParticleEffect;
 import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
 import ud.bi0.dragonSphereZ.util.ReflectionUtils;
@@ -101,8 +100,8 @@ public enum ParticleEffectUtils {
 	itemtake("itemtake", 40, 8),
 	mobappearance("mobappearance", 41, 8),
 	dragonbreath("dragonbreath", 42, -1, ParticleProperty.DIRECTIONAL),	//1.9 Particles
-	endrod("endrod", 43, -1, ParticleProperty.DIRECTIONAL),
-	damage("damage", 44, -1, ParticleProperty.DIRECTIONAL);
+	endrod("endrod", 43, -1, ParticleProperty.DIRECTIONAL),				//1.9 Particles
+	damage("damage", 44, -1, ParticleProperty.DIRECTIONAL);				//1.9 Particles
 
 	public static final Map<String, ParticleEffectUtils> NAME_MAP = new HashMap<String, ParticleEffectUtils>();
 	public static final Map<Integer, ParticleEffectUtils> ID_MAP = new HashMap<Integer, ParticleEffectUtils>();
@@ -1351,10 +1350,8 @@ public enum ParticleEffectUtils {
 	 * @param particleCount
 	 */
 	public void display(Material dataMat, byte dataID, List<Player> players, Location center, double visibleRange, boolean rainbowMode, float offsetX, float offsetY, float offsetZ, float speed, int particleCount) {
-		
 		// Color these particles only please also add rainbow if asked for.
 		if (this == ParticleEffectUtils.redstone || this == ParticleEffectUtils.mobspell || this == ParticleEffectUtils.mobspellambient) {
-			//TODO Add message about limiting offset to 0-255 for color...(or at input if < 0 = 0 if > 255 = 255 also could do if > 255 = 0 for a loop.
 			if (rainbowMode == true){
 				//float test = offsetX / 100;
 				//OrdinaryColor color = new OrdinaryColor(Color.getHSBColor((float)(offsetX / 100), offsetY, offsetZ));
