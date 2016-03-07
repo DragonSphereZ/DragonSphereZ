@@ -133,7 +133,7 @@ public class ComplexAtom extends ParticleEffect {
 							//angle = GenericMath.wrapAngleRad(angle);
 						
 						
-						for (int j = 0; j < orbitalCount; j++) {
+						for (int j = 0; j < orbitalCount; j++) { 	//Need to make the circle axis change based on how many there are so that they aren't overlapping
 							//double xRotation = (TrigMath.PI / orbitalCount) * j;
 							//v2 = new Vector3d(TrigMath.sin(angle) * ( 0.5 + innerRadius ), 0, TrigMath.cos(angle) * ( 0.5 + innerRadius ));
 							v2 = circle.getPoint(angle);
