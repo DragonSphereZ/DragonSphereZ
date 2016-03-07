@@ -42,7 +42,6 @@ public class EffComplexAtom extends Effect {
 	private Expression<Number> inputOrbitParticles;
 	private Expression<Number> inputOrbitalCount;
 	private Expression<Number> inputNucleusDensity;
-	private Expression<Number> inputParticleDensity;
 	private Expression<Number> range;
 	private Expression<Number> inputManualYRotation;
 	private Expression<Number> displaceX;
@@ -75,13 +74,12 @@ public class EffComplexAtom extends Effect {
 		inputNucleusDensity = (Expression<Number>) exprs[18];
 		inputOrbitalCount = (Expression<Number>) exprs[19];
 		inputOrbitParticles = (Expression<Number>) exprs[20];
-		inputParticleDensity = (Expression<Number>) exprs[21];
-		range = (Expression<Number>) exprs[22];
-		inputManualYRotation = (Expression<Number>) exprs[23];
-		displaceX = (Expression<Number>) exprs[24];
-		displaceY = (Expression<Number>) exprs[25];
-		displaceZ = (Expression<Number>) exprs[26];
-		inputPulseTick = (Expression<Number>) exprs[27];
+		range = (Expression<Number>) exprs[21];
+		inputManualYRotation = (Expression<Number>) exprs[22];
+		displaceX = (Expression<Number>) exprs[23];
+		displaceY = (Expression<Number>) exprs[24];
+		displaceZ = (Expression<Number>) exprs[25];
+		inputPulseTick = (Expression<Number>) exprs[26];
 		return true;
 	}
 
@@ -99,7 +97,6 @@ public class EffComplexAtom extends Effect {
 	* nucleusRadius %number%,
 	* outerPCount %number%, 
 	* orbitals %number%, 
-	* orbitalPCount %number%, 
 	* visibleRange %number%, 
 	* [, yRot[ation] %-number%]
 	* [, dis[placement]XYZ %-number%, %-number%, %-number%]
@@ -107,7 +104,7 @@ public class EffComplexAtom extends Effect {
    */
 	@Override
 	public String toString(@Nullable Event e, boolean debug) {
-		return "drawComplexAtom particle1 %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], particle2 %string%[, material2 %-itemstack%][, speed2 %-number%][, ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%], center %object%, id %string%[, onlyFor %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, nucleusCount %number%, nucleusRadius %number%, outerPCount %number%, orbitals %number%, orbitalPCount %number%, visibleRange %number%[, yRot[ation] %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]";
+		return "drawComplexAtom particle1 %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], particle2 %string%[, material2 %-itemstack%][, speed2 %-number%][, ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%], center %object%, id %string%[, onlyFor %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, nucleusCount %number%, nucleusRadius %number%, outerPCount %number%, orbitals %number%, visibleRange %number%[, yRot[ation] %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]";
 	}
 
 	@Override
@@ -133,7 +130,6 @@ public class EffComplexAtom extends Effect {
 		float finalRadius = SkriptHandler.inputRadius(e, inputRadius);
 		int finalInnerParticleDensity = SkriptHandler.inputNucleusDensity(e, inputNucleusDensity);
 		int finalOrbitParticles = SkriptHandler.inputParticleDensity(e, inputOrbitParticles);
-		int finalParticleDensity = SkriptHandler.inputParticleDensity(e, inputParticleDensity);
 		int finalOrbitalCount = SkriptHandler.inputOrbitalCount(e, inputOrbitalCount);
 		double manualYRotation = SkriptHandler.inputEffectRotation(e, inputManualYRotation);
 
@@ -145,7 +141,7 @@ public class EffComplexAtom extends Effect {
 		Material dataMat2 = SkriptHandler.inputParticleDataMat(e, inputParticleData2);
 		byte dataID2 = SkriptHandler.inputParticleDataID(e, inputParticleData2);
 
-		new ComplexAtom(idName, particle, center, players, 0L, finalPulseTick, 1, dataMat, dataID, finalSpeed, visibleRange, offset, displacement, finalParticleDensity, rainbowMode, enableRotation, finalRadius, finalInnerParticleDensity, finalOrbitParticles, finalOrbitalCount, manualYRotation, particle2, dataMat2, dataID2, finalSpeed2, offset2).start();
+		new ComplexAtom(idName, particle, center, players, 0L, finalPulseTick, 1, dataMat, dataID, finalSpeed, visibleRange, offset, displacement, rainbowMode, enableRotation, finalRadius, finalInnerParticleDensity, finalOrbitParticles, finalOrbitalCount, manualYRotation, particle2, dataMat2, dataID2, finalSpeed2, offset2).start();
 		
 	}
 }
