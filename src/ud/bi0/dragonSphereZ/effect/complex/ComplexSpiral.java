@@ -14,6 +14,7 @@ import ud.bi0.dragonSphereZ.effect.ParticleEffect;
 import ud.bi0.dragonSphereZ.math.Base3d;
 import ud.bi0.dragonSphereZ.math.shape.Cylinder;
 import ud.bi0.dragonSphereZ.util.DynamicLocation;
+import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
 
 public class ComplexSpiral extends ParticleEffect {
 	
@@ -91,6 +92,8 @@ public class ComplexSpiral extends ParticleEffect {
 						center.update();
 						v = spiral.getPoint(angle, height);
 						v = v.add(center.getVector3d()).add(displacement);
+						if (rainbowMode)
+							offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
 						ComplexSpiral.this.display(v);
 						angle = GenericMath.wrapAngleRad(angle + stepAngle);
 						height += stepHeight;
