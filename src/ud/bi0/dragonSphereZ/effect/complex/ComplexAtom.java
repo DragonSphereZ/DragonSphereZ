@@ -98,7 +98,7 @@ public class ComplexAtom extends ParticleEffect {
 				Ellipsoid sphere = new Ellipsoid().setBase(Base3d.MINECRAFT).setRadius(innerRadius);
 				Ellipse circle = new Ellipse()
 										.setBase(Base3d.MINECRAFT) 			//Changes from default cartesian to Minecraft's coordinate system.
-										.adjust(Vector3d.UNIT_Y, new Vector3d())//axis) 		//Adjusts the circle axis.
+										.adjust(Vector3d.UNIT_Y, Vector3d.UNIT_Y)//axis) 		//Adjusts the circle axis.
 										.setRadius(innerRadius + 0.5); 				//Sets the radius of the circle.
 				double angle = 0;
 				double stepAngle = TrigMath.TWO_PI / orbitParticles;//particleDensity;//default 40
@@ -121,12 +121,12 @@ public class ComplexAtom extends ParticleEffect {
 
 						//TODO Closer to done now :3 
 						//for (int i = 0; i < innerParticleDensity; i++) {	//this was used to add an amount of random vectors to the sphere
-							v = sphere.getPoint(angle, angle);	//I want to see how this works but might prefer a more randomized sphere :3
-							//v = RandomUtils.getRandomVector().mul(0.5 * innerRadius);
-							v = v.add(v);
-							v = v.add(displacement).add(0,3,0);
-							ParticleEffectUtils.valueOf(particle2).display(dataMat2, dataID2, players, center, visibleRange, rainbowMode, offset2, speed2, 1);
-							//ComplexAtom.this.display(v);
+						v = sphere.getPoint(angle, angle);	//I want to see how this works but might prefer a more randomized sphere :3
+						//v = RandomUtils.getRandomVector().mul(0.5 * innerRadius);
+						v = v.add(center.getVector3d());
+						v = v.add(displacement).add(0,3,0);
+						ParticleEffectUtils.valueOf(particle2).display(dataMat2, dataID2, players, center, visibleRange, rainbowMode, offset2, speed2, 1);
+						//ComplexAtom.this.display(v);
 						//}
 						//for (int i = 0; i < orbitParticles; i++) {	
 							//double angle = step * angularVelocity;
