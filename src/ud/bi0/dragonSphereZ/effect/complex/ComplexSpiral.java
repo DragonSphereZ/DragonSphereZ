@@ -102,7 +102,7 @@ public class ComplexSpiral extends ParticleEffect {
 						//if (Math.abs(height) > Math.abs(this.height)) { //Triggers when it reaches the top of the spiral.
 						if (Math.abs(heightCounter) > Math.abs(height)) { 
 							if (scan) stepHeight = -stepHeight;
-							else height = 0;
+							else heightCounter = 0;
 						}
 						if (scan) {
 							//if ((this.height > 0 && height < 0) || (this.height < 0 && height > 0)) stepHeight = -stepHeight; //Triggers when it reaches the start of the spiral.
