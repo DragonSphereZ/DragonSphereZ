@@ -26,7 +26,7 @@ public class ComplexAtom extends ParticleEffect {
 	protected int innerParticleDensity;
 	protected int orbitParticles;
 	protected int orbitalCount;
-	protected double manualYRotation;
+	protected Vector3d axis;
 	String particle2;		//Atom uses a second particle
 	Material dataMat2;
 	byte dataID2;
@@ -55,7 +55,7 @@ public class ComplexAtom extends ParticleEffect {
 		int innerParticleDensity, 
 		int orbitParticles, 
 		int orbitalCount, 
-		double manualYRotation, 
+		Vector3d axis, 
 		String particle2,
 		Material dataMat2, 
 		byte dataID2, 
@@ -64,21 +64,21 @@ public class ComplexAtom extends ParticleEffect {
 			)
 	{
 		super(idName, particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, rainbowMode, offset, displacement);
-		init(innerRadius, enableRotation, innerParticleDensity, orbitParticles, orbitalCount, manualYRotation, particle2, dataMat2, dataID2, speed2, offset2);
+		init(innerRadius, enableRotation, innerParticleDensity, orbitParticles, orbitalCount, axis, particle2, dataMat2, dataID2, speed2, offset2);
 
 	}
 	public ComplexAtom(String idName, DynamicLocation center, List<Player> players) {
 		super(idName, center, players);
-		init(1, false, 20, 20, 3, 1, "redstone", Material.DIRT, (byte)0, 0, new Vector3d());
+		init(1, false, 20, 20, 3, new Vector3d(0,0,1), "redstone", Material.DIRT, (byte)0, 0, new Vector3d());
 	}
 	
-	public void init(double innerRadius, boolean enableRotation, int innerParticleDensity, int orbitParticles, int orbitalCount, double manualYRotation, String particle2, Material dataMat2, byte dataID2, float speed2, Vector3d offset2) {
+	public void init(double innerRadius, boolean enableRotation, int innerParticleDensity, int orbitParticles, int orbitalCount, Vector3d axis, String particle2, Material dataMat2, byte dataID2, float speed2, Vector3d offset2) {
 		this.innerRadius = innerRadius;
 		this.enableRotation = enableRotation;
 		this.innerParticleDensity = innerParticleDensity; 
 		this.orbitParticles = orbitParticles; 
 		this.orbitalCount = orbitalCount; 
-		this.manualYRotation = manualYRotation; 
+		this.axis = axis.normalize();
 		this.particle2 = particle2;
 		this.dataMat2 = dataMat2;
 		this.dataID2 = dataID2;
@@ -98,10 +98,12 @@ public class ComplexAtom extends ParticleEffect {
 				Ellipsoid sphere = new Ellipsoid().setBase(Base3d.MINECRAFT).setRadius(innerRadius);
 				Ellipse circle = new Ellipse()
 										.setBase(Base3d.MINECRAFT) 			//Changes from default cartesian to Minecraft's coordinate system.
-										.adjust(Vector3d.UNIT_Y, Vector3d.UNIT_Y)//axis) 		//Adjusts the circle axis.
+										.adjust(Vector3d.UNIT_Y, axis)//Vector3d.UNIT_Y)//axis) 		//Adjusts the circle axis.
 										.setRadius(innerRadius + 0.5); 				//Sets the radius of the circle.
 				double angle = 0;
 				double stepAngle = TrigMath.TWO_PI / orbitParticles;//particleDensity;//default 40
+				double angle2 = 0;
+				double stepAngle2 = TrigMath.TWO_PI / 20;
 				//double angularVelocity = TrigMath.PI / 40d;
 				float xRot = 0;			//Holds the current rotation angle for the random rotation.
 				float yRot = 0;
@@ -116,16 +118,34 @@ public class ComplexAtom extends ParticleEffect {
 					if (!center.hasMoved(pulseTick)) {
 						center.update();
 
-						if (rainbowMode)
-							offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
-
-						//TODO Closer to done now :3 
-						//for (int i = 0; i < innerParticleDensity; i++) {	//this was used to add an amount of random vectors to the sphere
+						
 						v = sphere.getPoint(angle, angle);	//I want to see how this works but might prefer a more randomized sphere :3
-						//v = RandomUtils.getRandomVector().mul(0.5 * innerRadius);
+						v2 = circle.getPoint(angle2);
+						
+						if (enableRotation)		//the atom didn't originally have this, I want to see how it looks :3
+							v2 = Quaterniond.fromAxesAnglesDeg(xRot, yRot, zRot).rotate(v2); //Rotates the vector.
+							xRot = 	GenericMath.wrapAngleDeg(xRot + stepXRot);	//Calculates the next rotation angle.
+							yRot = GenericMath.wrapAngleDeg(yRot + stepYRot);
+							zRot = GenericMath.wrapAngleDeg(zRot + stepZRot);
 						v = v.add(center.getVector3d());
 						v = v.add(displacement).add(0,3,0);
-						ParticleEffectUtils.valueOf(particle2).display(dataMat2, dataID2, players, center, visibleRange, rainbowMode, offset2, speed2, 1);
+						v2 = v2.add(center.getVector3d()); 	//Translates the vector to the center position.
+						v2 = v2.add(displacement).add(0,3,0);	//Adds final translation to the vector.
+						if (rainbowMode)
+							offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
+							offset2 = ParticleEffectUtils.simpleRainbowHelper(offset2, particle2);
+						ComplexAtom.this.display(v);	
+						//ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, players, center, visibleRange, rainbowMode, offset, speed, 1);
+						ComplexAtom.this.display(particle2, offset2, speed2, dataMat2, dataID2, v2);
+						//ParticleEffectUtils.valueOf(particle2).display(dataMat2, dataID2, players, center, visibleRange, rainbowMode, offset2, speed2, 1);
+						angle = GenericMath.wrapAngleRad(angle + stepAngle);
+						angle2 = GenericMath.wrapAngleRad(angle2 + stepAngle2);
+						
+						//TODO Closer to done now :3 
+						//for (int i = 0; i < innerParticleDensity; i++) {	//this was used to add an amount of random vectors to the sphere
+				
+						//v = RandomUtils.getRandomVector().mul(0.5 * innerRadius);
+						
 						//ComplexAtom.this.display(v);
 						//}
 						//for (int i = 0; i < orbitParticles; i++) {	
@@ -133,30 +153,50 @@ public class ComplexAtom extends ParticleEffect {
 							//angle = GenericMath.wrapAngleRad(angle);
 						
 						
-						for (int j = 0; j < orbitalCount; j++) { 	//Need to make the circle axis change based on how many there are so that they aren't overlapping
-							//double xRotation = (TrigMath.PI / orbitalCount) * j;
-							//v2 = new Vector3d(TrigMath.sin(angle) * ( 0.5 + innerRadius ), 0, TrigMath.cos(angle) * ( 0.5 + innerRadius ));
-							v2 = circle.getPoint(angle);
-							//VectorUtils.rotateAroundAxisX(v2, xRotation);
-							//VectorUtils.rotateAroundAxisY(v2, manualYRotation);
+						//for (int j = 0; j < orbitalCount; j++) { 	//Need to make the circle axis change based on how many there are so that they aren't overlapping
+						//double xRotation = (TrigMath.PI / orbitalCount) * j;
+						//v2 = new Vector3d(TrigMath.sin(angle) * ( 0.5 + innerRadius ), 0, TrigMath.cos(angle) * ( 0.5 + innerRadius ));
+						
+						//VectorUtils.rotateAroundAxisX(v2, xRotation);
+						//VectorUtils.rotateAroundAxisY(v2, manualYRotation);
 
-							if (enableRotation)		//the atom didn't originally have this, I want to see how it looks :3
-								v2 = Quaterniond.fromAxesAnglesDeg(xRot, yRot, zRot).rotate(v2); //Rotates the vector.
-								xRot = 	GenericMath.wrapAngleDeg(xRot + stepXRot);	//Calculates the next rotation angle.
-								yRot = GenericMath.wrapAngleDeg(yRot + stepYRot);
-								zRot = GenericMath.wrapAngleDeg(zRot + stepZRot);
-								
-							v2 = v2.add(center.getVector3d()); 	//Translates the vector to the center position.
-							v2 = v2.add(displacement).add(0,3,0);	//Adds final translation to the vector.
-							ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, players, center, visibleRange, rainbowMode, offset, speed, 1);
-							//ComplexAtom.this.display(v);
-							angle = GenericMath.wrapAngleRad(angle + stepAngle);
-						}
+						
+							
+							
+							
+						
+						
+						//}
 						
 						
 							//step++;
 						//}
 						
+						
+						//center.update();
+						//v = circle.getPoint(angle); //Gets the next point on the circle.
+						//if (enableRotation)
+						//	v = Quaterniond.fromAxesAnglesDeg(xRot, yRot, zRot).rotate(v); //Rotates the vector.
+						//	xRot = 	GenericMath.wrapAngleDeg(xRot + stepXRot);	//Calculates the next rotation angle.
+						//	yRot = GenericMath.wrapAngleDeg(yRot + stepYRot);
+						//	zRot = GenericMath.wrapAngleDeg(zRot + stepZRot);
+						//v = v.add(center.getVector3d()); 	//Translates the vector to the center position.
+						//v = v.add(displacement).add(0,1,0);	//Adds final translation to the vector.
+						//if (rainbowMode)
+						//	offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
+						//ComplexAtom.this.display(v);
+						//angle = GenericMath.wrapAngleRad(angle + stepAngle);
+						
+						Bukkit.getServer().broadcastMessage("[v] --> " + v);
+						Bukkit.getServer().broadcastMessage("[v2] --> " + v2);
+						Bukkit.getServer().broadcastMessage("[angle] --> " + angle);
+						Bukkit.getServer().broadcastMessage("[angle2] --> " + angle2);
+						Bukkit.getServer().broadcastMessage("[stepAngle] --> " + stepAngle);
+						Bukkit.getServer().broadcastMessage("[stepAngle2] --> " + stepAngle2);
+						Bukkit.getServer().broadcastMessage("[orbitParticles] --> " + orbitParticles);
+						Bukkit.getServer().broadcastMessage("[rainbowMode] --> " + rainbowMode);
+						Bukkit.getServer().broadcastMessage("[offset] --> " + offset);
+						Bukkit.getServer().broadcastMessage("[offset2] --> " + offset2);
 					} else center.update();
 				}
 			}, delayTick, pulseTick).getTaskId();

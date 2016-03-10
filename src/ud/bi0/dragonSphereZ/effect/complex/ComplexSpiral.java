@@ -84,7 +84,6 @@ public class ComplexSpiral extends ParticleEffect {
 				double angle = 0;
 				double stepAngle = clockwise ? TrigMath.TWO_PI / circleDensity : -TrigMath.TWO_PI / circleDensity; //Sets the angle difference and rotation direction.
 				double heightCounter = 0;
-				//double stepHeight = Math.signum(this.height) * effectMod / circleDensity; //Sets the height difference and its direction.
 				double stepHeight = Math.signum(height) * effectMod / circleDensity; //Sets the height difference and its direction.
 
 				@Override
@@ -92,31 +91,19 @@ public class ComplexSpiral extends ParticleEffect {
 					if (!center.hasMoved(pulseTick)) {
 						center.update();
 						v = spiral.getPoint(angle, heightCounter);
-						//v = spiral.getPoint(angle, height);
 						v = v.add(center.getVector3d()).add(displacement);
 						if (rainbowMode)
 							offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
 						ComplexSpiral.this.display(v);
 						angle = GenericMath.wrapAngleRad(angle + stepAngle);
 						heightCounter += stepHeight;
-						//if (Math.abs(height) > Math.abs(this.height)) { //Triggers when it reaches the top of the spiral.
-						if (Math.abs(heightCounter) > Math.abs(height)) { 
+						if (Math.abs(heightCounter) > Math.abs(height)) { //Triggers when it reaches the top of the spiral.
 							if (scan) stepHeight = -stepHeight;
 							else heightCounter = 0;
 						}
 						if (scan) {
-							//if ((this.height > 0 && height < 0) || (this.height < 0 && height > 0)) stepHeight = -stepHeight; //Triggers when it reaches the start of the spiral.
 							if ((height > 0 && heightCounter < 0) || (height < 0 && heightCounter > 0)) stepHeight = -stepHeight; //Triggers when it reaches the start of the spiral.
 						}
-
-						Bukkit.getServer().broadcastMessage("[clockwise] --> " + clockwise);
-						Bukkit.getServer().broadcastMessage("[stepAngle] --> " + stepAngle);
-						//Bukkit.getServer().broadcastMessage("[effectMod] --> " + effectMod);
-						//Bukkit.getServer().broadcastMessage("[angle] --> " + angle);
-						//Bukkit.getServer().broadcastMessage("[heightCounter] --> " + heightCounter);
-						//Bukkit.getServer().broadcastMessage("[stepHeight] --> " + stepHeight);
-						//Bukkit.getServer().broadcastMessage("[height] --> " + height);
-		            	//Bukkit.getServer().broadcastMessage("[scan] --> " + scan);
 					} else center.update();
 				}
 			}, delayTick, pulseTick).getTaskId();

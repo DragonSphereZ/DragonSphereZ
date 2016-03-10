@@ -159,6 +159,13 @@ public class ParticleEffect extends BukkitRunnable {
 		ParticleEffectUtils.valueOf(particle).display(this, center.getWorld(), vector);
 	}
 	
+	/**
+	 * Using this method for the second or third particle in an effect
+	 */
+	public void display(String particle2, Vector3d offset2, float speed2, Material dataMat2, byte dataID2, Vector3d vector) {
+		ParticleEffectUtils.valueOf(particle2).display(this, center.getWorld(), vector, offset2, speed2, dataMat2, dataID2);
+	}
+	
 	public void display(List<Vector3d> vectors) {
 		for (Vector3d vector : vectors) {
 			display(vector);

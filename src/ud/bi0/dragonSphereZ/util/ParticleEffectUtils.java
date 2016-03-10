@@ -101,7 +101,8 @@ public enum ParticleEffectUtils {
 	mobappearance("mobappearance", 41, 8),
 	dragonbreath("dragonbreath", 42, -1, ParticleProperty.DIRECTIONAL),	//1.9 Particles
 	endrod("endrod", 43, -1, ParticleProperty.DIRECTIONAL),				//1.9 Particles
-	damage("damage", 44, -1, ParticleProperty.DIRECTIONAL);				//1.9 Particles
+	damage("damage", 44, -1, ParticleProperty.DIRECTIONAL),				//1.9 Particles
+	swipe("swipe", 45, -1, ParticleProperty.DIRECTIONAL);				//1.9 Particles
 
 	public static final Map<String, ParticleEffectUtils> NAME_MAP = new HashMap<String, ParticleEffectUtils>();
 	public static final Map<Integer, ParticleEffectUtils> ID_MAP = new HashMap<Integer, ParticleEffectUtils>();
@@ -1565,5 +1566,13 @@ public enum ParticleEffectUtils {
 		Location center = new Location(world, vector.getX(), vector.getY(), vector.getZ());
 		display(effect.getDataMat(), effect.getDataID(), effect.getPlayers(), center, effect.getVisibleRange(), effect.getRainbowMode(), (float) effect.getOffset().getX(), (float) effect.getOffset().getY(), (float) effect.getOffset().getZ(), effect.getSpeed(), effect.getParticleCount());
 	}
-
+	//Using this method for the second or third particle in an effect
+	
+	/**
+	 * Display helper method for getting more then one particle in an effect.
+	 */
+	public void display(ParticleEffect effect, World world, Vector3d vector, Vector3d offset, float speed, Material dataMat, byte dataID) {
+		Location center = new Location(world, vector.getX(), vector.getY(), vector.getZ());
+		display(dataMat, dataID, effect.getPlayers(), center, effect.getVisibleRange(), effect.getRainbowMode(), (float) offset.getX(), (float) offset.getY(), (float) offset.getZ(), speed, effect.getParticleCount());
+	}
 }
