@@ -192,6 +192,12 @@ public class SkriptHandler {
 		}
 		return 10;
     }
+	public static int inputOrbitSpeed(@Nullable Event e, @Nullable Expression<Number> inputOrbitSpeed) {
+		if (inputOrbitSpeed != null && inputOrbitSpeed.getSingle(e) != null){
+			return inputOrbitSpeed.getSingle(e).intValue();
+		}
+		return 1;
+    }
 	public static int inputOrbitalCount(@Nullable Event e, @Nullable Expression<Number> inputOrbitalCount) {
 		if (inputOrbitalCount != null && inputOrbitalCount.getSingle(e) != null){
 			return inputOrbitalCount.getSingle(e).intValue();

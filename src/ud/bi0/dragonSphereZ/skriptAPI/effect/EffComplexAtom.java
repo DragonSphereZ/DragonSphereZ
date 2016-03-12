@@ -39,9 +39,10 @@ public class EffComplexAtom extends Effect {
 	private Expression<Boolean> inputRainbowMode;
 	private Expression<Boolean> inputRotationMode;
 	private Expression<Number> inputRadius;
-	private Expression<Number> inputOrbitParticles;
+	private Expression<Number> inputOrbitDensity;
 	private Expression<Number> inputOrbitalCount;
 	private Expression<Number> inputNucleusDensity;
+	private Expression<Number> inputOrbitSpeed;
 	private Expression<Number> range;
 	private Expression<Number> xRot;
 	private Expression<Number> yRot;
@@ -76,16 +77,17 @@ public class EffComplexAtom extends Effect {
 		inputRadius = (Expression<Number>) exprs[17];
 		inputNucleusDensity = (Expression<Number>) exprs[18];
 		inputOrbitalCount = (Expression<Number>) exprs[19];
-		inputOrbitParticles = (Expression<Number>) exprs[20];
+		inputOrbitDensity = (Expression<Number>) exprs[20];
+		inputOrbitSpeed = (Expression<Number>) exprs[21];
 		
-		range = (Expression<Number>) exprs[21];
-		xRot = (Expression<Number>) exprs[22];
-		yRot = (Expression<Number>) exprs[23];
-		zRot = (Expression<Number>) exprs[24];
-		displaceX = (Expression<Number>) exprs[25];
-		displaceY = (Expression<Number>) exprs[26];
-		displaceZ = (Expression<Number>) exprs[27];
-		inputPulseTick = (Expression<Number>) exprs[28];
+		range = (Expression<Number>) exprs[22];
+		xRot = (Expression<Number>) exprs[23];
+		yRot = (Expression<Number>) exprs[24];
+		zRot = (Expression<Number>) exprs[25];
+		displaceX = (Expression<Number>) exprs[26];
+		displaceY = (Expression<Number>) exprs[27];
+		displaceZ = (Expression<Number>) exprs[28];
+		inputPulseTick = (Expression<Number>) exprs[29];
 		return true;
 	}
 
@@ -99,10 +101,11 @@ public class EffComplexAtom extends Effect {
 	* [, onlyFor %-player%]
 	* [, r[ainbow]M[ode] %-boolean%], 
 	* randomRotation %boolean%, 
-	* nucleusCount %number%, 
+	* nucleusDensity %number%, 
 	* nucleusRadius %number%, 
-	* orbitals %number%, 
+	* orbits %number%, 
 	* orbitalDensity %number%, 
+	* orbitalSpeed %number%,
 	* visibleRange %number%, 
 	* [, rot[ation]XYZ %-number%, %-number%, %-number%]
 	* [, dis[placement]XYZ %-number%, %-number%, %-number%]
@@ -110,7 +113,7 @@ public class EffComplexAtom extends Effect {
    */
 	@Override
 	public String toString(@Nullable Event e, boolean debug) {
-		return "drawComplexAtom particle1 %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], particle2 %string%[, material2 %-itemstack%][, speed2 %-number%][, ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%], center %object%, id %string%[, onlyFor %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, nucleusCount %number%, nucleusRadius %number%, outerPCount %number%, orbitals %number%, visibleRange %number%[, rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]";
+		return "drawComplexAtom particle1 %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], particle2 %string%[, material2 %-itemstack%][, speed2 %-number%][, ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%], center %object%, id %string%[, onlyFor %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, nucleusDensity %number%, nucleusRadius %number%, orbits %number%, orbitalDensity %number%, orbitalSpeed %number%, visibleRange %number%[, rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]";
 	}
 
 	@Override
@@ -137,7 +140,8 @@ public class EffComplexAtom extends Effect {
 		boolean enableRotation = SkriptHandler.inputRotationMode(e, inputRotationMode);
 		float finalRadius = SkriptHandler.inputRadius(e, inputRadius);
 		int finalInnerParticleDensity = SkriptHandler.inputNucleusDensity(e, inputNucleusDensity);
-		int finalOrbitParticles = SkriptHandler.inputParticleDensity(e, inputOrbitParticles);
+		int finalOrbitSpeed = SkriptHandler.inputOrbitSpeed(e, inputOrbitSpeed);
+		int finalOrbitDensity = SkriptHandler.inputParticleDensity(e, inputOrbitDensity);
 		int finalOrbitalCount = SkriptHandler.inputOrbitalCount(e, inputOrbitalCount);
 		Vector3d axis = SkriptHandler.inputEffectRotation(e, xRot, yRot, zRot);
 
@@ -151,7 +155,7 @@ public class EffComplexAtom extends Effect {
 		Material dataMat2 = SkriptHandler.inputParticleDataMat(e, inputParticleData2);
 		byte dataID2 = SkriptHandler.inputParticleDataID(e, inputParticleData2);
 		
-		new ComplexAtom(idName, particle, center, players, 0L, finalPulseTick, 1, dataMat, dataID, finalSpeed, visibleRange, offset, displacement, rainbowMode, enableRotation, finalRadius, finalInnerParticleDensity, finalOrbitParticles, finalOrbitalCount, axis, particle2, dataMat2, dataID2, finalSpeed2, offset2).start();
+		new ComplexAtom(idName, particle, center, players, 0L, finalPulseTick, 1, dataMat, dataID, finalSpeed, visibleRange, offset, displacement, rainbowMode, enableRotation, finalRadius, finalInnerParticleDensity, finalOrbitSpeed, finalOrbitDensity, finalOrbitalCount, axis, particle2, dataMat2, dataID2, finalSpeed2, offset2).start();
 		
 	}
 }
