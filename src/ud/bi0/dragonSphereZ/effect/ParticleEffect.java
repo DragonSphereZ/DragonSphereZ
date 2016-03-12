@@ -156,7 +156,8 @@ public class ParticleEffect extends BukkitRunnable {
 	}
 	
 	public void display(Vector3d vector) {
-		ParticleEffectUtils.valueOf(particle).display(this, center.getWorld(), vector);
+		Vector3d v = vector.add(this.center.getVector3d()).add(this.displacement);
+		ParticleEffectUtils.valueOf(particle).display(this, center.getWorld(), v);
 	}
 	
 	/**
