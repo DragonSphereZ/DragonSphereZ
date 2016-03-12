@@ -132,8 +132,10 @@ public class ComplexAtom extends ParticleEffect {
 						v2 = v2.add(center.getVector3d()); 	//Translates the vector to the center position.
 						v2 = v2.add(displacement).add(0,3,0);	//Adds final translation to the vector.
 						if (rainbowMode)
-							offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
 							offset2 = ParticleEffectUtils.simpleRainbowHelper(offset2, particle2);
+							offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
+						
+							
 						ComplexAtom.this.display(v);	
 						//ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, players, center, visibleRange, rainbowMode, offset, speed, 1);
 						ComplexAtom.this.display(particle2, offset2, speed2, dataMat2, dataID2, v2);
