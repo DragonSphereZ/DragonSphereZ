@@ -14,7 +14,6 @@ import com.flowpowered.math.vector.Vector3d;
 
 import ud.bi0.dragonSphereZ.effect.ParticleEffect;
 import ud.bi0.dragonSphereZ.math.Base3d;
-import ud.bi0.dragonSphereZ.math.shape.Ellipse;
 import ud.bi0.dragonSphereZ.math.shape.Ellipsoid;
 import ud.bi0.dragonSphereZ.util.DynamicLocation;
 import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
@@ -96,14 +95,8 @@ public class ComplexAtom2 extends ParticleEffect {
 	public void start() {
 		if (!effectManager.isActive(idName))  {
 			idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
-				
-				//Vector3d v = new Vector3d();
-				//double random = Math.random();
-				//Random r;
-				//Vector3d v = Vector3d.createRandomDirection(r).mul(innerRadius);//  .createRandomDirection(Random random).mul(radius);
+				Vector3d v = new Vector3d();
 				Vector3d v2 = new Vector3d();
-				//Ellipsoid sphere = new Ellipsoid().setBase(Base3d.MINECRAFT).setRadius(innerRadius);
-				
 				Ellipsoid sphere = new Ellipsoid()
 						.setBase(Base3d.MINECRAFT) 			//Changes from default cartesian to Minecraft's coordinate system.
 						.adjust(Vector3d.UNIT_Y, axis)//Vector3d.UNIT_Y)//axis) 		//Adjusts the circle axis.
@@ -111,33 +104,25 @@ public class ComplexAtom2 extends ParticleEffect {
 				double angle = 0;
 				double stepAngle = TrigMath.TWO_PI / orbitDensity;
 				double orbitAngle = TrigMath.TWO_PI / orbitalCount;
-				
-				//double angularVelocity = TrigMath.PI / 40d;
 				float xRot = 0;			//Holds the current rotation angle for the random rotation.
 				float yRot = 0;
 				float zRot = 0;
 				float stepXRot = 1.5F; 	//Holds the step to the next rotation angle.
 				float stepYRot = 0.3F;	
 				float stepZRot = 0.9F;
-				//float step;
 				@Override
 				public void run() {
 					
 					if (!center.isDynamic() || !center.hasMoved(pulseTick)) {
 						center.update();
-
-						if (rainbowMode)
-							offset2 = ParticleEffectUtils.simpleRainbowHelper(offset2, particle2);
-							offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
-							
 						//TODO Closer to done now :3 
 						for (int i = 0; i < nucleusDensity; i++) {	//this was used to add an amount of random vectors to the sphere
-							Vector3d v = Vector3d.createRandomDirection(new Random()).mul(innerRadius);
+							v = Vector3d.createRandomDirection(new Random()).mul(innerRadius);
 							v = v.add(0,3,0);
+							if (rainbowMode) offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
 							ComplexAtom2.this.display(v);
 							Bukkit.getServer().broadcastMessage("[v] --> " + v);
 						}
-						
 						for (int i = 0; i < orbitSpeed; i++) {	//Loops the amount of particles that will be displayed per orbit.
 							
 							for (int j = 0; j < orbitalCount; j++) { 	//Loops all orbits.
@@ -148,6 +133,7 @@ public class ComplexAtom2 extends ParticleEffect {
 									v2 = Quaterniond.fromAxesAnglesDeg(xRot, yRot, zRot).rotate(v2); //Rotates the vector.
 									
 								v2 = v2.add(0,3,0);	//Adds final translation to the vector.
+								if (rainbowMode) offset2 = ParticleEffectUtils.simpleRainbowHelper(offset2, particle2);
 								ComplexAtom2.this.display(particle2, offset2, speed2, dataMat2, dataID2, v2);
 							}
 							

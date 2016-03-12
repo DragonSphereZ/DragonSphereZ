@@ -95,13 +95,9 @@ public class ComplexAtom extends ParticleEffect {
 	public void start() {
 		if (!effectManager.isActive(idName))  {
 			idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
-				
-				//Vector3d v = new Vector3d();
-				//double random = Math.random();
-				//Random r;
-				//Vector3d v = Vector3d.createRandomDirection(r).mul(innerRadius);//  .createRandomDirection(Random random).mul(radius);
+
+				Vector3d v = new Vector3d();
 				Vector3d v2 = new Vector3d();
-				//Ellipsoid sphere = new Ellipsoid().setBase(Base3d.MINECRAFT).setRadius(innerRadius);
 				
 				Ellipse circle = new Ellipse()
 						.setBase(Base3d.MINECRAFT) 			//Changes from default cartesian to Minecraft's coordinate system.
@@ -110,29 +106,27 @@ public class ComplexAtom extends ParticleEffect {
 
 				double angle2 = 0;
 				
-				//double angularVelocity = TrigMath.PI / 40d;
 				float xRot = 0;			//Holds the current rotation angle for the random rotation.
 				float yRot = 0;
 				float zRot = 0;
 				float stepXRot = 1.5F; 	//Holds the step to the next rotation angle.
 				float stepYRot = 0.3F;	
 				float stepZRot = 0.9F;
-				//float step;
 				@Override
 				public void run() {
 					
 					if (!center.hasMoved(pulseTick)) {
 						center.update();
 
-						if (rainbowMode)
-							offset2 = ParticleEffectUtils.simpleRainbowHelper(offset2, particle2);
-							offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
+						
+						if (rainbowMode) offset2 = ParticleEffectUtils.simpleRainbowHelper(offset2, particle2);
+						if (rainbowMode) offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
 
 						
 						
 						//TODO Closer to done now :3 
 						for (int i = 0; i < nucleusDensity; i++) {	//this was used to add an amount of random vectors to the sphere
-							Vector3d v = Vector3d.createRandomDirection(new Random()).mul(innerRadius);
+							v = Vector3d.createRandomDirection(new Random()).mul(innerRadius);
 							v = v.add(center.getVector3d());
 							v = v.add(displacement).add(0,3,0);
 							ComplexAtom.this.display(v);
