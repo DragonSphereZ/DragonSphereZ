@@ -14,7 +14,7 @@ import com.flowpowered.math.vector.Vector3d;
 
 import ud.bi0.dragonSphereZ.effect.ParticleEffect;
 import ud.bi0.dragonSphereZ.math.Base3d;
-import ud.bi0.dragonSphereZ.math.shape.Ellipse;
+import ud.bi0.dragonSphereZ.math.shape.Ellipsoid;
 import ud.bi0.dragonSphereZ.util.DynamicLocation;
 import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
 
@@ -95,17 +95,15 @@ public class ComplexAtom extends ParticleEffect {
 	public void start() {
 		if (!effectManager.isActive(idName))  {
 			idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
-
 				Vector3d v = new Vector3d();
 				Vector3d v2 = new Vector3d();
-				
-				Ellipse circle = new Ellipse()
+				Ellipsoid sphere = new Ellipsoid()
 						.setBase(Base3d.MINECRAFT) 			//Changes from default cartesian to Minecraft's coordinate system.
 						.adjust(Vector3d.UNIT_Y, axis)//Vector3d.UNIT_Y)//axis) 		//Adjusts the circle axis.
 						.setRadius(innerRadius + 0.5); 				//Sets the radius of the circle.
-
-				double angle2 = 0;
-				
+				double angle = 0;
+				double stepAngle = TrigMath.TWO_PI / orbitDensity;
+				double orbitAngle = TrigMath.TWO_PI / orbitalCount;
 				float xRot = 0;			//Holds the current rotation angle for the random rotation.
 				float yRot = 0;
 				float zRot = 0;
@@ -115,59 +113,28 @@ public class ComplexAtom extends ParticleEffect {
 				@Override
 				public void run() {
 					
-					if (!center.hasMoved(pulseTick)) {
+					if (!center.isDynamic() || !center.hasMoved(pulseTick)) {
 						center.update();
-
-						
-						if (rainbowMode) offset2 = ParticleEffectUtils.simpleRainbowHelper(offset2, particle2);
-						if (rainbowMode) offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
-
-						
-						
-						//TODO Closer to done now :3 
 						for (int i = 0; i < nucleusDensity; i++) {	//this was used to add an amount of random vectors to the sphere
 							v = Vector3d.createRandomDirection(new Random()).mul(innerRadius);
-							v = v.add(center.getVector3d());
-							v = v.add(displacement).add(0,3,0);
+							v = v.add(0,3,0);
+							if (rainbowMode) offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
 							ComplexAtom.this.display(v);
-							Bukkit.getServer().broadcastMessage("[v] --> " + v);
 						}
-						for (int i = 0; i < orbitSpeed; i++) {	//Originally changes the speed of the outer particles(made them go faster around the circle)
-							
-							double stepAngle2 = TrigMath.TWO_PI / orbitDensity;
-							
-							
-							for (int j = 0; j < orbitalCount; j++) { 	//Need to make the circle axis change based on how many there are so that they aren't overlapping
-								
-								//Phi1 should be equal to 0
-								//phi2 should be equal to 2 * phi / 3
-								//and phi3 should be equal to 2 * phi * 2 / 3
-								
+						for (int i = 0; i < orbitSpeed; i++) {	//Loops the amount of particles that will be displayed per orbit.
+							for (int j = 0; j < orbitalCount; j++) { 	//Loops all orbits.
+								v2 = sphere.getPoint(angle, j * orbitAngle); //Gets the location.
 								if (enableRotation)		//the atom didn't originally have this, I want to see how it looks :3
 									v2 = Quaterniond.fromAxesAnglesDeg(xRot, yRot, zRot).rotate(v2); //Rotates the vector.
-									xRot = 	GenericMath.wrapAngleDeg(xRot + stepXRot);	//Calculates the next rotation angle.
-									yRot = GenericMath.wrapAngleDeg(yRot + stepYRot);
-									zRot = GenericMath.wrapAngleDeg(zRot + stepZRot);
-								v2 = v2.add(center.getVector3d()); 	//Translates the vector to the center position.
-								v2 = v2.add(displacement).add(0,3,0);	//Adds final translation to the vector.
-								v2 = circle.getPoint(angle2);
+								v2 = v2.add(0,3,0);	//Adds final translation to the vector.
+								if (rainbowMode) offset2 = ParticleEffectUtils.simpleRainbowHelper(offset2, particle2);
 								ComplexAtom.this.display(particle2, offset2, speed2, dataMat2, dataID2, v2);
 							}
-							angle2 = GenericMath.wrapAngleRad(angle2 + stepAngle2);
-							Bukkit.getServer().broadcastMessage("[angle2] --> " + angle2);
-							Bukkit.getServer().broadcastMessage("[stepAngle2] --> " + stepAngle2);
+							xRot = GenericMath.wrapAngleDeg(xRot + stepXRot);	//Calculates the next rotation angle.
+							yRot = GenericMath.wrapAngleDeg(yRot + stepYRot);
+							zRot = GenericMath.wrapAngleDeg(zRot + stepZRot);
+							angle = GenericMath.wrapAngleRad(angle + stepAngle); //Calculates the next angle
 						}
-					
-						
-						Bukkit.getServer().broadcastMessage("[v2] --> " + v2);
-						Bukkit.getServer().broadcastMessage("[innerRadius] --> " + innerRadius);
-						Bukkit.getServer().broadcastMessage("[orbitParticles] --> " + orbitDensity);
-						Bukkit.getServer().broadcastMessage("[rainbowMode] --> " + rainbowMode);
-						Bukkit.getServer().broadcastMessage("[offset] --> " + offset);
-						Bukkit.getServer().broadcastMessage("[offset2] --> " + offset2);
-						Bukkit.getServer().broadcastMessage("[particle2] --> " + particle2);
-						Bukkit.getServer().broadcastMessage("[speed2] --> " + speed2);
-						
 					} else center.update();
 				}
 			}, delayTick, pulseTick).getTaskId();

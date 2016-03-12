@@ -15,7 +15,7 @@ import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
 import ch.njol.util.Kleenean;
-import ud.bi0.dragonSphereZ.effect.complex.ComplexAtom2;
+import ud.bi0.dragonSphereZ.effect.complex.ComplexAtom;
 import ud.bi0.dragonSphereZ.skriptAPI.SkriptHandler;
 import ud.bi0.dragonSphereZ.util.DynamicLocation;
 
@@ -154,7 +154,7 @@ public class EffComplexAtom extends Effect {
 		Material dataMat2 = SkriptHandler.inputParticleDataMat(e, inputParticleData2);
 		byte dataID2 = SkriptHandler.inputParticleDataID(e, inputParticleData2);
 		
-		new ComplexAtom2(idName, particle, center, players, 0L, finalPulseTick, 1, dataMat, dataID, finalSpeed, visibleRange, offset, displacement, rainbowMode, enableRotation, finalRadius, finalInnerParticleDensity, finalOrbitSpeed, finalOrbitDensity, finalOrbitalCount, axis, particle2, dataMat2, dataID2, finalSpeed2, offset2).start();
+		new ComplexAtom(idName, particle, center, players, 0L, finalPulseTick, 1, dataMat, dataID, finalSpeed, visibleRange, offset, displacement, rainbowMode, enableRotation, finalRadius, finalInnerParticleDensity, finalOrbitSpeed, finalOrbitDensity, finalOrbitalCount, axis, particle2, dataMat2, dataID2, finalSpeed2, offset2).start();
 		
 	}
 }
