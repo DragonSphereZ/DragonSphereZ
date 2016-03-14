@@ -19,6 +19,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import com.flowpowered.math.vector.Vector3d;
+
+import ud.bi0.dragonSphereZ.DragonSphereCore;
 import ud.bi0.dragonSphereZ.effect.ParticleEffect;
 import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
 import ud.bi0.dragonSphereZ.util.ReflectionUtils;
@@ -99,10 +101,10 @@ public enum ParticleEffectUtils {
 	waterdrop("waterdrop", 39, 8),
 	itemtake("itemtake", 40, 8),
 	mobappearance("mobappearance", 41, 8),
-	dragonbreath("dragonbreath", 42, -1, ParticleProperty.DIRECTIONAL),	//1.9 Particles
-	endrod("endrod", 43, -1, ParticleProperty.DIRECTIONAL),				//1.9 Particles
-	damage("damage", 44, -1, ParticleProperty.DIRECTIONAL),				//1.9 Particles
-	swipe("swipe", 45, -1, ParticleProperty.DIRECTIONAL);				//1.9 Particles
+	dragonbreath("dragonbreath", 42, -1, ParticleProperty.DIRECTIONAL, ParticleProperty.IS_1_9),	//1.9 Particles
+	endrod("endrod", 43, -1, ParticleProperty.DIRECTIONAL, ParticleProperty.IS_1_9),				//1.9 Particles
+	damage("damage", 44, -1, ParticleProperty.DIRECTIONAL, ParticleProperty.IS_1_9),				//1.9 Particles
+	sweep("swipe", 45, -1, ParticleProperty.DIRECTIONAL, ParticleProperty.IS_1_9);					//1.9 Particles
 
 	public static final Map<String, ParticleEffectUtils> NAME_MAP = new HashMap<String, ParticleEffectUtils>();
 	public static final Map<Integer, ParticleEffectUtils> ID_MAP = new HashMap<Integer, ParticleEffectUtils>();
@@ -634,7 +636,7 @@ public enum ParticleEffectUtils {
 	 * <p>
 	 * This class is part of the <b>ParticleEffect Library</b> and follows the same usage conditions
 	 * 
-	 * @author DarkBlade12
+	 * @author DarkBlade12, Sashie
 	 * @since 1.7
 	 */
 	public static enum ParticleProperty {
@@ -653,7 +655,11 @@ public enum ParticleEffectUtils {
 		/**
 		 * The particle effect uses the offsets as color values
 		 */
-		COLORABLE;
+		COLORABLE,
+		/**
+		 * The particle effect requires 1.9
+		 */
+		IS_1_9;
 	}
 
 	/**
@@ -1336,6 +1342,7 @@ public enum ParticleEffectUtils {
 	/**
      * Sashies color and data helper :3
      * Most particle effects should use this
+     * Updated to 1.9
      * @param dataMat
      * @param dataID
 	 * @param player
@@ -1350,7 +1357,14 @@ public enum ParticleEffectUtils {
 	 * @param speed
 	 * @param particleCount
 	 */
-	public void display(Material dataMat, byte dataID, List<Player> players, Location center, double visibleRange, boolean rainbowMode, float offsetX, float offsetY, float offsetZ, float speed, int particleCount) {
+	public void display(String idName, Material dataMat, byte dataID, List<Player> players, Location center, double visibleRange, boolean rainbowMode, float offsetX, float offsetY, float offsetZ, float speed, int particleCount) {
+		//Check to make sure player has 1.9.
+				if (!Bukkit.getServer().getVersion().contains("MC: 1.9")) {
+					if (hasProperty(ParticleProperty.IS_1_9)) {
+						DragonSphereCore.effectManager.stopEffect(idName);
+						return;
+					} 
+		        }
 		// Color these particles only please also add rainbow if asked for.
 		if (this == ParticleEffectUtils.redstone || this == ParticleEffectUtils.mobspell || this == ParticleEffectUtils.mobspellambient) {
 			if (rainbowMode == true){
@@ -1555,8 +1569,8 @@ public enum ParticleEffectUtils {
 	 * bi0's display helper method using vectors.
 	 * 
 	 */
-	public void display(Material dataMat, byte dataID, List<Player> players, Location center, double visibleRange, boolean rainbowMode, Vector3d offset, float speed, int particleCount) {
-		display(dataMat, dataID, players, center, visibleRange, rainbowMode, (float) offset.getX(), (float) offset.getY(), (float) offset.getZ(), speed, particleCount);
+	public void display(String idName, Material dataMat, byte dataID, List<Player> players, Location center, double visibleRange, boolean rainbowMode, Vector3d offset, float speed, int particleCount) {
+		display(idName, dataMat, dataID, players, center, visibleRange, rainbowMode, (float) offset.getX(), (float) offset.getY(), (float) offset.getZ(), speed, particleCount);
 	}
 	
 	/**
@@ -1564,7 +1578,7 @@ public enum ParticleEffectUtils {
 	 */
 	public void display(ParticleEffect effect, World world, Vector3d vector) {
 		Location center = new Location(world, vector.getX(), vector.getY(), vector.getZ());
-		display(effect.getDataMat(), effect.getDataID(), effect.getPlayers(), center, effect.getVisibleRange(), effect.getRainbowMode(), (float) effect.getOffset().getX(), (float) effect.getOffset().getY(), (float) effect.getOffset().getZ(), effect.getSpeed(), effect.getParticleCount());
+		display(effect.getIdName(), effect.getDataMat(), effect.getDataID(), effect.getPlayers(), center, effect.getVisibleRange(), effect.getRainbowMode(), (float) effect.getOffset().getX(), (float) effect.getOffset().getY(), (float) effect.getOffset().getZ(), effect.getSpeed(), effect.getParticleCount());
 	}
 	//Using this method for the second or third particle in an effect
 	
@@ -1573,6 +1587,6 @@ public enum ParticleEffectUtils {
 	 */
 	public void display(ParticleEffect effect, World world, Vector3d vector, Vector3d offset, float speed, Material dataMat, byte dataID) {
 		Location center = new Location(world, vector.getX(), vector.getY(), vector.getZ());
-		display(dataMat, dataID, effect.getPlayers(), center, effect.getVisibleRange(), effect.getRainbowMode(), (float) offset.getX(), (float) offset.getY(), (float) offset.getZ(), speed, effect.getParticleCount());
+		display(effect.getIdName(), dataMat, dataID, effect.getPlayers(), center, effect.getVisibleRange(), effect.getRainbowMode(), (float) offset.getX(), (float) offset.getY(), (float) offset.getZ(), speed, effect.getParticleCount());
 	}
 }

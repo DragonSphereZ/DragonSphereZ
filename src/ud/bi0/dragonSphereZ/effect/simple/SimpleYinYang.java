@@ -115,9 +115,9 @@ public class SimpleYinYang extends ParticleEffect {
 						vectorYin = center.getVector3d().add(circle.getPoint(phi, height));
 						vectorYang = center.getVector3d().add(circle.getPoint(-phi, height));
 						location = FlowPoweredHook.Location(vectorYin, center.getWorld());
-						ParticleEffectUtils.valueOf(yin).display(matYin, dataYin, players, location, visibleRange, false, white, speed, countYin);
+						ParticleEffectUtils.valueOf(yin).display(idName, matYin, dataYin, players, location, visibleRange, false, white, speed, countYin);
 						location = FlowPoweredHook.Location(vectorYang, center.getWorld());
-						ParticleEffectUtils.valueOf(yang).display(matYang, dataYang, players, location, visibleRange, false, black, speed, countYang);
+						ParticleEffectUtils.valueOf(yang).display(idName, matYang, dataYang, players, location, visibleRange, false, black, speed, countYang);
 						phi = GenericMath.wrapAngleRad(phi + stepPhi);
 					} else center.update();
 				}
