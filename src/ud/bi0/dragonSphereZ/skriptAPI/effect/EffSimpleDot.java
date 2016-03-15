@@ -51,7 +51,7 @@ public class EffSimpleDot extends Effect {
 	
 	/**
 	 * drawDot 
-	 * [count %-number%], 
+	 * [ count %-number%,] 
 	 * particle %string%[, material %-itemstack%]
 	 * [, speed %-number%]
 	 * [, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], 

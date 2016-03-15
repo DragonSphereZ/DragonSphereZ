@@ -55,7 +55,7 @@ public class EffComplexDot extends Effect {
 	
 	/**
 	 * drawDot 
-	 * [count %-number%], 
+	 * [ count %-number%,] 
 	 * particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], 
 	 * center %objects%, 
 	 * [, onlyFor %-players%]
@@ -66,7 +66,7 @@ public class EffComplexDot extends Effect {
 	*/
 	@Override
 	public String toString(@Nullable Event e, boolean debug) {
-		return "drawDot [count %-number%], particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %objects%[, onlyFor %-players%][, r[ainbow]M[ode] %-boolean%], visibleRange %number%[, pulseDelay %-number%], keepFor %number%";
+		return "drawDot[ count %-number%,] particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %objects%[, onlyFor %-players%][, r[ainbow]M[ode] %-boolean%], visibleRange %number%[, pulseDelay %-number%], keepFor %number%";
 	}
 
 	@Override
