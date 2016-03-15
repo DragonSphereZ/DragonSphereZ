@@ -84,9 +84,6 @@ public class EffSimpleDot extends Effect {
 		Object[] center = (Object[])entLoc.getAll(e);
 		for (final Object loc : center) {
 			Location location = getLocation(loc);
-			//TODO Must add an on delay for rainbow mode to work and also just because :)
-			if (rainbowMode == true)
-				offsetX = (float) (offsetX + 0.01);
 			ParticleEffectUtils.valueOf(particle).display(idName, dataMat, dataID, players, location, visibleRange, rainbowMode, offsetX, offsetY, offsetZ, finalSpeed, count);
 			//ParticleEffectUtils.valueOf(particle).display(dataMat, dataID, players, location, visibleRange, rainbowMode, offsetX, offsetY, offsetZ, finalSpeed, count);
         }
