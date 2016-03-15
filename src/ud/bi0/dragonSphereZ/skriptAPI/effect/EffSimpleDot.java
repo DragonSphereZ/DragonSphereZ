@@ -75,9 +75,7 @@ public class EffSimpleDot extends Effect {
 		float offsetX = SkriptHandler.inputParticleOffset(e, offX);
 		float offsetY = SkriptHandler.inputParticleOffset(e, offY);
 		float offsetZ = SkriptHandler.inputParticleOffset(e, offZ);
-		
 		double visibleRange = range.getSingle(e).doubleValue();
-
 		Material dataMat = SkriptHandler.inputParticleDataMat(e, inputParticleData);
 		byte dataID = SkriptHandler.inputParticleDataID(e, inputParticleData);
 		String idName = "&dot-" + Math.random() + "-&dot";
