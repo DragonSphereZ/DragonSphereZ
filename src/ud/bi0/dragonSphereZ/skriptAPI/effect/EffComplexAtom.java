@@ -97,7 +97,7 @@ public class EffComplexAtom extends Effect {
 	* center %entity/location%, 
 	* center %object%,
 	* id %string%, 
-	* [, onlyFor %-player%]
+	* [, onlyFor %-players%]
 	* [, r[ainbow]M[ode] %-boolean%], 
 	* randomRotation %boolean%, 
 	* nucleusDensity %number%, 
@@ -112,7 +112,7 @@ public class EffComplexAtom extends Effect {
    */
 	@Override
 	public String toString(@Nullable Event e, boolean debug) {
-		return "drawComplexAtom particle1 %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], particle2 %string%[, material2 %-itemstack%][, speed2 %-number%][, ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%], center %object%, id %string%[, onlyFor %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, nucleusDensity %number%, nucleusRadius %number%, orbits %number%, orbitalDensity %number%, orbitalSpeed %number%, visibleRange %number%[, rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]";
+		return "drawComplexAtom particle1 %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], particle2 %string%[, material2 %-itemstack%][, speed2 %-number%][, ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%], center %object%, id %string%[, onlyFor %-players%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, nucleusDensity %number%, nucleusRadius %number%, orbits %number%, orbitalDensity %number%, orbitalSpeed %number%, visibleRange %number%[, rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]";
 	}
 
 	@Override

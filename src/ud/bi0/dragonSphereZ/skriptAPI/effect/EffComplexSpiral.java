@@ -88,7 +88,7 @@ public class EffComplexSpiral extends Effect {
 	 * [, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], 
 	 * center %object%, 
 	 * id %string%, 
-	 * [, onlyFor %-player%] 
+	 * [, onlyFor %-players%] 
 	 * [, r[ainbow]M[ode] %-boolean%]
 	 * [, clockwise %boolean%]
 	 * [, scan %boolean%], 
@@ -103,7 +103,7 @@ public class EffComplexSpiral extends Effect {
 	*/
 	@Override
 	public String toString(@Nullable Event e, boolean debug) {
-		return "drawComplexSpiral particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, onlyFor %-player%][, r[ainbow]M[ode] %-boolean%][, clockwise %-boolean%][, scan %-boolean%], radius %number%, density %number%, height %number%, heightMod %number%, visibleRange %number%[, Rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]";
+		return "drawComplexSpiral particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, onlyFor %-players%][, r[ainbow]M[ode] %-boolean%][, clockwise %-boolean%][, scan %-boolean%], radius %number%, density %number%, height %number%, heightMod %number%, visibleRange %number%[, Rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]";
 	}
 
 	@Override
@@ -117,40 +117,23 @@ public class EffComplexSpiral extends Effect {
 		}
 		String particle = SkriptHandler.inputParticleString(e, inputParticleString);
 		float finalSpeed = SkriptHandler.inputParticleSpeed(e, inputParticleSpeed);
-		//float offsetX = SkriptHandler.inputParticleOffset(e, offX);
-		//float offsetY = SkriptHandler.inputParticleOffset(e, offY);
-		//float offsetZ = SkriptHandler.inputParticleOffset(e, offZ);
-		//Vector3d offset = new Vector3d(offsetX, offsetY, offsetZ);
 		Vector3d offset = SkriptHandler.inputParticleOffset(e, offX, offY, offZ);
 		List<Player> players = SkriptHandler.inputPlayers(e, inputPlayers);
 		boolean rainbowMode = SkriptHandler.inputRainbowMode(e, inputRainbowMode);
-		//double disX = SkriptHandler.inputLocDisplacement(e, displaceX);
-		//double disY = SkriptHandler.inputLocDisplacement(e, displaceY);
-		//double disZ = SkriptHandler.inputLocDisplacement(e, displaceZ);
-		//Vector3d displacement = new Vector3d(disX, disY, disZ);	
 		Vector3d displacement = SkriptHandler.inputLocDisplacement(e, displaceX, displaceY, displaceZ);
-		
-		//double xRotation = SkriptHandler.inputEffectRotation(e, xRot);
-		//double yRotation = SkriptHandler.inputEffectRotation(e, yRot);
-		//double zRotation = SkriptHandler.inputEffectRotation(e, zRot);
-		//Vector3d axis = new Vector3d(xRotation, yRotation, zRotation);
 		Vector3d axis = SkriptHandler.inputEffectRotation(e, xRot, yRot, zRot);
-		
 		int finalParticleDensity = SkriptHandler.inputParticleDensity(e, inputParticleDensity);
 		boolean finalClockwise = clockwise.getSingle(e).booleanValue();
 		boolean finalScan = scan.getSingle(e).booleanValue();
 		float finalHeightMod = SkriptHandler.inputHeightMod(e, inputHeightMod);
 		float finalHeight = SkriptHandler.inputHeight(e, inputHeight);
-		
 		String idName = inputIdName.getSingle(e);
 		double visibleRange = range.getSingle(e).doubleValue();
-		
 		float finalRadius = SkriptHandler.inputRadius(e, inputRadius);
 		Long finalPulseTick = SkriptHandler.inputPulseTick(e, inputPulseTick);
 		Material dataMat = SkriptHandler.inputParticleDataMat(e, inputParticleData);
 		byte dataID = SkriptHandler.inputParticleDataID(e, inputParticleData);
-		//(idName, particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed,  visibleRange,  rainbowMode, scan, offset, displacement, radius, circleDensity, height, effectMod, clockwise, axis)
-					// idName,particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, rainbowMode, scan, offset, displacement, radius, circleDensity, height, effectMod, clockwise, axis)
+				    	// idName,particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, rainbowMode, scan, offset, displacement, radius, circleDensity, height, effectMod, clockwise, axis)
 		new ComplexSpiral(idName, particle, center, players, 0L, finalPulseTick, 1, dataMat, dataID, finalSpeed, visibleRange, rainbowMode, finalScan, offset, displacement, finalRadius, finalParticleDensity, finalHeight, finalHeightMod, finalClockwise, axis).start();
 	}
 }

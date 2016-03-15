@@ -83,7 +83,7 @@ public class EffComplexCircle extends Effect {
 	 * center %entity/location%, 
 	 * center %object%, 
 	 * id %string%, 
-	 * [, onlyFor %-player%]
+	 * [, onlyFor %-players%]
 	 * [, r[ainbow]M[ode] %-boolean%], 
 	 * randomRotation %boolean%, 
 	 * radius %number%, 
@@ -95,7 +95,7 @@ public class EffComplexCircle extends Effect {
 	*/
 	@Override
 	public String toString(@Nullable Event e, boolean debug) {
-		return "drawComplexCircle particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, onlyFor %-player%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, radius %number%, density %number%, visibleRange %number%[, Rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, [pulse]Delay %-number%]" ;
+		return "drawComplexCircle particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, onlyFor %-players%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, radius %number%, density %number%, visibleRange %number%[, Rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, [pulse]Delay %-number%]" ;
 	}
 
 	@Override

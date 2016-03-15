@@ -39,6 +39,7 @@ public class ParticleEffect extends BukkitRunnable {
 	protected long pulseTick; //Default 20
 	
 	protected int idTask = 0;
+	protected int idTask2 = 2;
 	
 	
 	protected final Plugin plugin = DragonSphereCore.dragonSphereCore;
