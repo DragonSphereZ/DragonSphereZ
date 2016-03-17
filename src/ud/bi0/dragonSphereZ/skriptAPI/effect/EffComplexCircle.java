@@ -120,7 +120,7 @@ public class EffComplexCircle extends Effect {
 		double visibleRange = range.getSingle(e).doubleValue();
 		boolean enableRotation = SkriptHandler.inputRotationMode(e, inputRotationMode);
 		float finalRadius = SkriptHandler.inputRadius(e, inputRadius);
-		Long finalPulseTick = SkriptHandler.inputPulseTick(e, inputPulseTick);
+		int finalPulseTick = SkriptHandler.inputPulseTick(e, inputPulseTick);
 		Material dataMat = SkriptHandler.inputParticleDataMat(e, inputParticleData);
 		byte dataID = SkriptHandler.inputParticleDataID(e, inputParticleData);
 

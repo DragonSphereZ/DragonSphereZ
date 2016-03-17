@@ -146,7 +146,7 @@ public class EffComplexAtom extends Effect {
 
 		String idName = inputIdName.getSingle(e);
 		double visibleRange = range.getSingle(e).doubleValue();
-		Long finalPulseTick = SkriptHandler.inputPulseTick(e, inputPulseTick);
+		int finalPulseTick = SkriptHandler.inputPulseTick(e, inputPulseTick);
 		
 		Material dataMat = SkriptHandler.inputParticleDataMat(e, inputParticleData);
 		byte dataID = SkriptHandler.inputParticleDataID(e, inputParticleData);

@@ -130,7 +130,7 @@ public class EffComplexSpiral extends Effect {
 		String idName = inputIdName.getSingle(e);
 		double visibleRange = range.getSingle(e).doubleValue();
 		float finalRadius = SkriptHandler.inputRadius(e, inputRadius);
-		Long finalPulseTick = SkriptHandler.inputPulseTick(e, inputPulseTick);
+		int finalPulseTick = SkriptHandler.inputPulseTick(e, inputPulseTick);
 		Material dataMat = SkriptHandler.inputParticleDataMat(e, inputParticleData);
 		byte dataID = SkriptHandler.inputParticleDataID(e, inputParticleData);
 				    	// idName,particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, rainbowMode, scan, offset, displacement, radius, circleDensity, height, effectMod, clockwise, axis)

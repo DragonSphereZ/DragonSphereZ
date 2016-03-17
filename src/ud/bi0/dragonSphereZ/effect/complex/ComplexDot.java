@@ -55,9 +55,9 @@ public class ComplexDot extends ParticleEffect {
 			idTask2 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
 				@Override
 				public void run() {
+					DragonSphereCore.effectManager.stopEffect(idName);
 					Bukkit.getScheduler().cancelTask(idTask);
 					Bukkit.getScheduler().cancelTask(idTask2);
-					DragonSphereCore.effectManager.stopEffect(idName);
 				    }
 			}, delayTick);
 			effectManager.startEffect(this);

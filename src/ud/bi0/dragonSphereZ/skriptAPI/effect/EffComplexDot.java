@@ -14,6 +14,7 @@ import javax.annotation.Nullable;
 import ch.njol.skript.lang.Effect;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.lang.SkriptParser.ParseResult;
+import ch.njol.skript.util.Timespan;
 import ch.njol.util.Kleenean;
 import ud.bi0.dragonSphereZ.effect.complex.ComplexDot;
 import ud.bi0.dragonSphereZ.skriptAPI.SkriptHandler;
@@ -32,7 +33,7 @@ public class EffComplexDot extends Effect {
 	private Expression<Boolean> isRainbowTrue;
 	private Expression<Number> range;
 	private Expression<Number> inputPulseDelay;
-	private Expression<Number> inputKeepDelay;
+	private Expression<Timespan> inputKeepDelay;
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -45,11 +46,11 @@ public class EffComplexDot extends Effect {
 		offY = (Expression<Number>) exprs[5];
 		offZ = (Expression<Number>) exprs[6];
 		entLoc = (Expression<?>) exprs[7];
-		inputPlayers = (Expression<Player>) exprs[9];
-		isRainbowTrue = (Expression<Boolean>) exprs[10];
-		range = (Expression<Number>) exprs[11];
-		inputPulseDelay = (Expression<Number>) exprs[12];
-		inputKeepDelay = (Expression<Number>) exprs[13];
+		inputPlayers = (Expression<Player>) exprs[8];
+		isRainbowTrue = (Expression<Boolean>) exprs[9];
+		range = (Expression<Number>) exprs[10];
+		inputPulseDelay = (Expression<Number>) exprs[11];
+		inputKeepDelay = (Expression<Timespan>) exprs[12];
 		return true;
 	}
 	
@@ -61,12 +62,12 @@ public class EffComplexDot extends Effect {
 	 * [, onlyFor %-players%]
 	 * [, r[ainbow]M[ode] %-boolean%], 
 	 * visibleRange %number%, 
-	 * [, pulseDelay %-number%], 
-	 * keepFor %number%
+	 * [, pulseDelay %-number%]
+	 * [, keepFor %-timespan%]
 	*/
 	@Override
 	public String toString(@Nullable Event e, boolean debug) {
-		return "drawDot[ count %-number%,] particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %objects%[, onlyFor %-players%][, r[ainbow]M[ode] %-boolean%], visibleRange %number%[, pulseDelay %-number%], keepFor %number%";
+		return "drawDot[ count %-number%,] particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %objects%[, onlyFor %-players%][, r[ainbow]M[ode] %-boolean%], visibleRange %number%[, pulseDelay %-number%][, keepFor %-timespan%]";
 	}
 
 	@Override
@@ -85,8 +86,8 @@ public class EffComplexDot extends Effect {
 		Vector3d offset = SkriptHandler.inputParticleOffset(e, offX, offY, offZ);
 		Material dataMat = SkriptHandler.inputParticleDataMat(e, inputParticleData);
 		byte dataID = SkriptHandler.inputParticleDataID(e, inputParticleData);
-	    Long finalPulseTick = SkriptHandler.inputPulseTick(e, inputPulseDelay);
-	    Long finalKeepDelay = SkriptHandler.inputPulseTick(e, inputKeepDelay);
+	    int finalPulseTick = SkriptHandler.inputPulseTick(e, inputPulseDelay);
+	    int finalKeepDelay = SkriptHandler.inputKeepDelay(e, inputKeepDelay);
 	    double visibleRange = range.getSingle(e).doubleValue();
 	    String idName = "&dot-" + Math.random() + "-&dot";
 	    if (finalPulseTick > finalKeepDelay){

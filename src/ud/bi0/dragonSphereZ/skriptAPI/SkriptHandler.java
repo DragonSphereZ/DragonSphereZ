@@ -17,6 +17,7 @@ import com.flowpowered.math.vector.Vector3d;
 import ch.njol.skript.Skript;
 import ch.njol.skript.lang.Expression;
 import ch.njol.skript.log.ErrorQuality;
+import ch.njol.skript.util.Timespan;
 import ud.bi0.dragonSphereZ.DragonSphereCore;
 import ud.bi0.dragonSphereZ.util.DynamicLocation;
 import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
@@ -277,12 +278,20 @@ public class SkriptHandler {
 	/**
 	 * Changes the length of time between 'loops' for each effect
 	 */
-	public static long inputPulseTick(@Nullable Event e, @Nullable Expression<Number> inputPulseTick) {
+	public static int inputPulseTick(@Nullable Event e, @Nullable Expression<Number> inputPulseTick) {
 		if(inputPulseTick != null){
-			return inputPulseTick.getSingle(e).longValue();
+			return inputPulseTick.getSingle(e).intValue();
 		}
 		return 0;
     }
-	
+	/**
+	 * Some effects turn themselves off on their own after an amount of time, default 5 ticks
+	 */
+	public static int inputKeepDelay(@Nullable Event e, @Nullable Expression<Timespan> inputKeepDelay) {
+		if(inputKeepDelay != null){
+			return inputKeepDelay.getSingle(e).getTicks();
+		}
+		return 5;
+    }
 
 }
