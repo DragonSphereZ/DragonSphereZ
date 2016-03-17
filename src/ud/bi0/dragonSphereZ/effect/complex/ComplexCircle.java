@@ -2,7 +2,6 @@ package ud.bi0.dragonSphereZ.effect.complex;
 
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -12,7 +11,6 @@ import com.flowpowered.math.imaginary.Quaterniond;
 import com.flowpowered.math.vector.Vector3d;
 
 import ud.bi0.dragonSphereZ.effect.ParticleEffect;
-import ud.bi0.dragonSphereZ.math.Base3d;
 import ud.bi0.dragonSphereZ.math.shape.Ellipse;
 import ud.bi0.dragonSphereZ.util.DynamicLocation;
 import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
@@ -23,6 +21,17 @@ public class ComplexCircle extends ParticleEffect {
 	protected double particleDensity;
 	protected boolean enableRotation;
 	protected Vector3d axis;
+	
+	Vector3d v = new Vector3d();
+	Ellipse circle;				//Sets the radius of the circle.
+	double angle = 0;
+	double stepAngle = TrigMath.TWO_PI / particleDensity;
+	float xRot = 0;			//Holds the current rotation angle for the random rotation.
+	float yRot = 0;
+	float zRot = 0;
+	final float stepXRot = 1.5F; 	//Holds the step to the next rotation angle.
+	final float stepYRot = 0.3F;	
+	final float stepZRot = 0.9F;
 	
 	public ComplexCircle(
 		//super
@@ -63,47 +72,26 @@ public class ComplexCircle extends ParticleEffect {
 		this.particleDensity = particleDensity;
 		this.enableRotation = enableRotation;
 		this.axis = axis.normalize();
+		
+		circle.adjust(Vector3d.UNIT_Y, axis);
+		circle.setRadius(radius);
 	}
 	
 	@Override
-	public void start() {
-		if (!effectManager.isActive(idName))  {
-			idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
-				
-				Vector3d v = new Vector3d();
-				Ellipse circle = new Ellipse()
-										.setBase(Base3d.MINECRAFT) 			//Changes from default cartesian to Minecraft's coordinate system.
-										.adjust(Vector3d.UNIT_Y, axis) 		//Adjusts the circle axis.
-										.setRadius(radius); 				//Sets the radius of the circle.
-				double angle = 0;
-				double stepAngle = TrigMath.TWO_PI / particleDensity;
-				float xRot = 0;			//Holds the current rotation angle for the random rotation.
-				float yRot = 0;
-				float zRot = 0;
-				float stepXRot = 1.5F; 	//Holds the step to the next rotation angle.
-				float stepYRot = 0.3F;	
-				float stepZRot = 0.9F;
-							
-				@Override
-				public void run() {
-					if (!center.hasMoved(pulseTick)) {
-						center.update();
-						v = circle.getPoint(angle); //Gets the next point on the circle.
-						if (enableRotation)
-							v = Quaterniond.fromAxesAnglesDeg(xRot, yRot, zRot).rotate(v); //Rotates the vector.
-							xRot = 	GenericMath.wrapAngleDeg(xRot + stepXRot);	//Calculates the next rotation angle.
-							yRot = GenericMath.wrapAngleDeg(yRot + stepYRot);
-							zRot = GenericMath.wrapAngleDeg(zRot + stepZRot);
-						v = v.add(center.getVector3d()); 	//Translates the vector to the center position.
-						v = v.add(displacement).add(0,1,0);	//Adds final translation to the vector.
-						if (rainbowMode)
-							offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
-						ComplexCircle.this.display(v);
-						angle = GenericMath.wrapAngleRad(angle + stepAngle);						
-					} else center.update();
-				}
-			}, delayTick, pulseTick).getTaskId();
-			effectManager.startEffect(this);
-		}
+	public void onRun() {
+		if (!center.hasMoved(pulseTick)) {
+			center.update();
+			v = circle.getPoint(angle); //Gets the next point on the circle.
+			if (enableRotation)
+				v = Quaterniond.fromAxesAnglesDeg(xRot, yRot, zRot).rotate(v); //Rotates the vector.
+				xRot = 	GenericMath.wrapAngleDeg(xRot + stepXRot);	//Calculates the next rotation angle.
+				yRot = GenericMath.wrapAngleDeg(yRot + stepYRot);
+				zRot = GenericMath.wrapAngleDeg(zRot + stepZRot);
+			v = v.add(displacement).add(0,1,0);	//Adds final translation to the vector.
+			if (rainbowMode)
+				offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
+			display(v);
+			angle = GenericMath.wrapAngleRad(angle + stepAngle);						
+		} else center.update();
 	}
 }

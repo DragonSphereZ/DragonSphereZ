@@ -57,7 +57,7 @@ public class EffSimpleEffect extends Effect {
 		} catch (IllegalArgumentException ex) {
 			return;
 		}
-		effect.start();
+		effect.start(effect);
 	}
 
 }

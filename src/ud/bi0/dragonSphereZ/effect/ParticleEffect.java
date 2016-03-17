@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.annotation.Nullable;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
@@ -16,7 +17,7 @@ import ud.bi0.dragonSphereZ.util.DynamicLocation;
 import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
 
 
-public class ParticleEffect extends BukkitRunnable {
+public abstract class ParticleEffect extends BukkitRunnable {
 	
 	
 	protected final String idName; 
@@ -153,12 +154,9 @@ public class ParticleEffect extends BukkitRunnable {
 		cancel();
 	}
 	
-	public void start() {
-	}
-	
 	public void display(Vector3d vector) {
-		Vector3d v = vector.add(this.center.getVector3d()).add(this.displacement);
-		ParticleEffectUtils.valueOf(particle).display(this, center.getWorld(), v);
+		Vector3d finalVector = vector.add(this.getCenter().getVector3d()).add(this.getDisplacement());
+		ParticleEffectUtils.valueOf(this.getParticle()).display(this, finalVector);
 	}
 	
 	/**
@@ -172,6 +170,20 @@ public class ParticleEffect extends BukkitRunnable {
 	public void display(List<Vector3d> vectors) {
 		for (Vector3d vector : vectors) {
 			display(vector);
+		}
+	}
+	
+	public abstract void onRun();
+		
+	public void start(ParticleEffect effect) {
+		if (!effectManager.isActive(idName))  {
+			idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
+				@Override
+				public void run() {
+					effect.onRun();
+				}
+			}, delayTick, pulseTick).getTaskId();
+			effectManager.startEffect(effect);
 		}
 	}
 }

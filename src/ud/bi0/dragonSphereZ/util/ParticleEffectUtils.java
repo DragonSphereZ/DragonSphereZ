@@ -1580,6 +1580,11 @@ public enum ParticleEffectUtils {
 		Location center = new Location(world, vector.getX(), vector.getY(), vector.getZ());
 		display(effect.getIdName(), effect.getDataMat(), effect.getDataID(), effect.getPlayers(), center, effect.getVisibleRange(), effect.getRainbowMode(), (float) effect.getOffset().getX(), (float) effect.getOffset().getY(), (float) effect.getOffset().getZ(), effect.getSpeed(), effect.getParticleCount());
 	}
+	
+	public void display(ParticleEffect effect, Vector3d vector) {
+		Location center = new Location(effect.getCenter().getWorld(), vector.getX(), vector.getY(), vector.getZ());
+		display(effect.getIdName(), effect.getDataMat(), effect.getDataID(), effect.getPlayers(), center, effect.getVisibleRange(), effect.getRainbowMode(), (float) effect.getOffset().getX(), (float) effect.getOffset().getY(), (float) effect.getOffset().getZ(), effect.getSpeed(), effect.getParticleCount());
+	}
 	//Using this method for the second or third particle in an effect
 	
 	/**
