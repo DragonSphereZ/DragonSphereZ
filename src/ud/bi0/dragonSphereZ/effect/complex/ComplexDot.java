@@ -28,11 +28,11 @@ public class ComplexDot extends ParticleEffect {
 		byte dataID,
 		float speed,
 		double visibleRange,
-
-		//this
 		Vector3d offset,
 		Vector3d displacement,
-		boolean rainbowMode)
+		boolean rainbowMode
+		//this
+		)
 	{
 		super(idName, particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, rainbowMode, offset, displacement);
 	}

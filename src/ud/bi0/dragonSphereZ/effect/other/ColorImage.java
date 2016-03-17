@@ -197,7 +197,7 @@ public class ColorImage extends ParticleEffect {
 				                int r = (new Color(image.getRGB(x, y))).getRed();
 				                int g = (new Color(image.getRGB(x, y))).getGreen();
 				                int b = (new Color(image.getRGB(x, y))).getBlue();
-				                ParticleEffectUtils.valueOf("redstone").display(center, visibleRange, players, r, g, b);
+				                ParticleEffectUtils.valueOf(particle).display(center, visibleRange, players, r, g, b);
 				            }
 				        }
 				        rotationStep++;
