@@ -94,7 +94,8 @@ public class EffComplexDot extends Effect {
 	    	finalPulseTick = finalKeepDelay;
 	    }
 	    //(String idName, String particle, DynamicLocation center, List<Player> players, long delayTick, long pulseTick, int particleCount, Material dataMat, byte dataID, float speed, double visibleRange, Vector3d offset, Vector3d displacement, boolean rainbowMode)
-	    new ComplexDot(idName, particle, center, players, finalKeepDelay, finalPulseTick, count, dataMat, dataID, finalSpeed, visibleRange, offset, new Vector3d(0,0,0), rainbowMode);
+	    ComplexDot dot = new ComplexDot(idName, particle, center, players, finalKeepDelay, finalPulseTick, count, dataMat, dataID, finalSpeed, visibleRange, offset, new Vector3d(0,0,0), rainbowMode);
+	    dot.start(dot);
 	}
 	
 }

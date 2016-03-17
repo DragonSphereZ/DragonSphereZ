@@ -154,7 +154,8 @@ public class EffComplexAtom extends Effect {
 		Material dataMat2 = SkriptHandler.inputParticleDataMat(e, inputParticleData2);
 		byte dataID2 = SkriptHandler.inputParticleDataID(e, inputParticleData2);
 		
-		new ComplexAtom(idName, particle, center, players, 0L, finalPulseTick, 1, dataMat, dataID, finalSpeed, visibleRange, offset, displacement, rainbowMode, enableRotation, finalRadius, finalInnerParticleDensity, finalOrbitSpeed, finalOrbitDensity, finalOrbitalCount, axis, particle2, dataMat2, dataID2, finalSpeed2, offset2).start();
+		ComplexAtom atom = new ComplexAtom(idName, particle, center, players, 0L, finalPulseTick, 1, dataMat, dataID, finalSpeed, visibleRange, offset, displacement, rainbowMode, enableRotation, finalRadius, finalInnerParticleDensity, finalOrbitSpeed, finalOrbitDensity, finalOrbitalCount, axis, particle2, dataMat2, dataID2, finalSpeed2, offset2);
+		atom.start(atom);
 		
 	}
 }
