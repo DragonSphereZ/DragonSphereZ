@@ -3,103 +3,88 @@ package ud.bi0.dragonSphereZ.math.shape;
 import java.util.ArrayList;
 import java.util.function.IntToDoubleFunction;
 
-import com.flowpowered.math.imaginary.Quaterniond;
-import com.flowpowered.math.matrix.Matrix3d;
 import com.flowpowered.math.vector.Vector2d;
 import com.flowpowered.math.vector.Vector3d;
 
 import ud.bi0.dragonSphereZ.math.Base3d;
 import ud.bi0.dragonSphereZ.math.Coordinate;
 
-public class Plane extends Shape {
+public class Plane 
+	extends BaseShape
+	implements Cloneable {
 	
-	private final Base3d base;
-	private final Vector2d radius;
+	public static final Vector2d DEFAULT_RADIUS = Vector2d.ONE;
+	
+	private Vector2d radius = DEFAULT_RADIUS;
 	
 	public Plane() {
-		super();
-		this.base = new Base3d();
-		this.radius = new Vector2d(1, 1);
 	}
 	
 	public Plane(Plane plane) {
-		this(plane.base, plane.radius);
+		this(plane.getOrigin(), plane.getBase(), plane.getRadius());
 	}
 	
-	public Plane(Base3d base, Vector2d radius) {
-		this(base, radius.getX(), radius.getY());
+	public Plane(Vector2d radius) {
+		setRadius(radius);
 	}
 	
-	public Plane(Base3d base, double radius) {
-		this(base, radius, radius);
+	public Plane(Vector3d origin, Base3d base, Vector2d radius) {
+		super(origin, base);
+		setRadius(radius);
 	}
 	
-	public Plane(Base3d base, double radiusU, double radiusV) {
-		super();
-		this.base = new Base3d(base);
-		this.radius = new Vector2d(radiusU, radiusV);
-	}
-	
-	public Base3d getBase() {
-		return new Base3d(base);
+	public Plane(Vector3d origin, Vector3d point1, Vector3d point2) {
+		super(origin, DEFAULT_BASE);
+		Vector3d u = point1.sub(origin);
+		Vector3d v = point2.sub(origin);
+		Vector2d radius = new Vector2d(u.length(), v.length());
+		u = u.normalize();
+		v = v.normalize();
+		Vector3d normal = u.cross(v);
+		adjustBase(DEFAULT_BASE.getW(), normal);
+		setRadius(radius);
 	}
 	
 	public Vector2d getRadius() {
-		return new Vector2d(radius);
+		return radius.clone();
 	}
 	
-	public Plane setBase(Base3d base) {
-		return new Plane(base, this.radius);
+	public double getRadiusU() {
+		return getRadius().getX();
 	}
 	
-	public Plane setRadius(double radius) {
-		return setRadius(radius, radius);
+	public double getRadiusV() {
+		return getRadius().getY();
 	}
 	
-	public Plane setRadius(Vector2d radius) {
-		return new Plane(this.base, radius.getX(), radius.getY());
+	public void setRadius(double radius) {
+		setRadius(radius, radius);
 	}
 	
-	public Plane setRadius(double radiusU, double radiusV) {
-		return new Plane(this.base, radiusU, radiusV);
+	public void setRadius(double radiusU, double radiusV) {
+		setRadius(new Vector2d(radiusU, radiusV));
 	}
-	
-	public Plane adjust(Vector3d from, Vector3d to) {
-		return setBase(base.adjust(from, to));
+	public void setRadius(Vector2d radius) {
+		this.radius = radius.clone();
 	}
-	
-	public Plane rotate(Quaterniond rotation) {
-		return setBase(base.rotate(rotation));
-	}
-	
-	public Plane transform(Matrix3d matrix) {
-		return setBase(base.transform(matrix));
-	}
-	
+		
 	public Vector3d getPoint(double percentU, double percentV) {
-		return getPoint(getRadius().getX(), getRadius().getY(), percentU, percentV);
-	}
-	public Vector3d getPoint(double radiusU, double radiusV, double percentU, double percentV) {
-		return getPoint(new Vector2d(radiusU, radiusV), new Vector2d(percentU, percentV));
-	}
-	
-	public Vector3d getPoint(Vector2d radius, Vector2d percent) {
-		return Coordinate.Cartesian3d.getPoint(base, radius.toVector3(0).mul(-1).add(radius.toVector3(0).mul(percent.toVector3(0).mul(2)))).add(getOrigin());
+		double u = getRadiusU() * ( 2 * percentU - 1);
+		double v = getRadiusV() * ( 2 * percentV - 1);
+		Vector3d point = Coordinate.Cartesian3d.getPoint(getBase(), new Vector3d(u,v,0));
+		return point.add(getOrigin());
 	}
 	
 	public ArrayList<Vector3d> getPointN(int n, IntToDoubleFunction percentU, IntToDoubleFunction percentV) {
-		double u = getRadius().getX();
-		double v = getRadius().getY();
-		IntToDoubleFunction radiusU = (i) -> u;
-		IntToDoubleFunction radiusV = (i) -> v;
-		return getPointN(n, radiusU, radiusV, percentU, percentV);
-	}
-	
-	public ArrayList<Vector3d> getPointN(int n, IntToDoubleFunction radiusU, IntToDoubleFunction radiusV, IntToDoubleFunction percentU, IntToDoubleFunction percentV) {
-		ArrayList<Vector3d> points = new ArrayList<Vector3d>(n);
+		ArrayList<Vector3d> points = new ArrayList<>(n);
 		for (int i = 0; i < n; i++) {
-			points.add(getPoint(radiusU.applyAsDouble(i), radiusV.applyAsDouble(i), percentU.applyAsDouble(i), percentV.applyAsDouble(i)));
+			points.add(getPoint(percentU.applyAsDouble(i), percentV.applyAsDouble(i)));
 		}
 		return points;
+	}
+	
+	@Override
+	public Plane clone() {
+		return new Plane(this);
 	}
 }

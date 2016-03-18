@@ -3,124 +3,104 @@ package ud.bi0.dragonSphereZ.math.shape;
 import java.util.ArrayList;
 import java.util.function.IntToDoubleFunction;
 
-import com.flowpowered.math.imaginary.Quaterniond;
+import com.flowpowered.math.GenericMath;
 import com.flowpowered.math.matrix.Matrix2d;
-import com.flowpowered.math.matrix.Matrix3d;
 import com.flowpowered.math.vector.Vector2d;
 import com.flowpowered.math.vector.Vector3d;
 
 import ud.bi0.dragonSphereZ.math.Base3d;
 import ud.bi0.dragonSphereZ.math.Coordinate;
 
-public class Cylinder extends Shape {
+public class Cylinder 
+	extends BaseShape 
+	implements Cloneable {
 	
-	private final Base3d base;
-	private final Vector2d radius;
-	private final double height;
+	public static final Vector2d DEFAULT_RADIUS = Vector2d.ONE;
+	public static final double DEFAULT_START_HEIGHT = 0;
+	public static final double DEFAULT_END_HEIGHT = 1;
+	
+	private Vector2d radius = DEFAULT_RADIUS;
+	private double startHeight = DEFAULT_START_HEIGHT; 
+	private double endHeight = DEFAULT_END_HEIGHT;
 	
 	public Cylinder() {
-		super();
-		this.base = new Base3d();
-		this.radius = new Vector2d(1,1);
-		this.height = 1;
 	}
 	
 	public Cylinder(Cylinder cylinder) {
-		this(cylinder.base, cylinder.radius, cylinder.height);
+		this(cylinder.getOrigin(), cylinder.getBase(), cylinder.getRadius(), cylinder.getStartHeight(), cylinder.getEndHeight());
 	}
 	
-	public Cylinder(Base3d base, Vector2d radius, double height) {
-		this(base, radius.getX(), radius.getY(), height);
+	public Cylinder(Vector2d radius, double startHeight, double endHeight) {
+		setRadius(radius);
+		setStartHeight(startHeight);
+		setEndHeight(endHeight);
 	}
 	
-	public Cylinder(Base3d base, double radiusU, double radiusV, double height) {
-		super();
-		this.base = new Base3d(base);
-		this.radius = new Vector2d(radiusU, radiusV);
-		this.height = height;
-	}
-	
-	public Base3d getBase() {
-		return new Base3d(base);
+	public Cylinder(Vector3d origin, Base3d base, Vector2d radius, double startHeight, double endHeight) {
+		super(origin, base);
+		setRadius(radius);
+		setStartHeight(startHeight);
+		setEndHeight(endHeight);
 	}
 	
 	public Vector2d getRadius() {
-		return new Vector2d(radius);
+		return radius.clone();
 	}
 	
 	public Vector3d getAxis() {
-		return base.getW();
+		return getBase().getW();
 	}
 	
-	public double getHeight() {
-		return height;
+	public double getStartHeight() {
+		return startHeight;
 	}
 	
-	public Cylinder setBase(Base3d base) {
-		return new Cylinder(base, this.radius, this.height);
+	public double getEndHeight() {
+		return endHeight;
+	}
+
+	public void setRadius(Vector2d radius) {
+		this.radius = radius.clone();
 	}
 	
-	public Cylinder setRadius(Vector2d radius) {
-		return new Cylinder(this.base, radius, this.height);
+	public void setRadius(double radiusU, double radiusV) {
+		setRadius(new Vector2d(radiusU, radiusV));
 	}
 	
-	public Cylinder setRadius(double radiusU, double radiusV) {
-		return setRadius(new Vector2d(radiusU, radiusV));
+	public void setRadius(double radius) {
+		setRadius(radius, radius);
 	}
 	
-	public Cylinder setRadius(double radius) {
-		return setRadius(new Vector2d(radius, radius));
+	public void setStartHeight(double startHeight) {
+		this.startHeight = startHeight;
 	}
 	
-	public Cylinder setHeight(double height) {
-		return new Cylinder(this.base, this.radius, height);
+	public void setEndHeight(double endHeight) {
+		this.endHeight = endHeight;
 	}
 	
-	public Cylinder adjust(Vector3d from, Vector3d to) {
-		return setBase(base.adjust(from, to));
+	public void transformRadius(Matrix2d matrix) {
+		Vector2d radius = getRadius();
+		radius = matrix.transform(radius);
+		setRadius(radius);
 	}
 	
-	public Cylinder rotate(Quaterniond rotation) {
-		return setBase(base.rotate(rotation));
+	public Vector3d getPoint(double angle, double percentHeight) {
+		double height = GenericMath.lerp(getStartHeight(), getEndHeight(), percentHeight);
+		Vector3d point = Coordinate.Cylindrical3d.getPoint(getBase(), getRadius(), angle, height).add(getOrigin());
+		return point.add(getOrigin());
 	}
-	
-	public Cylinder transform(Matrix3d matrix) {
-		return setBase(base.transform(matrix));
-	}
-	
-	public Cylinder transformRadius(Matrix2d matrix) {
-		return new Cylinder(base, matrix.transform(radius), height);
-	}
-	
-	public Ellipse getEllipse() {
-		return new Ellipse(base, radius);
-	}
-	
-	public Vector3d getPoint(double angle, double height) {
-		return getPoint(this.radius, angle, height);
-	}
-	
-	public Vector3d getPoint(Vector2d radius, double angle, double height) {
-		return getPoint(radius.getX(), radius.getY(), angle, height);
-	}
-	
-	public Vector3d getPoint(double radiusU, double radiusV, double angle, double height) {
-		return Coordinate.Cylindrical3d.getPoint(base, radiusU, radiusV, angle, height).add(getOrigin());
-	}
-	
-	public ArrayList<Vector3d> getPointN(int n, IntToDoubleFunction angle, IntToDoubleFunction height) {
-		double u = this.radius.getX();
-		double v = this.radius.getY();
-		IntToDoubleFunction radiusU = (i) -> u;
-		IntToDoubleFunction radiusV = (i) -> v;
-		return getPointN(n, radiusU, radiusV, angle, height);
-	}
-	
-	public ArrayList<Vector3d> getPointN(int n, IntToDoubleFunction radiusU, IntToDoubleFunction radiusV, IntToDoubleFunction angle, IntToDoubleFunction height) {
-		ArrayList<Vector3d> points = new ArrayList<Vector3d>(n);
+
+	public ArrayList<Vector3d> getPointN(int n, IntToDoubleFunction angle, IntToDoubleFunction percentHeight) {
+		ArrayList<Vector3d> points = new ArrayList<>(n);
 		for (int i = 0; i < n; i++) {
-			points.add(getPoint(radiusU.applyAsDouble(i), radiusV.applyAsDouble(i), angle.applyAsDouble(i), height.applyAsDouble(i)));
+			points.add(getPoint(angle.applyAsDouble(i), percentHeight.applyAsDouble(i)));
 		}
 		return points;
+	}
+	
+	@Override
+	public Cylinder clone() {
+		return new Cylinder(this);
 	}
 }

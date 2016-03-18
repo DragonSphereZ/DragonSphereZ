@@ -2,25 +2,29 @@ package ud.bi0.dragonSphereZ.math.shape;
 
 import com.flowpowered.math.vector.Vector3d;
 
-public class Shape {
+public abstract class Shape
+	implements Cloneable {
 	
-	private Vector3d origin;
+	public static Vector3d DEFAULT_ORIGIN = Vector3d.ZERO;
+	
+	private Vector3d origin = DEFAULT_ORIGIN;
 	
 	public Shape() {
-		origin = new Vector3d();
+	}
+	
+	public Shape(Shape shape) {
+		this(shape.getOrigin());
 	}
 	
 	public Shape(Vector3d origin) {
-		this.origin = new Vector3d(origin);
+		this.origin = origin.clone();
 	}
 	
 	public Vector3d getOrigin() {
-		return origin;
+		return origin.clone();
 	}
 	
-	public Shape setOrigin(Vector3d origin) {
-		this.origin = origin;
-		return this;
+	public void setOrigin(Vector3d origin) {
+		this.origin = origin.clone();
 	}
-	
 }

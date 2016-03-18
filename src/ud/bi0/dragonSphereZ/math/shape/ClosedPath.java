@@ -12,20 +12,19 @@ public class ClosedPath
 	extends Shape 
 	implements Cloneable {
 	
-	private LinkedList<Vector3d> points;
+	private LinkedList<Vector3d> points = new LinkedList<>();
 	
 	public ClosedPath(ClosedPath ClosedPath) {
 		this(ClosedPath.getOrigin(), ClosedPath.getNodes());
 	}
 	
 	public ClosedPath(Collection<Vector3d> points) {
-		this(DEFAULT_ORIGIN, points);
+		addAll(points);
 	}
 	
 	public ClosedPath(Vector3d origin, Collection<Vector3d> points) {
 		super(origin);
-		this.points = new LinkedList<Vector3d>();
-		this.points.addAll(points);
+		addAll(points);
 	}
 	
 	public int getSize() {

@@ -3,76 +3,57 @@ package ud.bi0.dragonSphereZ.math.shape;
 import java.util.ArrayList;
 import java.util.function.IntToDoubleFunction;
 
-import com.flowpowered.math.imaginary.Quaterniond;
 import com.flowpowered.math.matrix.Matrix3d;
 import com.flowpowered.math.vector.Vector3d;
 
 import ud.bi0.dragonSphereZ.math.Base3d;
 import ud.bi0.dragonSphereZ.math.Coordinate;
 
-public class Box extends Shape {
+public class Box 
+	extends BaseShape
+	implements Cloneable {
 	
-	private final Base3d base;
-	private final Vector3d radius;
+	public static final Vector3d DEFAULT_RADIUS = Vector3d.ONE;
+	
+	private Vector3d radius;
 	
 	public Box() {
-		super();
-		this.base = new Base3d();
-		this.radius = new Vector3d(1, 1, 1);
+		this(DEFAULT_RADIUS);
 	}
 	
 	public Box(Box box) {
-		this(box.getBase(), box.getRadius());
+		this(box.getOrigin(), box.getBase(), box.getRadius());
 	}
 	
-	public Box(Base3d base, Vector3d radius) {
-		this(base, radius.getX(), radius.getY(), radius.getZ());
+	public Box(Vector3d radius) {
+		setRadius(radius);
 	}
 	
-	public Box(Base3d base, double radiusU, double radiusV, double radiusW) {
-		super();
-		this.base = new Base3d(base);
-		this.radius = new Vector3d(radiusU, radiusV, radiusW);
-	}
-	
-	public Base3d getBase() {
-		return new Base3d(base);
+	public Box(Vector3d origin, Base3d base, Vector3d radius) {
+		super(origin, base);
+		setRadius(radius);
 	}
 	
 	public Vector3d getRadius() {
-		return new Vector3d(radius);
+		return radius.clone();
 	}
 	
-	public Box setBase(Base3d base) {
-		return new Box(base, this.radius);
+	public void setRadius(double radius) {
+		setRadius(radius, radius, radius);
 	}
 	
-	public Box setRadius(double radius) {
-		return setRadius(radius, radius, radius);
+	public void setRadius(double radiusU, double radiusV, double radiusW) {
+		setRadius(new Vector3d(radiusU, radiusV, radiusW));
 	}
 	
-	public Box setRadius(double radiusU, double radiusV, double radiusW) {
-		return setRadius(new Vector3d(radiusU, radiusV, radiusW));
+	public void setRadius(Vector3d radius) {
+		this.radius = radius.clone();
 	}
 	
-	public Box setRadius(Vector3d radius) {
-		return new Box(this.base, radius);
-	}
-	
-	public Box adjust(Vector3d from, Vector3d to) {
-		return setBase(base.adjust(from, to));
-	}
-	
-	public Box rotate(Quaterniond rotation) {
-		return setBase(base.rotate(rotation));
-	}
-	
-	public Box transform(Matrix3d matrix) {
-		return setBase(base.transform(matrix));
-	}
-	
-	public Box transformRadius(Matrix3d matrix) {
-		return new Box(base, matrix.transform(radius));
+	public void transformRadius(Matrix3d matrix) {
+		Vector3d radius = getRadius();
+		radius = matrix.transform(radius);
+		setRadius(radius);
 	}
 	
 	public ArrayList<Vector3d> getVertices() {
@@ -119,7 +100,7 @@ public class Box extends Shape {
 	}
 	
 	public Vector3d getPoint(Vector3d radius, Vector3d percent) {
-		return Coordinate.Cartesian3d.getPoint(this.base, radius.mul(-1).add(radius.mul(percent).mul(2))).add(getOrigin());
+		return Coordinate.Cartesian3d.getPoint(getBase(), radius.mul(-1).add(radius.mul(percent).mul(2))).add(getOrigin());
 	}
 	
 	public ArrayList<Vector3d> getPoint(int n, IntToDoubleFunction percentU, IntToDoubleFunction percentV, IntToDoubleFunction percentW) {
@@ -138,6 +119,11 @@ public class Box extends Shape {
 			points.add(getPoint(radiusU.applyAsDouble(i), radiusV.applyAsDouble(i), radiusU.applyAsDouble(i), percentU.applyAsDouble(i), percentV.applyAsDouble(i), percentW.applyAsDouble(i)));
 		}
 		return points;
+	}
+	
+	@Override
+	public Box clone() {
+		return new Box(this);
 	}
 	
 }

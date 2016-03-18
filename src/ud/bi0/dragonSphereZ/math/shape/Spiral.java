@@ -21,14 +21,13 @@ public class Spiral
 	public static final double DEFAULT_END_HEIGHT = 1;
 	public static final double DEFAULT_SLOPE = 1;
 	
-	private Vector2d startRadius;
-	private Vector2d endRadius;
-	private double startHeight;
-	private double endHeight;
-	private double slope;
+	private Vector2d startRadius = DEFAULT_START_RADIUS;
+	private Vector2d endRadius = DEFAULT_END_RADIUS;
+	private double startHeight = DEFAULT_START_HEIGHT;
+	private double endHeight = DEFAULT_END_HEIGHT;
+	private double slope = DEFAULT_SLOPE;
 	
 	public Spiral() {
-		this(DEFAULT_START_RADIUS, DEFAULT_END_RADIUS, DEFAULT_START_HEIGHT, DEFAULT_END_HEIGHT, DEFAULT_SLOPE);
 	}
 	
 	public Spiral(Spiral spiral) {
@@ -111,7 +110,7 @@ public class Spiral
 	}
 	
 	public void setSlope(double slope) {
-		this.slope = slope;
+		this.slope = Math.abs(slope);
 	}
 	
 	public Vector3d getPoint(double percentHeight) {

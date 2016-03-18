@@ -7,14 +7,14 @@ import com.flowpowered.math.vector.Vector3d;
 import ud.bi0.dragonSphereZ.math.Base3d;
 
 abstract class BaseShape
-	extends Shape {
+	extends Shape
+	implements Cloneable {
 
 	public static final Base3d DEFAULT_BASE = Base3d.MINECRAFT;
 	
-	private Base3d base;
+	private Base3d base = DEFAULT_BASE;
 	
 	public BaseShape() {
-		this.setBase(DEFAULT_BASE);
 	}
 	
 	public BaseShape(BaseShape baseShape) {
@@ -23,7 +23,7 @@ abstract class BaseShape
 	
 	public BaseShape(Vector3d origin, Base3d base) {
 		super(origin);
-		this.setBase(base);
+		setBase(base);
 	}
 	
 	public Base3d getBase() {
@@ -35,19 +35,19 @@ abstract class BaseShape
 	}
 	
 	public void adjustBase(Vector3d from, Vector3d to) {
-		Base3d newBase = this.getBase().adjust(from, to);
-		this.setBase(newBase);
+		Base3d newBase = getBase().adjust(from, to);
+		setBase(newBase);
 	}
 	
 	
 	public void rotateBase(Quaterniond rotation) {
-		Base3d newBase = this.getBase().rotate(rotation);
-		this.setBase(newBase);
+		Base3d newBase = getBase().rotate(rotation);
+		setBase(newBase);
 	}
 	
 	public void transformBase(Matrix3d matrix) {
-		Base3d newBase = this.getBase().transform(matrix);
-		this.setBase(newBase);
+		Base3d newBase = getBase().transform(matrix);
+		setBase(newBase);
 	}
 	
 }
