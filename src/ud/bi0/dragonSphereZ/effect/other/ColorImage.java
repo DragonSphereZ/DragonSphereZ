@@ -37,12 +37,12 @@ public class ColorImage extends ParticleEffect {
     float angularVelocityX = (float) (TrigMath.PI / 200);
     float angularVelocityY = (float) (TrigMath.PI / 170);
     float angularVelocityZ = (float) (TrigMath.PI / 155);
-    BufferedImage image = null;
-    boolean isGif = false;
-    File gifFile = null;
-    int step = 0;
-    float rotationStep = 0;
-    int delay = 0;
+    protected BufferedImage image = null;
+    protected boolean isGif = false;
+    protected File gifFile = null;
+    protected int step = 0;
+    protected float rotationStep = 0;
+    protected int delay = 0;
     boolean invert = false;
     int clr;
     Vector3d v = new Vector3d();
@@ -126,7 +126,7 @@ public class ColorImage extends ParticleEffect {
 	        }
 	        if (isGif) {
 	            try {
-	                image = getImg(step, gifFile);
+	                image = getImg(step);
 	            } catch (IOException e) {
 	            	Skript.warning("[DragonSphereZ] Error: The .gif failed to load..");
 	                e.printStackTrace();
@@ -198,7 +198,7 @@ public class ColorImage extends ParticleEffect {
 		} else center.update();
 	}
 	
-	private BufferedImage getImg(int step, File gifFile) throws IOException {
+	private BufferedImage getImg(int inStep) throws IOException {
 		ArrayList<BufferedImage> images = new ArrayList<BufferedImage>();
         ImageReader reader = ImageIO.getImageReadersBySuffix("GIF").next();
         ImageInputStream in = ImageIO.createImageInputStream(gifFile);
@@ -209,10 +209,10 @@ public class ColorImage extends ParticleEffect {
         }
         if (step >= reader.getNumImages(true)) {
             step = 0;
-            return images.get(step - 1);
+            return images.get(inStep - 1);
         }
         reader.dispose();
         in.close();
-        return images.get(step);
+        return images.get(inStep);
     }
 }
