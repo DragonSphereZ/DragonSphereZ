@@ -73,7 +73,7 @@ public class ComplexCircle extends ParticleEffect {
 		this.enableRotation = enableRotation;
 		this.axis = axis.normalize();
 		
-		circle.adjust(Vector3d.UNIT_Y, axis);
+		circle.adjustBase(Vector3d.UNIT_Y, axis);
 		circle.setRadius(radius);
 	}
 	

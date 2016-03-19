@@ -186,4 +186,28 @@ public abstract class ParticleEffect extends BukkitRunnable {
 			effectManager.startEffect(effect);
 		}
 	}
+	
+	public void startUndelayed(ParticleEffect effect) {
+		if (!effectManager.isActive(idName))  {
+			idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
+				@Override
+				public void run() {
+					effect.onRun();
+				}
+			}, 0, pulseTick).getTaskId();
+			effectManager.startEffect(effect);
+		}
+	}
+	
+	public void stopDelayed(ParticleEffect effect) {
+			idTask2 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
+				@Override
+				public void run() {
+					effectManager.stopEffect(idName);
+					Bukkit.getScheduler().cancelTask(idTask);
+					Bukkit.getScheduler().cancelTask(idTask2);
+				    }
+			}, delayTick);
+			effectManager.startEffect(effect);
+	}
 }

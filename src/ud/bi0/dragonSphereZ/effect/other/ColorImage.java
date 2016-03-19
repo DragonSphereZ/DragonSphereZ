@@ -11,7 +11,6 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageReader;
 import javax.imageio.stream.ImageInputStream;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
@@ -19,7 +18,6 @@ import com.flowpowered.math.TrigMath;
 import com.flowpowered.math.vector.Vector3d;
 
 import ch.njol.skript.Skript;
-import ud.bi0.dragonSphereZ.DragonSphereCore;
 import ud.bi0.dragonSphereZ.effect.ParticleEffect;
 import ud.bi0.dragonSphereZ.util.DynamicLocation;
 import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
@@ -35,6 +33,28 @@ public class ColorImage extends ParticleEffect {
 	protected int pixelStepY;
 	protected float scaleSize;
     
+	float size = (float) 1 / scaleSize;
+    float angularVelocityX = (float) (TrigMath.PI / 200);
+    float angularVelocityY = (float) (TrigMath.PI / 170);
+    float angularVelocityZ = (float) (TrigMath.PI / 155);
+    BufferedImage image = null;
+    boolean isGif = false;
+    File gifFile = null;
+    int step = 0;
+    float rotationStep = 0;
+    int delay = 0;
+    boolean invert = false;
+    int clr;
+    Vector3d v = new Vector3d();
+    int y;
+    int x;
+    float xRot = 0;			//Holds the current rotation angle for the random rotation.
+	float yRot = 0;
+	float zRot = 0;
+	int r;
+	int g;
+	int b;
+
 	public ColorImage(
 		//super
 		String idName,
@@ -84,128 +104,98 @@ public class ColorImage extends ParticleEffect {
 	public enum Plane {
 		X, Y, Z, XY, XZ, XYZ, YZ;
 	}
+
 	@Override
-	public void start() {
-		if (!effectManager.isActive(idName))  {
-			idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
-			    float size = (float) 1 / scaleSize;
-			    float angularVelocityX = (float) (TrigMath.PI / 200);
-			    float angularVelocityY = (float) (TrigMath.PI / 170);
-			    float angularVelocityZ = (float) (TrigMath.PI / 155);
-			    BufferedImage image = null;
-			    boolean isGif = false;
-			    File gifFile = null;
-			    int step = 0;
-			    float rotationStep = 0;
-			    int delay = 0;
-			    boolean invert = false;
-			    int clr;
-			    Vector3d v = new Vector3d();
-			    int y;
-			    int x;
-		//-----------------------------------------------------
-				
-			    float xRot = 0;			//Holds the current rotation angle for the random rotation.
-				float yRot = 0;
-				float zRot = 0;
-				//float stepXRot = 1.5F; 	//Holds the step to the next rotation angle.
-				//float stepYRot = 0.3F;	
-				//float stepZRot = 0.9F;
-				@Override
-				public void run() {
-					if (!center.hasMoved(pulseTick)) {
-						if (image == null && file != null) {
-				            try {
-				            	//Bukkit.getServer().broadcastMessage("[test] -->" + file + "<--");
-				    			image = ImageIO.read(file);
-				            	isGif = file.getName().endsWith(".gif");
-				            	gifFile = file;
-				            } catch (Exception ex) {
-				            	Skript.warning("[DragonSphereZ] Error: Invalid file used, make sure the image is in /plugins/DragonSphereZ/");
-				                image = null;
-				            }
-						}
-						if (image == null) {
-							DragonSphereCore.effectManager.stopEffect(idName);
-				        	Skript.warning("[DragonSphereZ] Error: The image failed to load, try another? :c");
-				        	return;
-				        }
-				        if (isGif) {
-				            try {
-				                image = getImg(step, gifFile);
-				            } catch (IOException e) {
-				            	Skript.warning("[DragonSphereZ] Error: The .gif failed to load..");
-				                e.printStackTrace();
-				                DragonSphereCore.effectManager.stopEffect(idName);
-				            }
-				            if (delay == 5) {
-				                step++;
-				                delay = 0;
-				            }
-				            delay++;
-				        }
-				        center.update();
-				        for (y = 0; y < image.getHeight(); y += pixelStepY) {
-				            for (x = 0; x < image.getWidth(); x += pixelStepX) {
-				            	clr = image.getRGB(x, y);
-				            	//Removes the image mask/transparency
-				                if (!invert && (clr == 0 || clr == 16777215)) {
-				                    continue;
-				                } else if (invert &&  (clr != 0 || clr == 16777215)) {
-				                    continue;
-				                }
-				                //Bukkit.getServer().broadcastMessage("[mask test] pixel -->" + clr + "<--");  //TODO Keep this line for later
-				                
-				                v = new Vector3d((float) image.getWidth() / 2 - x, (float) image.getHeight() / 2 - y, 0).mul(size);
-				                
-				                VectorUtils.rotateVector(v, axis.getX(), axis.getY(), axis.getZ());
-				                if (enableRotation) {
-				                    //v = Quaterniond.fromAxesAnglesDeg(xRot, yRot, zRot).rotate(v); //Rotates the vector.
-									//xRot = 	GenericMath.wrapAngleDeg(xRot + stepXRot);	//Calculates the next rotation angle.
-									//yRot = GenericMath.wrapAngleDeg(yRot + stepYRot);
-									//zRot = GenericMath.wrapAngleDeg(zRot + stepZRot);
-				                    switch (plane) {
-				                        case X:
-				                        	xRot = angularVelocityX * rotationStep;
-				                            break;
-				                        case Y:
-				                        	yRot = angularVelocityY * rotationStep;
-				                            break;
-				                        case Z:
-				                        	zRot = angularVelocityZ * rotationStep;
-				                            break;
-				                        case XY:
-				                        	xRot = angularVelocityX * rotationStep;
-				                        	yRot = angularVelocityY * rotationStep;
-				                            break;
-				                        case XZ:
-				                        	xRot = angularVelocityX * rotationStep;
-				                        	zRot = angularVelocityZ * rotationStep;
-				                            break;
-				                        case XYZ:
-				                        	xRot = angularVelocityX * rotationStep;
-				                        	yRot = angularVelocityY * rotationStep;
-				                        	zRot = angularVelocityZ * rotationStep;
-				                            break;
-				                        case YZ:
-				                        	yRot = angularVelocityY * rotationStep;
-				                        	zRot = angularVelocityZ * rotationStep;
-				                            break;
-				                    }
-				                    VectorUtils.rotateVector(v, xRot, yRot, zRot);
-				                }
-				                int r = (new Color(image.getRGB(x, y))).getRed();
-				                int g = (new Color(image.getRGB(x, y))).getGreen();
-				                int b = (new Color(image.getRGB(x, y))).getBlue();
-				                ParticleEffectUtils.valueOf(particle).display(center, visibleRange, players, r, g, b);
-				            }
-				        }
-				        rotationStep++;
-					} else center.update();
-				}
-			}, delayTick, pulseTick).getTaskId();
-			effectManager.startEffect(this);
-		}
+	public void onRun() {
+		if (!center.hasMoved(pulseTick)) {
+			if (image == null && file != null) {
+	            try {
+	            	//Bukkit.getServer().broadcastMessage("[test] -->" + file + "<--");
+	    			image = ImageIO.read(file);
+	            	isGif = file.getName().endsWith(".gif");
+	            	gifFile = file;
+	            } catch (Exception ex) {
+	            	Skript.warning("[DragonSphereZ] Error: Invalid file used, make sure the image is in /plugins/DragonSphereZ/");
+	                image = null;
+	            }
+			}
+			if (image == null) {
+				effectManager.stopEffect(idName);
+	        	Skript.warning("[DragonSphereZ] Error: The image failed to load, try another? :c");
+	        	return;
+	        }
+	        if (isGif) {
+	            try {
+	                image = getImg(step, gifFile);
+	            } catch (IOException e) {
+	            	Skript.warning("[DragonSphereZ] Error: The .gif failed to load..");
+	                e.printStackTrace();
+	                effectManager.stopEffect(idName);
+	            }
+	            if (delay == 5) {
+	                step++;
+	                delay = 0;
+	            }
+	            delay++;
+	        }
+	        center.update();
+	        for (y = 0; y < image.getHeight(); y += pixelStepY) {
+	            for (x = 0; x < image.getWidth(); x += pixelStepX) {
+	            	clr = image.getRGB(x, y);
+	            	//Removes the image mask/transparency
+	                if (!invert && (clr == 0 || clr == 16777215)) {
+	                    continue;
+	                } else if (invert &&  (clr != 0 || clr == 16777215)) {
+	                    continue;
+	                }
+	                //Bukkit.getServer().broadcastMessage("[mask test] pixel -->" + clr + "<--");  //TODO Keep this line for later
+	                
+	                v = new Vector3d((float) image.getWidth() / 2 - x, (float) image.getHeight() / 2 - y, 0).mul(size);
+	                
+	                VectorUtils.rotateVector(v, axis.getX(), axis.getY(), axis.getZ());
+	                if (enableRotation) {
+	                    //v = Quaterniond.fromAxesAnglesDeg(xRot, yRot, zRot).rotate(v); //Rotates the vector.
+						//xRot = 	GenericMath.wrapAngleDeg(xRot + stepXRot);	//Calculates the next rotation angle.
+						//yRot = GenericMath.wrapAngleDeg(yRot + stepYRot);
+						//zRot = GenericMath.wrapAngleDeg(zRot + stepZRot);
+	                    switch (plane) {
+	                        case X:
+	                        	xRot = angularVelocityX * rotationStep;
+	                            break;
+	                        case Y:
+	                        	yRot = angularVelocityY * rotationStep;
+	                            break;
+	                        case Z:
+	                        	zRot = angularVelocityZ * rotationStep;
+	                            break;
+	                        case XY:
+	                        	xRot = angularVelocityX * rotationStep;
+	                        	yRot = angularVelocityY * rotationStep;
+	                            break;
+	                        case XZ:
+	                        	xRot = angularVelocityX * rotationStep;
+	                        	zRot = angularVelocityZ * rotationStep;
+	                            break;
+	                        case XYZ:
+	                        	xRot = angularVelocityX * rotationStep;
+	                        	yRot = angularVelocityY * rotationStep;
+	                        	zRot = angularVelocityZ * rotationStep;
+	                            break;
+	                        case YZ:
+	                        	yRot = angularVelocityY * rotationStep;
+	                        	zRot = angularVelocityZ * rotationStep;
+	                            break;
+	                    }
+	                    VectorUtils.rotateVector(v, xRot, yRot, zRot);
+	                }
+	                r = (new Color(image.getRGB(x, y))).getRed();
+	                g = (new Color(image.getRGB(x, y))).getGreen();
+	                b = (new Color(image.getRGB(x, y))).getBlue();
+	                ParticleEffectUtils.valueOf(particle).display(center, visibleRange, players, r, g, b);
+	            }
+	        }
+	        rotationStep++;
+		} else center.update();
 	}
 	
 	private BufferedImage getImg(int step, File gifFile) throws IOException {
@@ -225,5 +215,4 @@ public class ColorImage extends ParticleEffect {
         in.close();
         return images.get(step);
     }
-	
 }

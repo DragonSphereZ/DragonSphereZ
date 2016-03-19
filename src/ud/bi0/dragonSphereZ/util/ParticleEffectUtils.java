@@ -104,7 +104,7 @@ public enum ParticleEffectUtils {
 	dragonbreath("dragonbreath", 42, -1, ParticleProperty.DIRECTIONAL, ParticleProperty.IS_1_9),	//1.9 Particles
 	endrod("endrod", 43, -1, ParticleProperty.DIRECTIONAL, ParticleProperty.IS_1_9),				//1.9 Particles
 	damage("damage", 44, -1, ParticleProperty.DIRECTIONAL, ParticleProperty.IS_1_9),				//1.9 Particles
-	sweep("swipe", 45, -1, ParticleProperty.DIRECTIONAL, ParticleProperty.IS_1_9);					//1.9 Particles
+	sweep("sweep", 45, -1, ParticleProperty.DIRECTIONAL, ParticleProperty.IS_1_9);					//1.9 Particles
 
 	public static final Map<String, ParticleEffectUtils> NAME_MAP = new HashMap<String, ParticleEffectUtils>();
 	public static final Map<Integer, ParticleEffectUtils> ID_MAP = new HashMap<Integer, ParticleEffectUtils>();

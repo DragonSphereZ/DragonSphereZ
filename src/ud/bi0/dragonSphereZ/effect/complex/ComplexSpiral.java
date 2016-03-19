@@ -77,7 +77,7 @@ public class ComplexSpiral extends ParticleEffect {
 		this.clockwise = clockwise;
 		this.axis = axis;
 		
-		spiral.adjust(Vector3d.UNIT_Y, axis);
+		spiral.adjustBase(Vector3d.UNIT_Y, axis);
 		spiral.setRadius(radius);
 	}
 	

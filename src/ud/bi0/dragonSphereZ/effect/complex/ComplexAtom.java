@@ -101,7 +101,7 @@ public class ComplexAtom extends ParticleEffect {
 		this.offset2 = offset2;
 		
 		sphere = new Ellipsoid();
-		sphere.adjust(Vector3d.UNIT_Y, axis);
+		sphere.adjustBase(Vector3d.UNIT_Y, axis);
 		sphere.setRadius(0.5);
 	}
 	

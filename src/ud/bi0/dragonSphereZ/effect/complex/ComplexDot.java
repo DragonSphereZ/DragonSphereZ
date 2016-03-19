@@ -2,19 +2,20 @@ package ud.bi0.dragonSphereZ.effect.complex;
 
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
 import com.flowpowered.math.vector.Vector3d;
 
-import ud.bi0.dragonSphereZ.DragonSphereCore;
 import ud.bi0.dragonSphereZ.effect.ParticleEffect;
 import ud.bi0.dragonSphereZ.util.DynamicLocation;
 import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
 
 public class ComplexDot extends ParticleEffect {
-
+	
+	//protected int stopDelay;
+	//int stopDelayCounter = 0;
+	
 	public ComplexDot(
 		//super
 		String idName,
@@ -32,36 +33,32 @@ public class ComplexDot extends ParticleEffect {
 		Vector3d displacement,
 		boolean rainbowMode
 		//this
+		//int stopDelay
 		)
 	{
 		super(idName, particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, rainbowMode, offset, displacement);
+	//	init(stopDelay);
 	}
 	public ComplexDot(String idName, DynamicLocation center, List<Player> players) {
 		super(idName, center, players);
+	//	init(5);
 	}
-	
-	@Override
-	public void start() {
-		if (!effectManager.isActive(idName))  {
-			idTask = Bukkit.getServer().getScheduler().runTaskTimer(plugin, new Runnable() {
-				@Override
-				public void run() {
-					center.update();
-					if (rainbowMode == true)
-						offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
-					ParticleEffectUtils.valueOf(particle).display(idName, dataMat, dataID, players, center, visibleRange, rainbowMode, offset, speed, particleCount);
-				}
-			}, 0, pulseTick).getTaskId();
-			idTask2 = Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(plugin, new Runnable() {
-				@Override
-				public void run() {
-					DragonSphereCore.effectManager.stopEffect(idName);
-					Bukkit.getScheduler().cancelTask(idTask);
-					Bukkit.getScheduler().cancelTask(idTask2);
-				    }
-			}, delayTick);
-			effectManager.startEffect(this);
+	//public void init(int stopDelay) {
+	//	this.stopDelay = stopDelay;	
+	//}
 
-		}
+	@Override
+	public void onRun() {
+		center.update();
+		if (rainbowMode == true)
+			offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
+		ParticleEffectUtils.valueOf(particle).display(idName, dataMat, dataID, players, center, visibleRange, rainbowMode, offset, speed, particleCount);
+		
+		//Limited to the pulseTick
+		//if (stopDelayCounter >= stopDelay){
+		//	effectManager.stopEffect(idName);
+		//}
+		//stopDelayCounter += 1;
+			
 	}
 }
