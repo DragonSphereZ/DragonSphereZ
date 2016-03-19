@@ -25,7 +25,6 @@ public class ComplexAtom extends ParticleEffect {
 	protected int orbitSpeed;
 	protected int orbitDensity;
 	protected int orbitalCount;
-	protected Vector3d axis;
 	protected String particle2;		//Atom uses a second particle
 	protected Material dataMat2;
 	protected byte dataID2;
@@ -35,7 +34,7 @@ public class ComplexAtom extends ParticleEffect {
 	
 	Vector3d v = new Vector3d();
 	Vector3d v2 = new Vector3d();
-	Ellipsoid sphere;
+	Ellipsoid sphere = new Ellipsoid();
 	double angle = 0;
 	final double stepAngle = TrigMath.TWO_PI / orbitDensity;
 	final double orbitAngle = TrigMath.TWO_PI / orbitalCount;
@@ -93,16 +92,14 @@ public class ComplexAtom extends ParticleEffect {
 		this.orbitSpeed = orbitSpeed; 
 		this.orbitDensity = orbitDensity; 
 		this.orbitalCount = orbitalCount; 
-		this.axis = axis.normalize();
 		this.particle2 = particle2;
 		this.dataMat2 = dataMat2;
 		this.dataID2 = dataID2;
 		this.speed2 = speed2;
 		this.offset2 = offset2;
-		
-		sphere = new Ellipsoid();
-		sphere.adjustBase(Vector3d.UNIT_Y, axis);
-		sphere.setRadius(0.5);
+
+		sphere.adjustBase(Vector3d.UNIT_Y, axis.normalize());
+		sphere.setRadius(innerRadius + 0.5);
 	}
 	
 	@Override

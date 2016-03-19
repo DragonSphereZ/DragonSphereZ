@@ -17,7 +17,7 @@ public class Pyramid
 	public static final double DEFAULT_HEIGHT = 1;
 	public static final int DEFAULT_SIZE = 3;
 	
-	private int size = DEFAULT_SIZE;	
+	private int size = DEFAULT_SIZE;
 	private Vector2d radius = DEFAULT_RADIUS;
 	private double height = DEFAULT_HEIGHT;
 

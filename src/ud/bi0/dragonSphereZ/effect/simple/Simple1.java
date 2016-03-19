@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 
 import com.flowpowered.math.TrigMath;
 import com.flowpowered.math.vector.Vector3d;
+import com.google.common.collect.Iterators;
 
 import ud.bi0.dragonSphereZ.effect.ParticleEffect;
 import ud.bi0.dragonSphereZ.math.MathFunction;
@@ -22,9 +23,9 @@ public class Simple1 extends ParticleEffect {
 	ArrayList<Vector3d> points;
 	ArrayList<Vector3d> shifts;
 	Vector3d point = new Vector3d();
-	Iterator<Vector3d> lineIter = points.iterator();
-	Iterator<Vector3d> shiftIter = shifts.iterator();
-	Vector3d shift = shiftIter.next();
+	Iterator<Vector3d> lineIter = Iterators.emptyIterator();
+	Iterator<Vector3d> shiftIter = Iterators.emptyIterator();
+	Vector3d shift = new Vector3d();
 	
 	
 

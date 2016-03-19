@@ -25,7 +25,7 @@ public class ComplexSpiral extends ParticleEffect {
 	protected Vector3d axis;
 	
 	
-	Cylinder spiral;
+	Cylinder spiral = new Cylinder();
 	Vector3d v = new Vector3d();
 	double angle = 0;
 	double stepAngle = clockwise ? TrigMath.TWO_PI / circleDensity : -TrigMath.TWO_PI / circleDensity; //Sets the angle difference and rotation direction.

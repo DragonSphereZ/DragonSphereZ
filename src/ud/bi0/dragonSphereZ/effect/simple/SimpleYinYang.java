@@ -36,8 +36,8 @@ public class SimpleYinYang extends ParticleEffect {
 	double height = 2;
 	double stepPhi;
 	double phi = 0;
-	final Vector3d black = new Vector3d();
-	final Vector3d white = color ? new Vector3d(254, 254, 254) : new Vector3d(0,0,0);
+	Vector3d black = new Vector3d();
+	Vector3d white = new Vector3d(); 
 	
 	
 	
@@ -101,7 +101,9 @@ public class SimpleYinYang extends ParticleEffect {
 		this.matYang = matYang;
 		this.countYin = countYin;
 		this.countYang = countYang;
-	
+		
+		
+		white = color ? new Vector3d(254, 254, 254) : new Vector3d(0,0,0);
 		location = new Location(center.getWorld(), 0, 0, 0);
 		circle = new Cylinder();
 		circle.setRadius(0.5);

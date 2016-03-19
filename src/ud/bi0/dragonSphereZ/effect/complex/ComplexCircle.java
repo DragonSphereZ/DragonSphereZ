@@ -17,15 +17,11 @@ import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
 
 public class ComplexCircle extends ParticleEffect {
 	
-	protected double radius;
-	protected double particleDensity;
-	protected boolean enableRotation;
-	protected Vector3d axis;
-	
 	Vector3d v = new Vector3d();
-	Ellipse circle;				//Sets the radius of the circle.
+	Ellipse circle = new Ellipse();
 	double angle = 0;
-	double stepAngle = TrigMath.TWO_PI / particleDensity;
+	double stepAngle = 0;
+	boolean enableRotation = false;
 	float xRot = 0;			//Holds the current rotation angle for the random rotation.
 	float yRot = 0;
 	float zRot = 0;
@@ -68,13 +64,10 @@ public class ComplexCircle extends ParticleEffect {
 	}
 	
 	public void init(double radius, double particleDensity, boolean enableRotation, Vector3d axis) {
-		this.radius = radius;
-		this.particleDensity = particleDensity;
 		this.enableRotation = enableRotation;
-		this.axis = axis.normalize();
-		
-		circle.adjustBase(Vector3d.UNIT_Y, axis);
-		circle.setRadius(radius);
+		this.stepAngle = TrigMath.TWO_PI / particleDensity;
+		this.circle.adjustBase(Vector3d.UNIT_Y, axis.normalize());
+		this.circle.setRadius(radius);
 	}
 	
 	@Override

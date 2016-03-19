@@ -32,7 +32,7 @@ public class SimpleTrail extends ParticleEffect {
 			x = random.nextDouble() * 0.5 - 0.25;
 			y = random.nextDouble() * 0.5 - 0.25;
 			z = random.nextDouble() * 0.25;
-			vector = vector.add(x, y, z).add(center.getVector3d());
+			vector = vector.add(x, y, z);
 			SimpleTrail.this.display(vector);
 		} else center.update();
 	}
