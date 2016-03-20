@@ -12,9 +12,7 @@ import ud.bi0.dragonSphereZ.util.DynamicLocation;
 import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
 
 public class ComplexBand extends ParticleEffect {
-	
-	//Vector3d v = new Vector3d();
-	
+		
 	public ComplexBand(
 		//super
 		String idName,
@@ -45,13 +43,10 @@ public class ComplexBand extends ParticleEffect {
 	public void onRun() {
 		if (!center.isDynamic() || center.hasMoved(pulseTick)) {
 			center.update();
+			if (rainbowMode == true)
+				offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
 			for (int i = 0; i < 15; i++) {
-				//v = v.add(0,0.1,0);
-				//center.setY(center.getY() + 0.1D);
-				center.add(0, 0.1, 0);
-				if (rainbowMode == true)
-					offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
-				//ComplexBand.this.display(v);
+				center.add(0, 0.1, 0);	//TODO when using 'location of player' this effect shoots straight up into the air. Need to fix this
 				ParticleEffectUtils.valueOf(particle).display(idName, dataMat, dataID, players, center, visibleRange, rainbowMode, offset, speed, particleCount);
 			}
 		} else center.update();
