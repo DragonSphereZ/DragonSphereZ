@@ -34,21 +34,24 @@ public class ColorImage extends ParticleEffect {
 	protected float scaleSize;
     
 	float size = (float) 1 / scaleSize;
-    float angularVelocityX = (float) (TrigMath.PI / 200);
-    float angularVelocityY = (float) (TrigMath.PI / 170);
-    float angularVelocityZ = (float) (TrigMath.PI / 155);
-    protected BufferedImage image = null;
-    protected boolean isGif = false;
-    protected File gifFile = null;
-    protected int step = 0;
-    protected float rotationStep = 0;
-    protected int delay = 0;
-    boolean invert = false;
-    int clr;
-    Vector3d v = new Vector3d();
-    int y;
-    int x;
-    float xRot = 0;			//Holds the current rotation angle for the random rotation.
+	float angularVelocityX = (float) (TrigMath.PI / 200);
+	float angularVelocityY = (float) (TrigMath.PI / 170);
+	float angularVelocityZ = (float) (TrigMath.PI / 155);
+    
+    
+	protected BufferedImage image = null;
+	protected boolean isGif = false;
+	protected File gifFile = null;
+	protected int step = 0;
+	protected int delay = 0;
+    
+	protected float rotationStep = 0;
+	boolean invert = false;
+	int clr;
+	Vector3d v = new Vector3d();
+	int y;
+	int x;
+	float xRot = 0;			//Holds the current rotation angle for the random rotation.
 	float yRot = 0;
 	float zRot = 0;
 	int r;
@@ -101,10 +104,20 @@ public class ColorImage extends ParticleEffect {
 		this.pixelStepY = pixelStepY;
 		this.scaleSize = scaleSize;
 	}
-	public enum Plane {
-		X, Y, Z, XY, XZ, XYZ, YZ;
-	}
 
+
+	public void loadFile(File file) {
+        try {
+            image = ImageIO.read(file);
+            this.isGif = file.getName().endsWith(".gif");
+            this.gifFile = file;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            image = null;
+        }
+    }
+	
+	
 	@Override
 	public void onRun() {
 		if (!center.hasMoved(pulseTick)) {
@@ -124,7 +137,7 @@ public class ColorImage extends ParticleEffect {
 	        	Skript.warning("[DragonSphereZ] Error: The image failed to load, try another? :c");
 	        	return;
 	        }
-	        if (isGif) {
+	        if (isGif) {	//TODO Set this up to load all 'images' into an array to be played back
 	            try {
 	                image = getImg(step);
 	            } catch (IOException e) {
@@ -138,6 +151,7 @@ public class ColorImage extends ParticleEffect {
 	            }
 	            delay++;
 	        }
+	        
 	        center.update();
 	        for (y = 0; y < image.getHeight(); y += pixelStepY) {
 	            for (x = 0; x < image.getWidth(); x += pixelStepX) {
@@ -215,4 +229,7 @@ public class ColorImage extends ParticleEffect {
         in.close();
         return images.get(inStep);
     }
+	public enum Plane {
+		X, Y, Z, XY, XZ, XYZ, YZ;
+	}
 }
