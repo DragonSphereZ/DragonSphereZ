@@ -113,14 +113,21 @@ public class Spiral
 		this.slope = Math.abs(slope);
 	}
 	
-	public Vector3d getPoint(double percentHeight) {
-		double height = GenericMath.lerp(this.getStartHeight(), this.getEndHeight(), percentHeight);
-		double radiusU = GenericMath.lerp(this.getStartRadius().getX(), this.getEndRadius().getX(), percentHeight);
-		double radiusV = GenericMath.lerp(this.getStartRadius().getY(), this.getEndRadius().getY(), percentHeight);
-		double angle = height / this.getSlope();
-		angle = angle - GenericMath.floor(angle);
-		angle *= TrigMath.TWO_PI;
-		Vector3d point = Coordinate.Cylindrical3d.getPoint(this.getBase(), radiusU, radiusV, angle, height).add(this.getOrigin());
+	public Vector3d getPoint(double percent) {
+		double height = GenericMath.lerp(getStartHeight(), getEndHeight(), percent);
+		double angle = 0;
+		if (Math.abs(height) < GenericMath.DBL_EPSILON) {
+			angle = percent * TrigMath.TWO_PI / getSlope();
+		} else {
+			angle = height / getSlope();
+			angle = angle - GenericMath.floor(angle);
+			angle *= TrigMath.TWO_PI;
+		}
+		Vector2d startRadius = getStartRadius();
+		Vector2d endRadius = getEndRadius();
+		double radiusU = GenericMath.lerp( startRadius.getX(), endRadius.getX(), percent);
+		double radiusV = GenericMath.lerp( startRadius.getY(), endRadius.getY(), percent);
+		Vector3d point = Coordinate.Cylindrical3d.getPoint( getBase(), radiusU, radiusV, angle, height).add(this.getOrigin());
 		return point;
 	}
 	

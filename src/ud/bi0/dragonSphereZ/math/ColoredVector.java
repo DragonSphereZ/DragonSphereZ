@@ -4,37 +4,37 @@ import java.awt.Color;
 
 import com.flowpowered.math.vector.Vector3d;
 
-public class ColoredPoint
+public class ColoredVector
 	implements Cloneable {
 	
-	private Vector3d point;
+	private Vector3d vector;
 	private Color color;
 	
-	public ColoredPoint(Vector3d point, Color color) {
-		setPoint(point);
+	public ColoredVector(Vector3d vector, Color color) {
+		setPoint(vector);
 		setColor(color);
 	}
 	
-	public ColoredPoint(ColoredPoint coloredPoint) {
-		this(coloredPoint.getPoint(), coloredPoint.getColor());
+	public ColoredVector(ColoredVector coloredVector) {
+		this(coloredVector.getPoint(), coloredVector.getColor());
 	}
 	
-	public static ColoredPoint createFromRGB(Vector3d point, Vector3d color) {
+	public static ColoredVector createFromRGB(Vector3d vector, Vector3d color) {
 		int r = (int) color.getX();
 		int g = (int) color.getY();
 		int b = (int) color.getZ();
-		return new ColoredPoint(point, new Color(r,g,b));
+		return new ColoredVector(vector, new Color(r,g,b));
 	}
 	
-	public static ColoredPoint createFromHSB(Vector3d point, Vector3d color) {
+	public static ColoredVector createFromHSB(Vector3d vector, Vector3d color) {
 		float h = (float) color.getX();
 		float s = (float) color.getY();
 		float b = (float) color.getZ();
-		return new ColoredPoint(point, Color.getHSBColor(h, s, b));
+		return new ColoredVector(vector, Color.getHSBColor(h, s, b));
 	}
 	
 	public Vector3d getPoint() {
-		return point.clone();
+		return vector.clone();
 	}
 	
 	public Color getColor() {
@@ -46,7 +46,7 @@ public class ColoredPoint
 	}
 	
 	public void setPoint(Vector3d point) {
-		this.point = point.clone();
+		this.vector = point.clone();
 	}
 	
 	public void setColor(Color color) {
@@ -61,8 +61,8 @@ public class ColoredPoint
 	}
 	
 	@Override
-	public ColoredPoint clone() {
-		return new ColoredPoint(this);
+	public ColoredVector clone() {
+		return new ColoredVector(this);
 	}
 	
 }
