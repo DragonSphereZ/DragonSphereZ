@@ -1,5 +1,7 @@
 package ud.bi0.dragonSphereZ.skriptAPI;
 
+import java.awt.Font;
+import java.awt.GraphicsEnvironment;
 import java.util.Arrays;
 import java.util.List;
 
@@ -293,5 +295,31 @@ public class SkriptHandler {
 		}
 		return 5;
     }
+	
+	/**
+	 * Input font name, style, size for text effect
+	 */
+	public static Font inputFont(@Nullable Event e, @Nullable Expression<String> inputFontName, @Nullable Expression<String> inputFontStyle, @Nullable Expression<Number> inputFontSize) {
+		String fontName = "Tahoma";
+		String fontStyle = "plain";
+		int fontSize = 16;
+		if (inputFontName != null && inputFontStyle != null && inputFontSize != null){
+			Font[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAllFonts();
+			fontName = inputFontName.getSingle(e);
+			fontStyle = inputFontStyle.getSingle(e).toLowerCase();
+			fontSize = inputFontSize.getSingle(e).intValue();
+			for (Font f : fonts) {
+				if (fontName.equals(f.getName())){
+					if (fontStyle.equals("bold") || fontStyle.equals("bolditalic") || fontStyle.equals("italic")){
+						if (fontStyle.equals("bold")) return new Font(fontName, Font.BOLD, fontSize);
+						if (fontStyle.equals("bolditalic")) return new Font(fontName, Font.BOLD | Font.ITALIC, fontSize);
+						if (fontStyle.equals("italic")) return new Font(fontName, Font.ITALIC, fontSize);
+					}else return new Font(fontName, Font.PLAIN, fontSize);
+				}
+			}
+        }
+		return new Font(fontName, Font.PLAIN, fontSize);
+    }
+	
 
 }

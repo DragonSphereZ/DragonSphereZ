@@ -123,7 +123,6 @@ public class ColorImage extends ParticleEffect {
 		if (!center.hasMoved(pulseTick)) {
 			if (image == null && file != null) {
 	            try {
-	            	//Bukkit.getServer().broadcastMessage("[test] -->" + file + "<--");
 	    			image = ImageIO.read(file);
 	            	isGif = file.getName().endsWith(".gif");
 	            	gifFile = file;
