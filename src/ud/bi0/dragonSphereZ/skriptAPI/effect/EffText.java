@@ -20,7 +20,6 @@ import ud.bi0.dragonSphereZ.effect.other.Text;
 import ud.bi0.dragonSphereZ.skriptAPI.SkriptHandler;
 import ud.bi0.dragonSphereZ.util.DynamicLocation;
 
-
 public class EffText extends Effect {
 	private Expression<String> inputText;
 	private Expression<String> inputParticleString;
@@ -32,15 +31,14 @@ public class EffText extends Effect {
 	private Expression<Object> entLoc;
 	private Expression<String> inputIdName;
 	private Expression<Player> inputPlayers;
-	
 	private Expression<Boolean> inputRainbowMode;
 	private Expression<Boolean> inputAutoFace;
 	private Expression<Boolean> inputInvert;
 	private Expression<String> inputFontName;
 	private Expression<String> inputFontStyle;
 	private Expression<Number> inputFontSize;
-	private Expression<Number> pixelX;
-	private Expression<Number> pixelY;
+//	private Expression<Number> pixelX;
+//	private Expression<Number> pixelY;
 	private Expression<Long> scale;
 	private Expression<Number> range;
 	private Expression<Number> xRot;
@@ -71,8 +69,8 @@ public class EffText extends Effect {
 		inputFontName = (Expression<String>) exprs[13];
 		inputFontStyle = (Expression<String>) exprs[14];
 		inputFontSize = (Expression<Number>) exprs[15];
-		pixelX = (Expression<Number>) exprs[16];
-		pixelY = (Expression<Number>) exprs[17];
+//		pixelX = (Expression<Number>) exprs[16];
+//		pixelY = (Expression<Number>) exprs[17];
 		scale = (Expression<Long>) exprs[18];
 		range = (Expression<Number>) exprs[19];
 		xRot = (Expression<Number>) exprs[20];
@@ -97,8 +95,8 @@ public class EffText extends Effect {
 	 * [, autoFace %-boolean%]
 	 * [, invert %-boolean%]
 	 * [, f[ont]Name %-string%, f[ont]Style %-string%, f[ont]Size %-number%], 
-	 * pixelStepX %number%, 
-	 * pixelStepY %number%, 
+//	 * pixelStepX %number%, 
+//	 * pixelStepY %number%, 
 	 * scale %number%, 
 	 * visibleRange %number%
 	 * [, Rot[ation]XYZ %-number%, %-number%, %-number%]
@@ -108,7 +106,7 @@ public class EffText extends Effect {
 	
 	@Override
 	public String toString(@Nullable Event e, boolean debug) {
-		return "drawText %string%, particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, onlyFor %-players%][, r[ainbow]M[ode] %-boolean%][, autoFace %-boolean%][, invert %-boolean%][, f[ont]Name %-string%, f[ont]Style %-string%, f[ont]Size %-number%], pixelStepX %number%, pixelStepY %number%, scale %number%, visibleRange %number%[, Rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]" ;
+		return "drawText %string%, particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %object%, id %string%[, onlyFor %-players%][, r[ainbow]M[ode] %-boolean%][, autoFace %-boolean%][, invert %-boolean%][, f[ont]Name %-string%, f[ont]Style %-string%, f[ont]Size %-number%], scale %number%, visibleRange %number%[, Rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]" ;
 	}
 
 	@Override
@@ -134,14 +132,14 @@ public class EffText extends Effect {
 		Vector3d axis = SkriptHandler.inputEffectRotation(e, xRot, yRot, zRot);
 		
 		Long scaleSize = (long) 5;
-		int pixelStepX = 1;
-		int pixelStepY = 1;
-		if (pixelX != null){
-			pixelStepX = pixelX.getSingle(e).intValue();
-		}
-		if (pixelY != null){
-			pixelStepY = pixelY.getSingle(e).intValue();
-		}
+		//int pixelStepX = 1;
+		//int pixelStepY = 1;
+		//if (pixelX != null){
+		//	pixelStepX = pixelX.getSingle(e).intValue();
+		//}
+		//if (pixelY != null){
+		//	pixelStepY = pixelY.getSingle(e).intValue();
+		//}
 		if (scale != null){
 			scaleSize = scale.getSingle(e).longValue();
 		}
@@ -151,7 +149,7 @@ public class EffText extends Effect {
 		
 		int finalPulseTick = SkriptHandler.inputPulseTick(e, inputPulseTick);
 		
-		Text string = new Text(idName, particle, center, players, 0, finalPulseTick, 1, dataMat, dataID, finalSpeed, visibleRange, rainbowMode, offset, displacement, axis, pixelStepX, pixelStepY, scaleSize, font, text, invert, autoFace);
+		Text string = new Text(idName, particle, center, players, 0, finalPulseTick, 1, dataMat, dataID, finalSpeed, visibleRange, rainbowMode, offset, displacement, axis, 1, 1, scaleSize, font, text, invert, autoFace);
 		string.start(string);
 	}
 }
