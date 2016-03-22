@@ -26,7 +26,7 @@ public class Text extends ParticleEffect {
 	protected int pixelStepX;	//Default 1
 	protected int pixelStepY;	//Default 1
 	protected float scaleSize;	//Default 5
-	float size = (float) 1 / scaleSize;
+	//float size = (float) 1 / scaleSize;
 	boolean invert;
 	int clr;
 	protected BufferedImage image = null;
@@ -88,7 +88,6 @@ public class Text extends ParticleEffect {
         try {
             if (image == null || realTime) {	//For changing text(not implemented yet)
                 image = StringParser.stringToBufferedImage(font, text);
-                Bukkit.getServer().broadcastMessage("[test] once plz");
             }
             if (rainbowMode)
 				offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
@@ -101,14 +100,14 @@ public class Text extends ParticleEffect {
                     } else if (invert && Color.black.getRGB() == clr) {
                         continue;
                     }
-                    Bukkit.getServer().broadcastMessage("[mask test] pixel -->" + clr + "<--");
-                    v = new Vector3d((float) image.getWidth() / 2 - x, (float) image.getHeight() / 2 - y, 0).mul(size);
+                    
+                    v = new Vector3d((float) image.getWidth() / 2 - x, (float) image.getHeight() / 2 - y, 0).mul(1 / scaleSize);
                     VectorUtils.rotateVector(v, axis.getX(), axis.getY(), axis.getZ());
                     if (center.isDynamic() && autoFace == true) {
 	                    VectorUtils.rotateAroundAxisY(v, -center.getYaw() * TrigMath.DEG_TO_RAD);	//Supposed to auto rotate the text
+	                    Bukkit.getServer().broadcastMessage("[rotate] ");
                     }
                     Text.this.display(v);
-                    Bukkit.getServer().broadcastMessage("[ticks]  -->" + pulseTick + "<--");
                 }
             }
         } catch (Exception ex) {

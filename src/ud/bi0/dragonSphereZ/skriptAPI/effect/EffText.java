@@ -1,6 +1,5 @@
 package ud.bi0.dragonSphereZ.skriptAPI.effect;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -133,6 +132,7 @@ public class EffText extends Effect {
 		List<Player> players = SkriptHandler.inputPlayers(e, inputPlayers);
 		double visibleRange = range.getSingle(e).doubleValue();
 		Vector3d axis = SkriptHandler.inputEffectRotation(e, xRot, yRot, zRot);
+		
 		Long scaleSize = (long) 5;
 		int pixelStepX = 1;
 		int pixelStepY = 1;
@@ -151,9 +151,6 @@ public class EffText extends Effect {
 		
 		int finalPulseTick = SkriptHandler.inputPulseTick(e, inputPulseTick);
 		
-		Bukkit.getServer().broadcastMessage("[test] -->" + font + "<--");
-		Bukkit.getServer().broadcastMessage("[test] -->" + finalPulseTick + "<--");
-
 		Text string = new Text(idName, particle, center, players, 0, finalPulseTick, 1, dataMat, dataID, finalSpeed, visibleRange, rainbowMode, offset, displacement, axis, pixelStepX, pixelStepY, scaleSize, font, text, invert, autoFace);
 		string.start(string);
 	}
