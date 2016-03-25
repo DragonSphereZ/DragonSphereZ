@@ -100,13 +100,16 @@ public class Text extends ParticleEffect {
                     } else if (invert && Color.black.getRGB() == clr) {
                         continue;
                     }
-                    
                     v = new Vector3d((float) image.getWidth() / 2 - x, (float) image.getHeight() / 2 - y, 0).mul(1 / scaleSize);
-                    VectorUtils.rotateVector(v, axis.getX(), axis.getY(), axis.getZ());
+                    
+                    Bukkit.getServer().broadcastMessage("[v1] -->" + v + "<--");
+                    v = VectorUtils.rotateVector(v, axis.getX(), axis.getY(), axis.getZ());
+                    Bukkit.getServer().broadcastMessage("[v3] -->" + v + "<--");
+                    
                     if (center.isDynamic() && autoFace == true) {
-	                    VectorUtils.rotateAroundAxisY(v, -center.getYaw() * TrigMath.DEG_TO_RAD);	//Supposed to auto rotate the text
-	                    Bukkit.getServer().broadcastMessage("[rotate] ");
+                    	VectorUtils.rotateAroundAxisY(v, -center.getYaw() * TrigMath.DEG_TO_RAD);	//Supposed to auto rotate the text
                     }
+                    //Bukkit.getServer().broadcastMessage("[rotate] " + center.getYaw());	//TODO this returns 0
                     Text.this.display(v);
                 }
             }
