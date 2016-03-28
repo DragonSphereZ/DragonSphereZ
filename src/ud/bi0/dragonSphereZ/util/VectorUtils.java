@@ -33,7 +33,8 @@ public final class VectorUtils {
         z = v.getX() * -sin + v.getZ() * cos;
         Vector3d v2 = new Vector3d(x, v.getY(), z);
         Bukkit.getServer().broadcastMessage("[v2] -->" + v2 + "<--");
-        return new Vector3d(x, v.getY(), z);
+        return v2;
+        //return new Vector3d(x, v.getY(), z);
     }
 
     public static final Vector3d rotateAroundAxisZ(Vector3d v, double angle) {
