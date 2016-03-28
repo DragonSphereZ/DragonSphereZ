@@ -1,6 +1,7 @@
 package ud.bi0.dragonSphereZ.util;
 
 
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 
@@ -30,7 +31,10 @@ public final class VectorUtils {
         sin = TrigMath.sin(angle);
         x = v.getX() * cos + v.getZ() * sin;
         z = v.getX() * -sin + v.getZ() * cos;
-        return new Vector3d(x, v.getY(), z);
+        Vector3d v2 = new Vector3d(x, v.getY(), z);
+        Bukkit.getServer().broadcastMessage("[v2] -->" + v2 + "<--");
+        return v2;
+        //return new Vector3d(x, v.getY(), z);
     }
 
     public static final Vector3d rotateAroundAxisZ(Vector3d v, double angle) {

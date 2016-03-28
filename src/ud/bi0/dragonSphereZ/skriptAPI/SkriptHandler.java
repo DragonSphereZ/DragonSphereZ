@@ -243,6 +243,13 @@ public class SkriptHandler {
 		}
 		return 0;
     }
+	public static Vector3d inputEffectRotationOld(@Nullable Event e, @Nullable Expression<Number> inputEffectRotationX, @Nullable Expression<Number> inputEffectRotationY, @Nullable Expression<Number> inputEffectRotationZ) {
+		Vector3d v = new Vector3d();
+		if (!hasNull(e, inputEffectRotationX, inputEffectRotationY, inputEffectRotationZ)) {
+			v = v.add(inputEffectRotationX.getSingle(e).floatValue(), inputEffectRotationY.getSingle(e).floatValue(), inputEffectRotationZ.getSingle(e).floatValue());
+		} else v = Vector3d.UNIT_Y;
+		return v;
+    }
 	
 	public static Vector3d inputEffectRotation(@Nullable Event e, @Nullable Expression<Number> inputEffectRotationX, @Nullable Expression<Number> inputEffectRotationY, @Nullable Expression<Number> inputEffectRotationZ) {
 		Vector3d v = new Vector3d();

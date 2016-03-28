@@ -19,13 +19,12 @@ import com.flowpowered.math.vector.Vector3d;
 
 import ch.njol.skript.Skript;
 import ud.bi0.dragonSphereZ.effect.ParticleEffect;
-import ud.bi0.dragonSphereZ.math.shape.Image;
 import ud.bi0.dragonSphereZ.util.DynamicLocation;
 import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
 import ud.bi0.dragonSphereZ.util.VectorUtils;
 
-public class ColorImage extends ParticleEffect {
-
+public class ColorImage2 extends ParticleEffect {
+	
 	protected Plane plane;
 	protected File file;
 	protected boolean enableRotation;
@@ -59,7 +58,7 @@ public class ColorImage extends ParticleEffect {
 	int g;
 	int b;
 
-	public ColorImage(
+	public ColorImage2(
 		//super
 		String idName,
 		String particle,
@@ -89,9 +88,11 @@ public class ColorImage extends ParticleEffect {
 		init(axis, enableRotation, plane, file, pixelStepX, pixelStepY, scaleSize);
 
 	}
-	public ColorImage(String idName, DynamicLocation center, List<Player> players) {
+	public ColorImage2(String idName, DynamicLocation center, List<Player> players) {
 		super(idName, center, players);
-		init(new Vector3d(0,0,1), false, ColorImage.Plane.XY, null, 10, 10, 40);
+		//this.offset = new Vector3d(0,1,1);
+		//this.displacement = new Vector3d();
+		init(new Vector3d(0,0,1), false, ColorImage2.Plane.XY, null, 10, 10, 40);
 	}
 	
 	public void init(Vector3d axis, boolean enableRotation, Plane plane, File file, int pixelStepX, int pixelStepY, float scaleSize) {
@@ -102,19 +103,14 @@ public class ColorImage extends ParticleEffect {
 		this.pixelStepX = pixelStepX;
 		this.pixelStepY = pixelStepY;
 		this.scaleSize = scaleSize;
-		
-		
 	}
 
 
 	public void loadFile(File file) {
         try {
             image = ImageIO.read(file);
-            
-            Image test = new Image(image);
-            
-            isGif = file.getName().endsWith(".gif");
-            gifFile = file;
+            this.isGif = file.getName().endsWith(".gif");
+            this.gifFile = file;
         } catch (Exception ex) {
             ex.printStackTrace();
             image = null;
@@ -125,9 +121,6 @@ public class ColorImage extends ParticleEffect {
 	@Override
 	public void onRun() {
 		if (!center.hasMoved(pulseTick)) {
-			
-			
-			
 			if (image == null && file != null) {
 	            try {
 	    			image = ImageIO.read(file);

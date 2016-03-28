@@ -71,15 +71,15 @@ public class EffText extends Effect {
 		inputFontSize = (Expression<Number>) exprs[15];
 //		pixelX = (Expression<Number>) exprs[16];
 //		pixelY = (Expression<Number>) exprs[17];
-		scale = (Expression<Long>) exprs[18];
-		range = (Expression<Number>) exprs[19];
-		xRot = (Expression<Number>) exprs[20];
-		yRot = (Expression<Number>) exprs[21];
-		zRot = (Expression<Number>) exprs[22];
-		displaceX = (Expression<Number>) exprs[23];
-		displaceY = (Expression<Number>) exprs[24];
-		displaceZ = (Expression<Number>) exprs[25];
-		inputPulseTick = (Expression<Number>) exprs[26];
+		scale = (Expression<Long>) exprs[16];
+		range = (Expression<Number>) exprs[17];
+		xRot = (Expression<Number>) exprs[18];
+		yRot = (Expression<Number>) exprs[19];
+		zRot = (Expression<Number>) exprs[20];
+		displaceX = (Expression<Number>) exprs[21];
+		displaceY = (Expression<Number>) exprs[22];
+		displaceZ = (Expression<Number>) exprs[23];
+		inputPulseTick = (Expression<Number>) exprs[24];
 		
 		return true;
 	}
@@ -129,7 +129,7 @@ public class EffText extends Effect {
 		String idName = inputIdName.getSingle(e);
 		List<Player> players = SkriptHandler.inputPlayers(e, inputPlayers);
 		double visibleRange = range.getSingle(e).doubleValue();
-		Vector3d axis = SkriptHandler.inputEffectRotation(e, xRot, yRot, zRot);
+		Vector3d axis = SkriptHandler.inputEffectRotationOld(e, xRot, yRot, zRot);
 		
 		Long scaleSize = (long) 5;
 		//int pixelStepX = 1;
