@@ -17,6 +17,8 @@ public class Image
 	extends BaseShape
 	implements Cloneable {
 
+	public static final double PIXEL_DISTANCE = 0.1;
+	
 	private BufferedImage image;
 	
 	public Image(BufferedImage image) {
@@ -70,7 +72,7 @@ public class Image
 	}
 	
 	private Vector3d getVector(int x, int y) {
-		return Coordinate.Cartesian3d.getPoint(getBase(), x, y, 0);
+		return Coordinate.Cartesian3d.getPoint(getBase(), x * PIXEL_DISTANCE, y * PIXEL_DISTANCE, 0).add(getOrigin());
 	}
 	
 	private static BufferedImage cloneImage(BufferedImage image) {

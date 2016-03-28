@@ -73,7 +73,7 @@ public class Gif
 	}
 	
 	private Vector3d getVector(int x, int y) {
-		return Coordinate.Cartesian3d.getPoint(getBase(), x, y, 0);
+		return Coordinate.Cartesian3d.getPoint(getBase(), x, y, 0).add(getOrigin());
 	}
 	
 	private static BufferedImage cloneImage(BufferedImage image) {
