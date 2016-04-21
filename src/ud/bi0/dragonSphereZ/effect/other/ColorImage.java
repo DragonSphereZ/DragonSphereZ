@@ -19,6 +19,7 @@ import com.flowpowered.math.vector.Vector3d;
 
 import ch.njol.skript.Skript;
 import ud.bi0.dragonSphereZ.effect.ParticleEffect;
+import ud.bi0.dragonSphereZ.math.shape.Gif;
 import ud.bi0.dragonSphereZ.math.shape.Image;
 import ud.bi0.dragonSphereZ.util.DynamicLocation;
 import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
@@ -41,6 +42,8 @@ public class ColorImage extends ParticleEffect {
     
     
 	protected BufferedImage image = null;
+	Image img;
+	Gif gif;
 	protected boolean isGif = false;
 	protected File gifFile = null;
 	protected int step = 0;
@@ -102,55 +105,51 @@ public class ColorImage extends ParticleEffect {
 		this.pixelStepX = pixelStepX;
 		this.pixelStepY = pixelStepY;
 		this.scaleSize = scaleSize;
+		loadFile(file);
+		
 		
 		
 	}
 
 
 	public void loadFile(File file) {
+		isGif = file.getName().endsWith(".gif");
         try {
-            image = ImageIO.read(file);
-            
-            Image test = new Image(image);
-            
-            isGif = file.getName().endsWith(".gif");
-            gifFile = file;
+            if (file.getName().endsWith(".gif")){
+            	
+            	//gifFile = file;
+            	//-----------------------
+            	ArrayList<BufferedImage> images = new ArrayList<BufferedImage>();
+                ImageReader reader = ImageIO.getImageReadersBySuffix("GIF").next();
+                ImageInputStream in = ImageIO.createImageInputStream(file);
+                reader.setInput(in);
+                for (int i = 0, count = reader.getNumImages(true); i < count; i++) {
+                    image = reader.read(i);
+                    images.add(image);
+                }
+            	gif = new Gif(images);
+            	reader.dispose();
+                in.close();
+            }else{
+            	image = ImageIO.read(file);
+            	img = new Image(image);
+            }
         } catch (Exception ex) {
             ex.printStackTrace();
             image = null;
         }
     }
 	
-	
 	@Override
 	public void onRun() {
 		if (!center.hasMoved(pulseTick)) {
 			
-			
-			
-			if (image == null && file != null) {
-	            try {
-	    			image = ImageIO.read(file);
-	            	isGif = file.getName().endsWith(".gif");
-	            	gifFile = file;
-	            } catch (Exception ex) {
-	            	Skript.warning("[DragonSphereZ] Error: Invalid file used, make sure the image is in /plugins/DragonSphereZ/");
-	                image = null;
-	            }
-			}
 			if (image == null) {
 				effectManager.stopEffect(idName);
 	        	Skript.warning("[DragonSphereZ] Error: The image failed to load, try another? :c");
 	        	return;
 	        }
-	        if (isGif) {	//TODO Set this up to load all 'images' into an array to be played back
-	            try {
-	                image = getImg(step);
-	            } catch (IOException e) {
-	            	Skript.warning("[DragonSphereZ] Error: The .gif failed to load..");
-	                e.printStackTrace();
-	                effectManager.stopEffect(idName);
-	            }
+	        if (isGif) {
 	            if (delay == 5) {
 	                step++;
 	                delay = 0;
@@ -159,6 +158,9 @@ public class ColorImage extends ParticleEffect {
 	        }
 	        
 	        center.update();
+	        
+	        
+	        
 	        for (y = 0; y < image.getHeight(); y += pixelStepY) {
 	            for (x = 0; x < image.getWidth(); x += pixelStepX) {
 	            	clr = image.getRGB(x, y);

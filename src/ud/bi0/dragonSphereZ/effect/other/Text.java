@@ -5,10 +5,10 @@ import java.awt.Font;
 import java.awt.image.BufferedImage;
 import java.util.List;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 
+import com.flowpowered.math.GenericMath;
 import com.flowpowered.math.TrigMath;
 import com.flowpowered.math.vector.Vector3d;
 
@@ -31,6 +31,8 @@ public class Text extends ParticleEffect {
 	int clr;
 	protected BufferedImage image = null;
 	Vector3d v = new Vector3d();
+	Vector3d v2;
+	double x2, z2, cos, sin, angle;
 	int y;
 	int x;
 	boolean realTime = false; //For changing text(not implimented yet)
@@ -102,15 +104,24 @@ public class Text extends ParticleEffect {
                     }
                     v = new Vector3d((float) image.getWidth() / 2 - x, (float) image.getHeight() / 2 - y, 0).mul(1 / scaleSize);
                     
-                    Bukkit.getServer().broadcastMessage("[v1] -->" + v + "<--");
+                    //Bukkit.getServer().broadcastMessage("[v1] -->" + v + "<--");
                     v = VectorUtils.rotateVector(v, axis.getX(), axis.getY(), axis.getZ());
-                    Bukkit.getServer().broadcastMessage("[v3] -->" + v + "<--");
+                    //Bukkit.getServer().broadcastMessage("[v3] -->" + v + "<--");
                     
                     if (center.isDynamic() && autoFace == true) {
-                    	VectorUtils.rotateAroundAxisY(v, -center.getYaw() * TrigMath.DEG_TO_RAD);	//Supposed to auto rotate the text
+                    	angle = GenericMath.wrapAngleRad(-center.getYaw() * TrigMath.DEG_TO_RAD);
+                        cos = TrigMath.cos(angle);
+                        sin = TrigMath.sin(angle);
+                        x2 = v.getX() * cos + v.getZ() * sin;
+                        z2 = v.getX() * -sin + v.getZ() * cos;
+                        v2 = new Vector3d(x2, v.getY(), z2);
+                    	//VectorUtils.rotateAroundAxisY(v, -center.getYaw() * TrigMath.DEG_TO_RAD);	//Supposed to auto rotate the text
+                        Text.this.display(v2);
+                    }else{
+                    	Text.this.display(v);
                     }
                     //Bukkit.getServer().broadcastMessage("[rotate] " + center.getYaw());	//TODO this returns 0
-                    Text.this.display(v);
+                    
                 }
             }
         } catch (Exception ex) {
