@@ -13,7 +13,7 @@ import ud.bi0.dragonSphereZ.skriptAPI.register.RegisterExpressions;
 
 
 public class DragonSphereCore extends JavaPlugin {
-	
+	//Test
 	
 	public static DragonSphereCore dragonSphereCore;
 	private static DragonSphereCore instance;
