@@ -124,7 +124,7 @@ public class EffComplexCircle extends Effect {
 		Material dataMat = SkriptHandler.inputParticleDataMat(e, inputParticleData);
 		byte dataID = SkriptHandler.inputParticleDataID(e, inputParticleData);
 
-		ComplexCircle circle = new ComplexCircle(idName, particle, center, players, 0L, finalPulseTick, 1, dataMat, dataID, finalSpeed, visibleRange, offset, displacement, finalRadius, finalParticleDensity, rainbowMode, enableRotation, axis);
+		ComplexCircle circle = new ComplexCircle(1, particle, dataMat, dataID, finalSpeed, offset, idName, center, players, rainbowMode, visibleRange, displacement, 0L, finalPulseTick, enableRotation, finalRadius, finalParticleDensity, axis);
 		circle.start(circle);
 	
 	}

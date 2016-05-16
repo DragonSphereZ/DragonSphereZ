@@ -31,28 +31,27 @@ public class ComplexCircle extends ParticleEffect {
 	
 	public ComplexCircle(
 		//super
-		String idName,
-		String particle,
-		DynamicLocation center,
-		List<Player> players,
-		long delayTick,
-		long pulseTick,
 		int particleCount,
+		String particle,
 		Material dataMat,
 		byte dataID,
 		float speed,
-		double visibleRange,
-
-		//this
 		Vector3d offset,
+		String idName,
+		DynamicLocation center,
+		List<Player> players,
+		boolean rainbowMode,
+		double visibleRange,
 		Vector3d displacement,
+		long delayTick,
+		long pulseTick,
+		//this
+		boolean enableRotation,
 		double radius,
 		double particleDensity,
-		boolean rainbowMode,
-		boolean enableRotation,
 		Vector3d axis)
 	{
-		super(idName, particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, rainbowMode, offset, displacement);
+		super(particleCount, particle, dataMat, dataID, speed, offset, idName, center, players, rainbowMode, visibleRange, displacement, delayTick, pulseTick);
 		init(radius, particleDensity, enableRotation, axis);
 
 	}
@@ -72,7 +71,7 @@ public class ComplexCircle extends ParticleEffect {
 	
 	@Override
 	public void onRun() {
-		if (!center.hasMoved(pulseTick)) {
+		if (!center.isDynamic() || !center.hasMoved()) {
 			center.update();
 			v = circle.getPoint(angle); //Gets the next point on the circle.
 			if (enableRotation)

@@ -47,36 +47,37 @@ public class ComplexAtom extends ParticleEffect {
 	
 	public ComplexAtom(
 		//super
-		String idName,
-		String particle,
-		DynamicLocation center,
-		List<Player> players,
-		long delayTick,
-		long pulseTick,
 		int particleCount,
+		String particle,
 		Material dataMat,
 		byte dataID,
 		float speed,
-		double visibleRange,
 		Vector3d offset,
-		Vector3d displacement,
+		String idName,
+		DynamicLocation center,
+		List<Player> players,
 		boolean rainbowMode,
+		double visibleRange,
+		Vector3d displacement,
+		long delayTick,
+		long pulseTick,
 		//this
+		String particle2,
+		Material dataMat2, 
+		byte dataID2, 
+		float speed2, 
+		Vector3d offset2,
 		boolean enableRotation,
 		float innerRadius, 
 		int nucleusDensity, 
 		int orbitSpeed, 
 		int orbitDensity, 
 		int orbitalCount, 
-		Vector3d axis, 
-		String particle2,
-		Material dataMat2, 
-		byte dataID2, 
-		float speed2, 
-		Vector3d offset2
+		Vector3d axis
+		
 			)
 	{
-		super(idName, particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, rainbowMode, offset, displacement);
+		super(particleCount, particle, dataMat, dataID, speed, offset, idName, center, players, rainbowMode, visibleRange, displacement, delayTick, pulseTick);
 		init(innerRadius, enableRotation, nucleusDensity, orbitSpeed, orbitDensity, orbitalCount, axis, particle2, dataMat2, dataID2, speed2, offset2);
 
 	}
@@ -104,7 +105,7 @@ public class ComplexAtom extends ParticleEffect {
 	
 	@Override
 	public void onRun() {
-		if (!center.isDynamic() || !center.hasMoved(pulseTick)) {
+		if (!center.isDynamic() || !center.hasMoved()) {//TODO fix these a bit
 			center.update();
 			for (int i = 0; i < nucleusDensity; i++) {	//this was used to add an amount of random vectors to the sphere
 				v = Vector3d.createRandomDirection(new Random()).mul(innerRadius);

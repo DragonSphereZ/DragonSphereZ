@@ -64,31 +64,30 @@ public class ColorImage extends ParticleEffect {
 
 	public ColorImage(
 		//super
-		String idName,
-		String particle,
-		DynamicLocation center,
-		List<Player> players,
-		long delayTick,
-		long pulseTick,
 		int particleCount,
+		String particle,
 		Material dataMat,
 		byte dataID,
 		float speed,
-		double visibleRange,
-		boolean rainbowMode,
 		Vector3d offset,
-		Vector3d displacement, 
+		String idName,
+		DynamicLocation center,
+		List<Player> players,
+		boolean rainbowMode,
+		double visibleRange,
+		Vector3d displacement,
+		long delayTick,
+		long pulseTick,
 		//this
 		Vector3d axis,
 		boolean enableRotation,
 		Plane plane,
 		File file,
-		
 		int pixelStepX,
 		int pixelStepY,
 		float scaleSize)
 	{
-		super(idName, particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, rainbowMode, offset, displacement);
+		super(particleCount, particle, dataMat, dataID, speed, offset, idName, center, players, rainbowMode, visibleRange, displacement, delayTick, pulseTick);
 		init(axis, enableRotation, plane, file, pixelStepX, pixelStepY, scaleSize);
 
 	}
@@ -142,7 +141,7 @@ public class ColorImage extends ParticleEffect {
 	
 	@Override
 	public void onRun() {
-		if (!center.hasMoved(pulseTick)) {
+		if (!center.isDynamic() || !center.hasMoved()) {
 			
 			if (image == null) {
 				effectManager.stopEffect(idName);

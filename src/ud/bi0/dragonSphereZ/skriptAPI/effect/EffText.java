@@ -149,7 +149,7 @@ public class EffText extends Effect {
 		
 		int finalPulseTick = SkriptHandler.inputPulseTick(e, inputPulseTick);
 		
-		Text string = new Text(idName, particle, center, players, 0, finalPulseTick, 1, dataMat, dataID, finalSpeed, visibleRange, rainbowMode, offset, displacement, axis, 1, 1, scaleSize, font, text, invert, autoFace);
+		Text string = new Text(1, particle, dataMat, dataID, finalSpeed, offset, idName, center, players, rainbowMode, visibleRange, displacement, 0, finalPulseTick, axis, 1, 1, scaleSize, font, text, invert, autoFace);
 		string.start(string);
 	}
 }

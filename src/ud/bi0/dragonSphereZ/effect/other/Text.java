@@ -39,20 +39,20 @@ public class Text extends ParticleEffect {
 
 	public Text(
 		//super
-		String idName,
+		int particleCount,	
 		String particle,
-		DynamicLocation center,
-		List<Player> players,
-		long delayTick,
-		long pulseTick,
-		int particleCount,
 		Material dataMat,
 		byte dataID,
 		float speed,
-		double visibleRange,
-		boolean rainbowMode,
 		Vector3d offset,
-		Vector3d displacement, 
+		String idName,
+		DynamicLocation center,
+		List<Player> players,
+		boolean rainbowMode,
+		double visibleRange,
+		Vector3d displacement,
+		long delayTick,
+		long pulseTick,
 		//this
 		Vector3d axis, 
 		int pixelStepX,
@@ -63,7 +63,7 @@ public class Text extends ParticleEffect {
 		boolean invert,
 		boolean autoFace)
 	{
-		super(idName, particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, rainbowMode, offset, displacement);
+		super(particleCount, particle, dataMat, dataID, speed, offset, idName, center, players, rainbowMode, visibleRange, displacement, delayTick, pulseTick);
 		init(axis, pixelStepX, pixelStepY, scaleSize, font, text, invert, autoFace);
 
 	}

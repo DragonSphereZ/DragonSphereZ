@@ -15,25 +15,23 @@ public class ComplexBand extends ParticleEffect {
 		
 	public ComplexBand(
 		//super
-		String idName,
-		String particle,
-		DynamicLocation center,
-		List<Player> players,
-		long delayTick,
-		long pulseTick,
 		int particleCount,
+		String particle,
 		Material dataMat,
 		byte dataID,
 		float speed,
-		double visibleRange,
 		Vector3d offset,
+		String idName,
+		DynamicLocation center,
+		List<Player> players,
+		boolean rainbowMode,
+		double visibleRange,
 		Vector3d displacement,
-		boolean rainbowMode
-		//this
-
+		long delayTick,
+		long pulseTick
 		)
 	{
-		super(idName, particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, rainbowMode, offset, displacement);
+		super(particleCount, particle, dataMat, dataID, speed, offset, idName, center, players, rainbowMode, visibleRange, displacement, delayTick, pulseTick);
 	}
 	public ComplexBand(String idName, DynamicLocation center, List<Player> players) {
 		super(idName, center, players);
@@ -41,12 +39,12 @@ public class ComplexBand extends ParticleEffect {
 
 	@Override
 	public void onRun() {
-		if (!center.isDynamic() || center.hasMoved(pulseTick)) {
+		if (!center.isDynamic() || !center.hasMoved()) {
 			center.update();
 			if (rainbowMode == true)
 				offset = ParticleEffectUtils.simpleRainbowHelper(offset, particle);
 			for (int i = 0; i < 15; i++) {
-				center.add(0, 0.1, 0);	//TODO when using 'location of player' this effect shoots straight up into the air. Need to fix this
+				center.add(0, 0.1, 0);	//TODO when using 'location of player' this effect shoots straight up into the air. Need to fix this try changing to vector
 				ParticleEffectUtils.valueOf(particle).display(idName, dataMat, dataID, players, center, visibleRange, rainbowMode, offset, speed, particleCount);
 			}
 		} else center.update();

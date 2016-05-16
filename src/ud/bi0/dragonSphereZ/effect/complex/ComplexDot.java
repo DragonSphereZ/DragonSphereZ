@@ -18,25 +18,25 @@ public class ComplexDot extends ParticleEffect {
 	
 	public ComplexDot(
 		//super
-		String idName,
-		String particle,
-		DynamicLocation center,
-		List<Player> players,
-		long delayTick,
-		long pulseTick,
 		int particleCount,
+		String particle,
 		Material dataMat,
 		byte dataID,
 		float speed,
-		double visibleRange,
 		Vector3d offset,
+		String idName,
+		DynamicLocation center,
+		List<Player> players,
+		boolean rainbowMode,
+		double visibleRange,
 		Vector3d displacement,
-		boolean rainbowMode
+		long delayTick,
+		long pulseTick
 		//this
 		//int stopDelay
 		)
 	{
-		super(idName, particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, rainbowMode, offset, displacement);
+		super(particleCount, particle, dataMat, dataID, speed, offset, idName, center, players, rainbowMode, visibleRange, displacement, delayTick, pulseTick);
 	//	init(stopDelay);
 	}
 	public ComplexDot(String idName, DynamicLocation center, List<Player> players) {
@@ -59,6 +59,5 @@ public class ComplexDot extends ParticleEffect {
 		//	effectManager.stopEffect(idName);
 		//}
 		//stopDelayCounter += 1;
-			
 	}
 }

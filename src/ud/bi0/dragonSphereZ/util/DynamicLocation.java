@@ -12,11 +12,11 @@ public class DynamicLocation extends Location {
 	private float epsilon = 0.05F; //lower than sneaking speed
 	
 	public DynamicLocation(Location location) {
-		super(location.getWorld(), location.getX(), location.getY(), location.getZ());
+		super(location.getWorld(), location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
 	}
 	
 	public DynamicLocation(Entity entity) {
-		super(entity.getWorld(), entity.getLocation().getX(), entity.getLocation().getY(), entity.getLocation().getZ());
+		super(entity.getWorld(), entity.getLocation().getX(), entity.getLocation().getY(), entity.getLocation().getZ(), entity.getLocation().getYaw(), entity.getLocation().getPitch());
     	this.entity = entity;
     	this.dynamic = true;
 	}
@@ -26,6 +26,8 @@ public class DynamicLocation extends Location {
 			this.setX(entity.getLocation().getX());
 			this.setY(entity.getLocation().getY());
 			this.setZ(entity.getLocation().getZ());
+			this.setYaw(entity.getLocation().getYaw());
+			this.setPitch(entity.getLocation().getPitch());
 		}
 		return this;
 	}

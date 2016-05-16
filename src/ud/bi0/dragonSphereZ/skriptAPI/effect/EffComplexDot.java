@@ -67,14 +67,14 @@ public class EffComplexDot extends Effect {
 	*/
 	@Override
 	public String toString(@Nullable Event e, boolean debug) {
-		return "drawDot[ count %-number%,] particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %objects%[, onlyFor %-players%][, r[ainbow]M[ode] %-boolean%], visibleRange %number%[, pulseDelay %-number%][, keepFor %-timespan%]";
+		return "drawDot[[ count] %-number%,] particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], center %objects%[, onlyFor %-players%][, r[ainbow]M[ode] %-boolean%], visibleRange %number%[, pulseDelay %-number%][, keepFor %-timespan%]";
 	}
 
 	@Override
 	protected void execute(@Nullable Event e) {
 		DynamicLocation center;
 		try {
-			center = DynamicLocation.init(entLoc.getSingle(e));
+			center = DynamicLocation.init(entLoc.getSingle(e));	//TODO change this to match the simple dot locations
 		} catch (IllegalArgumentException ex) {
 			return;
 		}
@@ -89,12 +89,12 @@ public class EffComplexDot extends Effect {
 	    int finalPulseTick = SkriptHandler.inputPulseTick(e, inputPulseDelay);
 	    int finalKeepDelay = SkriptHandler.inputKeepDelay(e, inputKeepDelay);
 	    double visibleRange = range.getSingle(e).doubleValue();
-	    String idName = "&dot-" + Math.random() + "-&dot";
+	    String idName = "&dot-" + Math.random() + "-&dot"; //TODO Change this maybe
 	    if (finalPulseTick > finalKeepDelay){
 	    	finalPulseTick = finalKeepDelay;
 	    }
 	    //(String idName, String particle, DynamicLocation center, List<Player> players, long delayTick, long pulseTick, int particleCount, Material dataMat, byte dataID, float speed, double visibleRange, Vector3d offset, Vector3d displacement, boolean rainbowMode)
-	    ComplexDot dot = new ComplexDot(idName, particle, center, players, finalKeepDelay, finalPulseTick, count, dataMat, dataID, finalSpeed, visibleRange, offset, new Vector3d(0,0,0), rainbowMode);
+	    ComplexDot dot = new ComplexDot(count, particle, dataMat, dataID, finalSpeed, offset, idName, center, players, rainbowMode, visibleRange, new Vector3d(0,0,0), finalKeepDelay, finalPulseTick);
 	    //dot.start(dot);
 	    dot.startUndelayed(dot);
 	    dot.stopDelayed(dot);

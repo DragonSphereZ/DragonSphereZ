@@ -112,7 +112,7 @@ public class EffComplexAtom extends Effect {
    */
 	@Override
 	public String toString(@Nullable Event e, boolean debug) {
-		return "drawComplexAtom particle1 %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], particle2 %string%[, material2 %-itemstack%][, speed2 %-number%][, ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%], center %object%, id %string%[, onlyFor %-players%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, nucleusDensity %number%, nucleusRadius %number%, orbits %number%, orbitalDensity %number%, orbitalSpeed %number%, visibleRange %number%[, rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]";
+		return "drawComplexAtom particle %string%[, material %-itemstack%][, speed %-number%][, ([offset]XYZ|RGB) %-number%, %-number%, %-number%], particle2 %string%[, material2 %-itemstack%][, speed2 %-number%][, ([offset]XYZ2|RGB2) %-number%, %-number%, %-number%], center %object%, id %string%[, onlyFor %-players%][, r[ainbow]M[ode] %-boolean%], randomRotation %boolean%, nucleusDensity %number%, nucleusRadius %number%, orbits %number%, orbitalDensity %number%, orbitalSpeed %number%, visibleRange %number%[, rot[ation]XYZ %-number%, %-number%, %-number%][, dis[placement]XYZ %-number%, %-number%, %-number%][, pulseDelay %-number%]";
 	}
 
 	@Override
@@ -154,7 +154,7 @@ public class EffComplexAtom extends Effect {
 		Material dataMat2 = SkriptHandler.inputParticleDataMat(e, inputParticleData2);
 		byte dataID2 = SkriptHandler.inputParticleDataID(e, inputParticleData2);
 		
-		ComplexAtom atom = new ComplexAtom(idName, particle, center, players, 0L, finalPulseTick, 1, dataMat, dataID, finalSpeed, visibleRange, offset, displacement, rainbowMode, enableRotation, finalRadius, finalInnerParticleDensity, finalOrbitSpeed, finalOrbitDensity, finalOrbitalCount, axis, particle2, dataMat2, dataID2, finalSpeed2, offset2);
+		ComplexAtom atom = new ComplexAtom(1, particle, dataMat, dataID, finalSpeed, offset, idName, center, players, rainbowMode, visibleRange, displacement, 0L, finalPulseTick, particle2, dataMat2, dataID2, finalSpeed2, offset2, enableRotation, finalRadius, finalInnerParticleDensity, finalOrbitSpeed, finalOrbitDensity, finalOrbitalCount, axis);
 		atom.start(atom);
 		
 	}

@@ -8,7 +8,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
+//import org.bukkit.scheduler.BukkitRunnable;
 
 import com.flowpowered.math.vector.Vector3d;
 
@@ -17,8 +17,8 @@ import ud.bi0.dragonSphereZ.util.DynamicLocation;
 import ud.bi0.dragonSphereZ.util.ParticleEffectUtils;
 
 
-public abstract class ParticleEffect extends BukkitRunnable {
-	
+//public abstract class ParticleEffect extends BukkitRunnable {
+public abstract class ParticleEffect {
 	
 	protected final String idName; 
 	
@@ -46,29 +46,31 @@ public abstract class ParticleEffect extends BukkitRunnable {
 	protected final Plugin plugin = DragonSphereCore.dragonSphereCore;
 	protected final ParticleEffectManager effectManager = DragonSphereCore.effectManager;
 	
-	public ParticleEffect(String idName, String particle, DynamicLocation center, List<Player> players, long delayTick, long pulseTick, int particleCount, Material dataMat, byte dataID, float speed, double visibleRange, boolean rainbowMode, Vector3d offset, Vector3d displacement) {
-		this.idName = new String(idName);
-		this.center = center;
-		this.players = players;
-		this.particle = particle;
+	//public ParticleEffect(String idName, String particle, DynamicLocation center, List<Player> players, long delayTick, long pulseTick, int particleCount, Material dataMat, byte dataID, float speed, double visibleRange, boolean rainbowMode, Vector3d offset, Vector3d displacement) {
+	public ParticleEffect(int particleCount, String particle, Material dataMat, byte dataID, float speed, Vector3d offset, String idName, DynamicLocation center, List<Player> players, boolean rainbowMode, double visibleRange, Vector3d displacement, long delayTick, long pulseTick) {
+
 		this.particleCount = particleCount;
+		this.particle = particle;
 		this.dataMat = dataMat;
 		this.dataID = dataID;
 		this.speed = speed;
-		this.visibleRange = visibleRange;
-		this.rainbowMode = rainbowMode;
 		this.offset = offset;
+		this.idName = new String(idName);
+		this.center = center;
+		this.players = players;
+		this.rainbowMode = rainbowMode;
+		this.visibleRange = visibleRange;
 		this.displacement = displacement;
 		this.delayTick = delayTick;
 		this.pulseTick = pulseTick;
 	}
 	
 	public ParticleEffect(String idName, DynamicLocation center, List<Player> players) {
-		this(idName, ParticleEffectUtils.limeglassparticle.name(), center, players, 0L, 20L, 1, Material.DIRT, (byte) 0, 0F, 32D, false, new Vector3d(), new Vector3d());
+		this(1, ParticleEffectUtils.limeglassparticle.name(), Material.DIRT, (byte) 0, 0F, new Vector3d(), idName, center, players, false, 32D, new Vector3d(), 0L, 20L);
 	}
 	
 	public ParticleEffect(String idName, String particle, DynamicLocation center, List<Player> players) {
-		this(idName, particle, center, players, 0L, 20L, 1, Material.DIRT, (byte) 0, 0F, 32D, false, new Vector3d(), new Vector3d());
+		this(1, particle, Material.DIRT, (byte) 0, 0F, new Vector3d(), idName, center, players, false, 32D, new Vector3d(), 0L, 20L);
 	}
 		
 	public void setOffset(double x, double y, double z) {
@@ -149,10 +151,10 @@ public abstract class ParticleEffect extends BukkitRunnable {
 		effectManager.stopEffect(idName);
 	}
 	
-	@Override
- 	public void run() {
-		cancel();
-	}
+	//@Override
+ 	//public void run() {
+	//	cancel();
+	//}
 	
 	public void display(Vector3d vector) {
 		Vector3d finalVector = vector.add(this.getCenter().getVector3d()).add(this.getDisplacement());

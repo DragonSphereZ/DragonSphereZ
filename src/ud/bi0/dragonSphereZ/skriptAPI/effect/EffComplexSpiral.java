@@ -134,7 +134,7 @@ public class EffComplexSpiral extends Effect {
 		Material dataMat = SkriptHandler.inputParticleDataMat(e, inputParticleData);
 		byte dataID = SkriptHandler.inputParticleDataID(e, inputParticleData);
 				    	// idName,particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, rainbowMode, scan, offset, displacement, radius, circleDensity, height, effectMod, clockwise, axis)
-		ComplexSpiral spiral = new ComplexSpiral(idName, particle, center, players, 0L, finalPulseTick, 1, dataMat, dataID, finalSpeed, visibleRange, rainbowMode, finalScan, offset, displacement, finalRadius, finalParticleDensity, finalHeight, finalHeightMod, finalClockwise, axis);
+		ComplexSpiral spiral = new ComplexSpiral(1, particle, dataMat, dataID, finalSpeed, offset, idName, center, players, rainbowMode, visibleRange, displacement, 0L, finalPulseTick, finalClockwise, finalScan, finalRadius, finalHeight, finalParticleDensity, finalHeightMod, axis);
 		spiral.start(spiral);
 	}
 }

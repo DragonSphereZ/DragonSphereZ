@@ -42,7 +42,7 @@ public class SimpleYinYang extends ParticleEffect {
 	
 	
 	public SimpleYinYang(String idName, String particle, DynamicLocation center, List<Player> players, boolean clockwise) {
-		super(idName, particle, center, players, 0, 2, 1, Material.DIRT,(byte) 0, 0, 32, false, new Vector3d(0,0,0), new Vector3d(0,0,0));
+		super(1, particle, Material.DIRT,(byte) 0, 0, new Vector3d(0,0,0), idName, center, players, false, 32, new Vector3d(0,0,0), 0, 2);
 		this.clockwise = clockwise;
 		particle.toLowerCase();
 		switch(particle) {

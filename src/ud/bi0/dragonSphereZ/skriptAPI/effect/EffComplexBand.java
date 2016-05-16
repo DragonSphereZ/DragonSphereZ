@@ -95,7 +95,7 @@ public class EffComplexBand extends Effect {
 
 	    String idName = inputIdName.getSingle(e);
 	    
-	    ComplexBand band = new ComplexBand(idName, particle, center, players, 0L, finalPulseTick, 1, dataMat, dataID, finalSpeed, visibleRange, offset, displacement, rainbowMode);
+	    ComplexBand band = new ComplexBand(1, particle, dataMat, dataID, finalSpeed, offset, idName, center, players, rainbowMode, visibleRange, displacement, 0L, finalPulseTick);
 	    band.start(band);
 
 	}

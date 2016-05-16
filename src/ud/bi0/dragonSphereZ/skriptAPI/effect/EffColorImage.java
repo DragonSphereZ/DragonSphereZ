@@ -141,7 +141,7 @@ public class EffColorImage extends Effect {
 		
 		
 		//(String idName, String particle, DynamicLocation center, List<Player> players, long delayTick, long pulseTick, int particleCount, Material dataMat, byte dataID, float speed, double visibleRange, boolean rainbowMode, Vector3d offset, Vector3d displacement, Vector3d axis, boolean enableRotation, Plane plane, File file, int pixelStepX, int pixelStepY, float scaleSize)
-		ColorImage image = new ColorImage(idName, "redstone", center, players, 0, finalPulseTick, 1, Material.DIRT, (byte)0, 0, visibleRange, false, new Vector3d(), displacement, axis, enableRotation, plane, file, pixelStepX, pixelStepY, scaleSize);
+		ColorImage image = new ColorImage(1, "redstone", Material.DIRT, (byte)0, 0, new Vector3d(), idName, center, players, false, visibleRange, displacement, 0, finalPulseTick, axis, enableRotation, plane, file, pixelStepX, pixelStepY, scaleSize);
 		image.start(image);
 	}
 }

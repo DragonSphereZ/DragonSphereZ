@@ -24,7 +24,6 @@ public class ComplexSpiral extends ParticleEffect {
 	protected boolean scan;
 	protected Vector3d axis;
 	
-	
 	Cylinder spiral = new Cylinder();
 	Vector3d v = new Vector3d();
 	double angle = 0;
@@ -35,30 +34,30 @@ public class ComplexSpiral extends ParticleEffect {
 	
 	public ComplexSpiral(
 		//super
-		String idName,
-		String particle,
-		DynamicLocation center,
-		List<Player> players,
-		long delayTick,
-		long pulseTick,
 		int particleCount,
+		String particle,
 		Material dataMat,
 		byte dataID,
 		float speed,
-		double visibleRange,
-		boolean rainbowMode,
-		//this
-		boolean scan,
 		Vector3d offset,
-		Vector3d displacement,		
-		double radius,
-		double circleDensity,
-		float height,
-		float effectMod,
+		String idName,
+		DynamicLocation center,
+		List<Player> players,
+		boolean rainbowMode,
+		double visibleRange,
+		Vector3d displacement,
+		long delayTick,
+		long pulseTick,
+		//this
 		boolean clockwise,
+		boolean scan,
+		double radius,
+		float height,
+		double circleDensity,
+		float effectMod,
 		Vector3d axis)
 	{
-		super(idName, particle, center, players, delayTick, pulseTick, particleCount, dataMat, dataID, speed, visibleRange, rainbowMode, offset, displacement);
+		super(particleCount, particle, dataMat, dataID, speed, offset, idName, center, players, rainbowMode, visibleRange, displacement, delayTick, pulseTick);
 		init(radius, circleDensity, height, effectMod, scan, clockwise, axis);
 
 	}
@@ -83,7 +82,7 @@ public class ComplexSpiral extends ParticleEffect {
 	
 	@Override
 	public void onRun() {
-		if (!center.hasMoved(pulseTick)) {
+		if (!center.isDynamic() || !center.hasMoved()) {
 			center.update();
 			v = spiral.getPoint(angle, heightCounter);
 			v = v.add(center.getVector3d()).add(displacement);
